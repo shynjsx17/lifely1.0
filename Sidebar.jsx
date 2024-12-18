@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './index.css'; // Ensure to include your CSS styles
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -14,68 +13,87 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
-      
-      <div className="sidebar-header">
-        <h3 className="brand">
-          <i className></i>
-          <span >Lifey</span>
-        </h3>
-        <div className="toggle-btn" onClick={toggleSidebar}>
-          <i className={`fas ${isCollapsed ? 'fa-chevron-right' : 'fa-chevron-left'} toggle-icon`}></i>
-        </div>
+    <div
+      className={`h-full bg-gradient-to-b from-[#add1c8] via-[#b4d2c8] to-[#e0cbb8] pt-5 fixed shadow-lg transition-all duration-500 ${
+        isCollapsed ? 'w-[80px]' : 'w-[250px]'
+      }`}
+    >
+      <div className="px-5 mb-10 flex items-center justify-between">
+        <h1
+          className={`text-xl font-bold ${
+            isCollapsed ? 'hidden' : ''
+          } transition-all duration-300`}
+        >
+          Lifely
+        </h1>
+        <button
+          className="bg-gray-300 text-black p-2 rounded-full"
+          onClick={toggleSidebar}
+        >
+          {isCollapsed ? '<' : '>'}
+        </button>
       </div>
-      <ul className="nav-links">
-
-        <li>
-          <a href="#" className="nav-item">
-          <span className="nav-icon"><img src="assets/icons8-home.svg" alt="Home Icon"/></span>
-            <span>Home</span>
-          </a>
+      <ul className="list-none mt-5">
+        <li className="flex items-center px-5 py-4 hover:bg-white transition-all duration-300">
+          <img
+            src="assets/icons8-home.svg"
+            alt="Home Icon"
+            className="w-6 h-6 mr-2"
+          />
+          {!isCollapsed && <span>Home</span>}
         </li>
-
-        <li>
-          <a href="#" className="nav-item">
-            <span className="nav-icon"><img src="assets/myday.svg" width="23px" alt="My Day Icon"/></span>
-            <span>My Day</span>
-          </a>
+        <li className="flex items-center px-5 py-4 hover:bg-white transition-all duration-300">
+          <img
+            src="assets/myday.svg"
+            alt="My Day Icon"
+            className="w-6 h-6 mr-2"
+          />
+          {!isCollapsed && <span>My Day</span>}
         </li>
-
-        <li>
-          <a href="#" className="nav-item">
-            <span className="nav-icon"><img src="assets/calendar.svg" alt="My Calendar Icon"/></span>
-            <span>My Calendar</span>
-          </a>
+        <li className="flex items-center px-5 py-4 hover:bg-white transition-all duration-300">
+          <img
+            src="assets/calendar.svg"
+            alt="My Calendar Icon"
+            className="w-6 h-6 mr-2"
+          />
+          {!isCollapsed && <span>My Calendar</span>}
         </li>
-
-        <li>
-          <a href="#" className="nav-item">
-            <span className="nav-icon"><img src="assets/diary-svgrepo-com.svg" width="25px" alt="My Diary Icon"/></span>
-            <span>My Diary</span>
-          </a>
+        <li className="flex items-center px-5 py-4 hover:bg-white transition-all duration-300">
+          <img
+            src="assets/diary-svgrepo-com.svg"
+            alt="My Diary Icon"
+            className="w-6 h-6 mr-2"
+          />
+          {!isCollapsed && <span>My Diary</span>}
         </li>
-
-        <li>
-          <a href="#" className="nav-item">
-            <span className="nav-icon"><img src="assets/archive.svg" alt="My Archive Icon"/></span>
-            <span>My Archive</span>
-          </a>
+        <li className="flex items-center px-5 py-4 hover:bg-white transition-all duration-300">
+          <img
+            src="assets/archive.svg"
+            alt="My Archive Icon"
+            className="w-6 h-6 mr-2"
+          />
+          {!isCollapsed && <span>My Archive</span>}
         </li>
-
-        <li className={`dropdown ${activeDropdown === 0 ? 'active' : ''}`}>
-          <a href="#" className="nav-item dropdown-toggle" onClick={() => toggleDropdown(0)}>
-            <div>
-              <span>My List</span>
-            </div>
-            <i className={`fas ${activeDropdown === 0 ? 'fa-chevron-down' : 'fa-chevron-right'} dropdown-icon`}></i>
-          </a>
-          <ul className="dropdown-menu">
-            <li><a href="#" className="dropdown-item">Personal</a></li>
-            <li><a href="#" className="dropdown-item">Work</a></li>
-            <li><a href="#" className="dropdown-item">School</a></li>
-          </ul>
+        <li
+          className={`relative ${
+            activeDropdown === 0 ? 'bg-gray-200' : ''
+          }`}
+        >
+          <button
+            className="flex items-center px-5 py-4 w-full text-left hover:bg-white transition-all duration-300"
+            onClick={() => toggleDropdown(0)}
+          >
+            <span className="mr-auto">My List</span>
+            <span>{activeDropdown === 0 ? 'v' : '>'}</span>
+          </button>
+          {activeDropdown === 0 && (
+            <ul className="absolute left-0 w-full bg-white shadow-md">
+              <li className="px-5 py-2 hover:bg-gray-300">Personal</li>
+              <li className="px-5 py-2 hover:bg-gray-300">Work</li>
+              <li className="px-5 py-2 hover:bg-gray-300">School</li>
+            </ul>
+          )}
         </li>
-
       </ul>
     </div>
   );
