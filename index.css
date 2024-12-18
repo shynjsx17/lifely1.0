@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 body {
+    color: #000;
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
@@ -16,7 +17,8 @@ body {
   .sidebar {
     width: 250px;
     height: 100%;
-    background: linear-gradient(45deg, #3a3a52, #2b2d42);
+    color: #000;
+    background: linear-gradient(180deg, #add1c8, #b4d2c8, #bcd4c7, #ced7c4, #dadac0, #e0d6bf, #e0cbb8);
     padding-top: 20px;
     position: fixed;
     transition: width 0.5s ease, background 0.3s ease;
@@ -24,6 +26,7 @@ body {
   }
   
   .sidebar-header {
+    color: #000;
     padding: 0 20px;
     margin-bottom: 40px;
     display: flex;
@@ -34,12 +37,12 @@ body {
   .brand {
     display: flex;
     align-items: center;
-    color: #fff;
+    color: #000;
   }
   
   .brand i {
     margin-right: 10px;
-    font-size: 28px;
+    font-size: 28px;;
   }
   
   .nav-links {
@@ -51,8 +54,8 @@ body {
   .nav-item {
     display: flex;
     align-items: center;
-    padding: 12px 20px;
-    color: #fff;
+    padding: 15px 20px; 
+    color: #000;
     text-decoration: none;
     transition: background 0.3s ease, padding-left 0.3s ease;
     position: relative;
@@ -62,7 +65,7 @@ body {
     font-size: 16px;
     width: 35px;
     min-width: 35px;
-    height: 35px;
+    height: 25px;
     line-height: 35px;
     text-align: center;
     display: inline-block;
@@ -72,7 +75,7 @@ body {
   }
   
   .nav-item:hover {
-    background: #575b8a;
+    background: #fff;
     padding-left: 30px;
   }
   
@@ -97,7 +100,7 @@ body {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    background: #3a3a52;
+    background: linear-gradient(180deg #bcd4c7, #ced7c4, #dadac0);
     position: absolute;
     left: 0;
     top: 100%;
@@ -108,13 +111,13 @@ body {
   .dropdown-menu .dropdown-item {
     display: block;
     padding: 10px 20px;
-    color: #fff;
+    color: #000;
     text-decoration: none;
     transition: background 0.3s ease;
   }
   
   .dropdown-menu .dropdown-item:hover {
-    background: #575b8a;
+    background: #fff;
   }
   
   .dropdown-toggle {
@@ -136,7 +139,7 @@ body {
   /* Sidebar collapse styles */
   .sidebar.collapsed {
     width: 80px;
-    background: linear-gradient(45deg, #2b2d42, #3a3a52);
+    background: linear-gradient(180deg, #add1c8, #b4d2c8, #bcd4c7, #ced7c4, #dadac0, #e0d6bf, #e0cbb8);
   }
   
   .sidebar.collapsed .nav-item span,
@@ -170,7 +173,7 @@ body {
   .toggle-btn {
     width: 20px;
     height: 20px;
-    background: #6c63ff;
+    background: #add1c8;
     color: #fff;
     border-radius: 50%;
     display: flex;
@@ -195,7 +198,7 @@ body {
     top: 0;
     width: 5px;
     height: 100%;
-    background: #6c63ff;
+    background: #bcd4c7;
     transition: transform 0.3s ease;
     transform: scaleY(0);
     transform-origin: bottom;
