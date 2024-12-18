@@ -65,7 +65,6 @@ const Sidebar = () => {
         <li className={`dropdown ${activeDropdown === 0 ? 'active' : ''}`}>
           <a href="#" className="nav-item dropdown-toggle" onClick={() => toggleDropdown(0)}>
             <div>
-              <span className="nav-icon"><img src="assets/icons8-home.svg" alt="Home Icon"/></span>
               <span>My List</span>
             </div>
             <i className={`fas ${activeDropdown === 0 ? 'fa-chevron-down' : 'fa-chevron-right'} dropdown-icon`}></i>
