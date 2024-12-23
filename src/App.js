@@ -6,7 +6,7 @@ import ArchiveComponent from "./Components/ArchiveComponent";
 import MyDiary from "./Components/MyDiary";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
-import ErrorBoundary from "./Components/ErrorBoundary"; // Add this line
+import ErrorBoundary from "./Components/ErrorBoundary";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <ErrorBoundary> {/* Wrap Routes with ErrorBoundary */}
+        <ErrorBoundary>
           <Routes>
             {!isAuthenticated ? (
               <>

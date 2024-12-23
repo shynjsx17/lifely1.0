@@ -1,34 +1,59 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import bgImage from "../Images/BG.png"; 
 import registerIcon from "../Images/RegisterIcon.png"; 
+import Swal from 'sweetalert2'
+
 
 const Register = () => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPass, setUserPass] = useState('');
+  const [repeatPass, setRepeatPass] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:3000/register', { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userName, userEmail, userPass }),
-      });
+    setError('');
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to register: ${response.statusText} - ${errorText}`);
-      }
-
-      const data = await response.json();
-      console.log('Registration successful:', data);
-    } catch (error) {
-      console.error('Error:', error);
+    if (userPass !== repeatPass) {
+        setError('Passwords do not match.');
+        return;
     }
-  };
+
+    try {
+        const response = await fetch('http://localhost/lifely1.0/backend/api/register.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userName,
+                userEmail,
+                userPass
+            })
+        });
+
+        const data = await response.json();
+        
+        if (data.status) {
+            await Swal.fire({
+                icon: 'success',
+                title: 'Registration Successful!',
+                text: 'Welcome to Lifely',
+                confirmButtonColor: '#FB923C',
+                confirmButtonText: 'Continue to Login'
+            });
+            navigate('/login');
+        } else {
+            setError(data.message || 'Registration failed');
+        }
+    } catch (error) {
+        console.error('Registration error:', error);
+        setError('Network error: Please check your connection and try again');
+    }
+};
 
   return (
     <div
@@ -83,7 +108,10 @@ const Register = () => {
               type="password"
               placeholder="Repeat Password *"
               className="w-full px-4 py-2 mb-6 border rounded-md focus:outline-none focus:ring focus:ring-orange-200"
+              value={repeatPass}
+              onChange={(e) => setRepeatPass(e.target.value)}
             />
+            {error && <p className="text-red-500 mb-4">{error}</p>}
             <button
               type="submit"
               className="w-full py-3 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition duration-200"

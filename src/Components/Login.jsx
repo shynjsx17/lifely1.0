@@ -1,8 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import bgImage from "../Images/BG.png"; 
-import loginIcon from "../Images/LoginIcon.png"; 
+import loginIcon from "../Images/LoginIcon.png";
+import Swal from 'sweetalert2';
 
 const Login = () => {
+  const [userEmail, setUserEmail] = useState('');
+  const [userPass, setUserPass] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost/lifely1.0/backend/api/login.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userEmail,
+          userPass
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.status) {
+        await Swal.fire({
+          icon: 'success',
+          title: 'Login Successful!',
+          text: 'Welcome back to Lifely',
+          confirmButtonColor: '#FB923C',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        navigate('/home');
+      } else {
+        setError(data.message || 'Login failed');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Network error: Please check your connection and try again');
+    }
+  };
+
   return (
     <div
       className="flex items-center justify-center min-h-screen"
@@ -25,31 +69,25 @@ const Login = () => {
             <span className="px-4 text-gray-500">or</span>
             <span className="w-full border-b border-gray-300"></span>
           </div>
-          <form className="w-full">
+
+          <form onSubmit={handleLogin}>
+            {error && <p className="text-red-500 mb-4">{error}</p>}
             <input
               type="email"
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
               placeholder="Email Address *"
               className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
               required
             />
             <input
               type="password"
+              value={userPass}
+              onChange={(e) => setUserPass(e.target.value)}
               placeholder="Password *"
               className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
               required
             />
-            <div className="flex items-center justify-between mb-6">
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  className="form-checkbox text-orange-400 border-gray-300"
-                />
-                <span className="text-black-500 text-sm ">Remember me</span>
-              </label>
-              <a href="#" className="text-orange-400 hover:underline">
-                Forgot Password?
-              </a>
-            </div>
             <button
               type="submit"
               className="w-full py-3 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition duration-200"
@@ -57,21 +95,13 @@ const Login = () => {
               Log In
             </button>
           </form>
-          <p className="text-black-500 text-center mt-6">
-            Don’t have an Account?{" "}
-            <a href="/register" className="text-orange-400 hover:underline">
-              Sign Up
-            </a>
-          </p>
         </div>
 
         {/* Right Section */}
-        <div className="w-full md:w-1/2 flex items-center justify-center bg-gradient-to-r from-orange-100 via-pink-100 to-blue-100">
-          <img
-            src={loginIcon}
-            alt="Login Icon"
-            className="max-w-[90%] h-auto"
-          />
+        <div className="hidden md:flex w-1/2 bg-gradient-to-r from-orange-100 via-pink-100 to-blue-100 items-center justify-center">
+          <div className="p-8">
+            <img src={loginIcon} alt="Login Icon" className="max-w-[105%] h-auto" />
+          </div>
         </div>
       </div>
     </div>
