@@ -9,6 +9,7 @@ const Login = () => {
   const { login } = useAuth();
   const [userEmail, setUserEmail] = useState('');
   const [userPass, setUserPass] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -52,7 +53,6 @@ const Login = () => {
     }
   };
 
-
   return (
     <div
       className="flex items-center justify-center min-h-screen"
@@ -94,6 +94,18 @@ const Login = () => {
               className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
               required
             />
+            <div className="flex items-center justify-between mb-4">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={() => setRememberMe(!rememberMe)}
+                  className="mr-2"
+                />
+                Remember me
+              </label>
+              <a href="#" className="text-orange-500 hover:underline">Forgot Password?</a>
+            </div>
             <button
               type="submit"
               className="w-full py-3 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition duration-200"
@@ -101,6 +113,13 @@ const Login = () => {
               Log In
             </button>
           </form>
+
+          <p className="mt-4 text-center text-black-600">
+            Don't have an Account?{' '}
+            <a href="/register" className="text-orange-500 hover:underline">
+              Sign Up
+            </a>
+          </p>
         </div>
 
         {/* Right Section */}
