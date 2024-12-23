@@ -1,8 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import bgImage from "../Images/BG.png"; 
 import registerIcon from "../Images/RegisterIcon.png"; 
 
 const Register = () => {
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userPass, setUserPass] = useState('');
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:3000/register', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userName, userEmail, userPass }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to register: ${response.statusText} - ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log('Registration successful:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <div
       className="flex items-center justify-center min-h-screen font-poppins"
@@ -30,21 +57,27 @@ const Register = () => {
             <span className="w-full border-b border-gray-300"></span>
           </div>
 
-          <form>
+          <form onSubmit={handleRegister}>
             <input
               type="text"
               placeholder="Username *"
               className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring focus:ring-orange-200"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
             />
             <input
               type="email"
               placeholder="Email Address *"
               className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring focus:ring-orange-200"
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
             />
             <input
               type="password"
               placeholder="Password *"
               className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring focus:ring-orange-200"
+              value={userPass}
+              onChange={(e) => setUserPass(e.target.value)}
             />
             <input
               type="password"
