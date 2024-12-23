@@ -21,7 +21,6 @@ const Home = () => {
   const [note, setNote] = useState("");
   const [filter, setFilter] = useState("upcoming");
 
-  // To apply and remove font style (bold, italic, underline)
   const fontStyle = (style) => {
     const selection = window.getSelection();
     const selectedText = selection.toString();

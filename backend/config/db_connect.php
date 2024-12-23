@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "lifely"; // Changed from lifely_db to match your database name
+    private $db_name = "lifely"; 
     private $username = "root";
     private $password = "";
     public $conn;
