@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();  //use to make sure the sidebar background color is active when a particular page is active 
+  const navigate = useNavigate();
 
   const toggleDropdown = (index) => {
     setActiveDropdown(activeDropdown === index ? null : index);
@@ -11,6 +13,29 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
 
   // use to check if the current route matches
   const isActive = (path) => location.pathname === path;
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure you want to logout?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#FB923C",
+      cancelButtonColor: "#d33",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem('token');
+        Swal.fire({
+          title: "Logged Out!",
+          text: "You have been successfully logged out.",
+          icon: "success",
+          confirmButtonColor: '#FB923C'
+        }).then(() => {
+            navigate('/login');
+          });
+      }
+    });
+  };
 
   return (
     <div
@@ -116,6 +141,23 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           )}
         </li>
       </ul>
+
+      {/* Logout Button - Add this at the bottom of your sidebar */}
+      <div className="absolute bottom-5 w-full px-3">
+        <button
+          onClick={handleLogout}
+          className={`w-full py-2 px-3 text-gray-700 hover:bg-white/30 rounded-lg transition-all duration-300 flex items-center ${
+            isCollapsed ? "justify-center" : "justify-start"
+          }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span className={`ml-2 ${isCollapsed ? "hidden" : "block"}`}>
+            Logout
+          </span>
+        </button>
+      </div>
     </div>
   );
 };
