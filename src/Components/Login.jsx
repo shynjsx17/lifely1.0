@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import bgImage from "../Images/BG.png"; 
+import { useAuth } from '../context/AuthContext';
 import loginIcon from "../Images/LoginIcon.png";
 import Swal from 'sweetalert2';
 
 const Login = () => {
+  const { login } = useAuth();
   const [userEmail, setUserEmail] = useState('');
   const [userPass, setUserPass] = useState('');
   const [error, setError] = useState('');
@@ -29,6 +31,8 @@ const Login = () => {
       const data = await response.json();
 
       if (data.status) {
+        login(data.data);
+        
         await Swal.fire({
           icon: 'success',
           title: 'Login Successful!',
@@ -37,6 +41,7 @@ const Login = () => {
           timer: 1500,
           showConfirmButton: false
         });
+        
         navigate('/home');
       } else {
         setError(data.message || 'Login failed');
@@ -46,6 +51,7 @@ const Login = () => {
       setError('Network error: Please check your connection and try again');
     }
   };
+
 
   return (
     <div
