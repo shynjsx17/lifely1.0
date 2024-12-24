@@ -79,7 +79,7 @@ const ArchiveComponent = () => {
       <div className="bg-system-background p-16 h-screen bg-no-repeat bg-fixed font-poppins">
       
       {/* Header */}
-      <h1 className="text-4xl font-bold text-gray-800 mb-12 ml-40 font-poppins">My Archive</h1>
+      <h1 className="text-4xl font-bold text-gray-800 mb-10 ml-60 font-poppins">My Archive</h1>
 
       {/* Button Container */}
       <div className="flex justify-between items-center mb-6">

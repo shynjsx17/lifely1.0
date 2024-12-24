@@ -73,7 +73,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         <li className={`flex items-center px-5 py-4 ${isActive("/MyDay") ? "bg-white" : "hover:bg-white"} transition-all duration-300`}>
           <Link to={"/MyDay"} className="flex items-center space-x-2">
             <img
-              src={require("../icons/myday.svg").default}
+              src={require("../icons/list.svg").default}
               alt="My Day Icon"
               className="w-6 h-6"
             />
@@ -93,7 +93,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         <li className={`flex items-center px-5 py-4 ${isActive("/MyDiary") ? "bg-white" : "hover:bg-white"} transition-all duration-300`}>
           <Link to={"/MyDiary"} className="flex items-center space-x-2">
             <img
-              src={require("../icons/diary-svgrepo-com.svg").default}
+              src={require("../icons/diary.svg").default}
               alt="My Diary Icon"
               className="w-6 h-6"
             />
