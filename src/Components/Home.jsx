@@ -52,7 +52,7 @@ const Home = () => {
       >
         {/* Title Section */}
         <div className="text-left mb-10 font-poppins">
-          <h1 className="font-bold text-3xl">Good Day, {user?.userName || 'User'}</h1>
+          <h1 className="font-bold text-3xl">Good Day, {user?.userName || 'User'}!</h1>
           <p className="font-bold text-xl text-[#FFB78B]">
             What's your plan for today?
           </p>

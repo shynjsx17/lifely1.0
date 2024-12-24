@@ -61,7 +61,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       {/* Sidebar Links */}
       <ul className="list-none mt-5">
         <li className={`flex items-center px-5 py-4 ${isActive("/") ? "bg-white" : "hover:bg-white"} transition-all duration-300`}>
-          <Link to={"/"} className="flex items-center space-x-2">
+          <Link to={"/Home"} className="flex items-center space-x-2">
             <img
               src={require("../icons/icons8-home.svg").default}
               alt="Home Icon"

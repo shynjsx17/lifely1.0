@@ -5,7 +5,9 @@
   "dependencies": {
     "cra-template": "1.2.0",
     "react": "^19.0.0",
+    "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0",
+    "react-icons": "^5.4.0",
     "react-router-dom": "^6.28.1",
     "react-scripts": "^5.0.1",
     "sweetalert2": "^11.15.3",

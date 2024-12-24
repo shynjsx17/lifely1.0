@@ -4,6 +4,7 @@ import Home from "./Components/Home";
 import Sidebar from "./Navigation/Sidebar";
 import ArchiveComponent from "./Components/ArchiveComponent";
 import MyDiary from "./Components/MyDiary";
+import MyDay from "./Components/MyDay";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import ErrorBoundary from "./Components/ErrorBoundary";
@@ -31,6 +32,11 @@ function App() {
               <Route path="/archive" element={
                 <ProtectedRoute>
                   <ArchiveComponent />
+                </ProtectedRoute>
+              } />
+               <Route path="/myday" element={
+                <ProtectedRoute>
+                  <MyDay/>
                 </ProtectedRoute>
               } />
               <Route path="/mydiary" element={
