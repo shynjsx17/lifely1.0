@@ -29,7 +29,7 @@ function App() {
                   <Home />
                 </ProtectedRoute>
               } />
-              <Route path="/archive" element={
+              <Route path="/archivecomponent" element={
                 <ProtectedRoute>
                   <ArchiveComponent />
                 </ProtectedRoute>
