@@ -7,6 +7,7 @@ import MyDiary from "./Components/MyDiary";
 import MyDay from "./Components/MyDay";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
+import Landing from "./Components/Landing";
 import ErrorBoundary from "./Components/ErrorBoundary";
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './Components/ProtectedRoute';
@@ -20,23 +21,22 @@ function App() {
         <Router>
           <ErrorBoundary>
             <Routes>
-              <Route path="/" element={<Login />} />
+              {/* Landing page route first */}
+              <Route exact path="/" element={<Landing />} />
+              
+              {/* Auth routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-
+              
+              {/* Protected routes */}
               <Route path="/home" element={
                 <ProtectedRoute>
                   <Home />
                 </ProtectedRoute>
               } />
-              <Route path="/archivecomponent" element={
+              <Route path="/myday" element={
                 <ProtectedRoute>
-                  <ArchiveComponent />
-                </ProtectedRoute>
-              } />
-               <Route path="/myday" element={
-                <ProtectedRoute>
-                  <MyDay/>
+                  <MyDay />
                 </ProtectedRoute>
               } />
               <Route path="/mydiary" element={
