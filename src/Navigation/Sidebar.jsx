@@ -1,41 +1,61 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import {FaArrowLeft} from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const location = useLocation();  //use to make sure the sidebar background color is active when a particular page is active 
+  const location = useLocation(); // Used to make the sidebar highlight the active page
+  const [showProfileopen, setShowProfileopen] = useState(false);
+  const [setProfile, setProfilepic] = useState(require("../icons/profile.svg").default);
+  const [showEditUsername, setShowEditUsername] = useState(false);
+  const [editUsername, setEditUsername] = useState(false);
+  const [username, setUsername] = useState("Shane");
+  const [tempUsername, setTempUsername] = useState(" ");
   const navigate = useNavigate();
-
+  
+  const toggleProfile = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const filereader = new FileReader();
+      filereader.onload = (event) => {
+        setProfilepic(event.target.result);
+      };
+      filereader.readAsDataURL(e.target.files[0]);
+    }
+  };
   const toggleDropdown = (index) => {
     setActiveDropdown(activeDropdown === index ? null : index);
   };
 
-  // use to check if the current route matches
+  // Function to check if the current route matches the path
   const isActive = (path) => location.pathname === path;
 
-  const handleLogout = () => {
-    Swal.fire({
-      title: "Are you sure you want to logout?",
-      showCancelButton: true,
-      confirmButtonText: "Yes",
-      cancelButtonText: "Cancel",
-      confirmButtonColor: "#FB923C",
-      cancelButtonColor: "#d33",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.removeItem('token');
-        Swal.fire({
-          title: "Logged Out!",
-          text: "You have been successfully logged out.",
-          icon: "success",
-          confirmButtonColor: '#FB923C'
-        }).then(() => {
-            navigate('/login');
-          });
-      }
-    });
-  };
+    const EditSave = () => {
+      setUsername(tempUsername);
+      setShowEditUsername(false);
+    }
+    const handleLogout = () => {
+      Swal.fire({
+        title: "Are you sure you want to logout?",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#FB923C",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.removeItem('token');
+          Swal.fire({
+            title: "Logged Out!",
+            text: "You have been successfully logged out.",
+            icon: "success",
+            confirmButtonColor: '#FB923C'
+          }).then(() => {
+              navigate('/login');
+            });
+        }
+      });
+    };  
 
   return (
     <div
@@ -44,14 +64,21 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       }`}
     >
       {/* Sidebar Header */}
-      <div className="px-5 mb-10 flex items-center justify-between">
-        <h1
-          className={`text-xl font-bold ${isCollapsed ? "hidden" : ""} transition-all duration-300`}
-        >
-          Lifely
-        </h1>
+      <div className="px-5 mb-10 flex items-center space-x-3 cursor-pointer">
+        <img
+          src={setProfile} // Replace with the actual path to your profile image
+          alt="Profile"
+          className="w-10 h-10 rounded-full"
+          onClick={() => setShowProfileopen(true)}
+        />
+        {!isCollapsed && (
+          <div>
+            <h3 className="text-sm font-semibold">Welcome,</h3>
+            <h2 className="text-sm font-normal">{username}</h2>
+          </div>
+        )}
         <button
-          className="bg-gray-300 text-black p-2 rounded-full"
+          className="bg-gray-300 text-black p-2 rounded-full ml-auto"
           onClick={() => setIsCollapsed(!isCollapsed)}
         >
           {isCollapsed ? "<" : ">"}
@@ -60,17 +87,129 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
 
       {/* Sidebar Links */}
       <ul className="list-none mt-5">
-        <li className={`flex items-center px-5 py-4 ${isActive("/") ? "bg-white" : "hover:bg-white"} transition-all duration-300`}>
-          <Link to={"/Home"} className="flex items-center space-x-2">
+        <li
+          className={`flex items-center px-5 py-4 ${
+            isActive("/") ? "bg-white" : "hover:bg-white"
+          } transition-all duration-300`}
+        >
+          <Link to={"/"} className="flex items-center space-x-2">
             <img
               src={require("../icons/icons8-home.svg").default}
               alt="Home Icon"
-              className="w-6 h-6"
+              className="w-6 h-6 "
             />
             {!isCollapsed && <span>Home</span>}
           </Link>
         </li>
-        <li className={`flex items-center px-5 py-4 ${isActive("/MyDay") ? "bg-white" : "hover:bg-white"} transition-all duration-300`}>
+        {/*Profile pop up */}
+        {
+          showProfileopen && (
+             <div  className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+                 <div className="bg-system-background rounded-lg w-[30rem] shadow-lg rounded-full">
+                 <div className="bg-[#F0EFF9] text-black py-2 rounded-t-lg shadow-md">
+                  <div className="flex items-center justify-between px-4">
+                    {/* Left Aligned Arrow Icon */}
+                    <div className="flex items-center">
+                      <FaArrowLeft size={20} className="mr-2" onClick={() => setShowProfileopen(false)}/> {/* Left Arrow Icon */}
+                    </div>
+
+                    {/* Centered Text */}
+                    <h2 className="text-lg font-bold text-center flex-1">Profile</h2>
+                  </div>
+                </div>
+                <div className="p-6">
+                  {/* Profile Image */}
+                  <div className="justify-center items-center flex">
+                    <div
+                      onClick={() => document.getElementById("fileInput").click()} // Trigger file input when clicked
+                      className="cursor-pointer w-20 h-20 rounded-full overflow-hidden"
+                    >
+                      <img
+                        src={setProfile} // Replace with the actual path to your profile image
+                        alt="Profile"
+                        className="w-20 h-20 rounded-full"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Hidden File Input */}
+                  <input
+                    type="file"
+                    id="fileInput"
+                    className="hidden"
+                    accept="image/*"
+                    onChange={toggleProfile}
+                  />
+
+                  {/* Username Section */}
+                  <div className="flex justify-center">
+                    <div
+                      className="text-center text-base font-semibold hover:underline cursor-pointer"
+                      onClick={() => setShowEditUsername(true)}
+                    >
+                      {username}
+                    </div>
+                  </div>
+                  <div className="flex justify-center mb-10">
+                    <div className="text-center text-sm hover:underline">(shane07@gmail.com)</div>
+                  </div>
+
+                  {/* Options */}
+                  {[
+                    { label: "Reset Password", onClick: () => {} },
+                    { label: "Delete Account", onClick: () => {} },
+                  ].map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center cursor-pointer border-t border-black p-3"
+                      onClick={item.onClick}
+                    >
+                      <div className="text-sm">{item.label}</div>
+                      <div className="text-lg font-bold">&gt;</div>
+                    </div>
+                  ))}
+                </div>
+
+                 </div>
+             </div>
+          )}
+          {/*Edit Username pop up*/}
+          {showEditUsername && (
+            <div  className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-10 z-50">
+              <div className="bg-white rounded-lg w-[30rem] shadow-lg rounded-full">
+                <div className="text-base text-center font-semibold p-3 border-b border-gray-300 mb-6">Edit Username</div>
+                <div className="flex justify-center">
+                <div className="flex justify-center">
+              <input
+                value={tempUsername}
+                onChange={(e) => setTempUsername(e.target.value)} // Update temp username
+                className="w-80 h-10 border border-gray-300 rounded px-2"
+              />
+            </div>
+                </div>
+                {/*buttons*/}
+              <div className="flex justify-between items-center border-gray-200 pt-4">
+              <button
+                onClick={() => setShowEditUsername(false)}
+                className="w-1/2 py-2 text-sm text-gray-700 bg-[#F0EFF9] rounded-bl-lg hover:bg-gray-300 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+              onClick={EditSave}
+                className="w-1/2 py-2 text-sm text-[#1E76E8] bg-[#F0EFF9] rounded-br-lg hover:bg-gray-300 transition-all"
+              >
+                Save
+              </button>
+            </div>
+              </div>
+            </div>
+          )}
+        <li
+          className={`flex items-center px-5 py-4 ${
+            isActive("/MyDay") ? "bg-white" : "hover:bg-white"
+          } transition-all duration-300`}
+        >
           <Link to={"/MyDay"} className="flex items-center space-x-2">
             <img
               src={require("../icons/list.svg").default}
@@ -80,7 +219,11 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             {!isCollapsed && <span>My Day</span>}
           </Link>
         </li>
-        <li className={`flex items-center px-5 py-4 ${isActive("/MyCalendar") ? "bg-white" : "hover:bg-white"} transition-all duration-300`}>
+        <li
+          className={`flex items-center px-5 py-4 ${
+            isActive("/MyCalendar") ? "bg-white" : "hover:bg-white"
+          } transition-all duration-300`}
+        >
           <Link to={"/MyCalendar"} className="flex items-center space-x-2">
             <img
               src={require("../icons/calendar.svg").default}
@@ -90,7 +233,11 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             {!isCollapsed && <span>My Calendar</span>}
           </Link>
         </li>
-        <li className={`flex items-center px-5 py-4 ${isActive("/MyDiary") ? "bg-white" : "hover:bg-white"} transition-all duration-300`}>
+        <li
+          className={`flex items-center px-5 py-4 ${
+            isActive("/MyDiary") ? "bg-white" : "hover:bg-white"
+          } transition-all duration-300`}
+        >
           <Link to={"/MyDiary"} className="flex items-center space-x-2">
             <img
               src={require("../icons/diary.svg").default}
@@ -100,7 +247,11 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             {!isCollapsed && <span>My Diary</span>}
           </Link>
         </li>
-        <li className={`flex items-center px-5 py-4 ${isActive("/ArchiveComponent") ? "bg-white" : "hover:bg-white"} transition-all duration-300`}>
+        <li
+          className={`flex items-center px-5 py-4 ${
+            isActive("/ArchiveComponent") ? "bg-white" : "hover:bg-white"
+          } transition-all duration-300`}
+        >
           <Link to={"/ArchiveComponent"} className="flex items-center space-x-2">
             <img
               src={require("../icons/archive.svg").default}
@@ -123,17 +274,23 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           {activeDropdown === 0 && (
             <ul className="absolute left-0 w-full bg-white shadow-md">
               <li
-                className={`px-5 py-2 text-center ${isActive("/Personal") ? "bg-white" : "hover:bg-gray-300"}`}
+                className={`px-5 py-2 text-center ${
+                  isActive("/Personal") ? "bg-white" : "hover:bg-gray-300"
+                }`}
               >
                 <Link to={"/Personal"}>Personal</Link>
               </li>
               <li
-                className={`px-5 py-2 text-center ${isActive("/Work") ? "bg-white" : "hover:bg-gray-300"}`}
+                className={`px-5 py-2 text-center ${
+                  isActive("/Work") ? "bg-white" : "hover:bg-gray-300"
+                }`}
               >
                 <Link to={"/Work"}>Work</Link>
               </li>
               <li
-                className={`px-5 py-2 text-center ${isActive("/School") ? "bg-white" : "hover:bg-gray-300"}`}
+                className={`px-5 py-2 text-center ${
+                  isActive("/School") ? "bg-white" : "hover:bg-gray-300"
+                }`}
               >
                 <Link to={"/School"}>School</Link>
               </li>
@@ -141,12 +298,11 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           )}
         </li>
       </ul>
-
-      {/* Logout Button - Add this at the bottom of your sidebar */}
-      <div className="absolute bottom-5 w-full px-3">
+        {/* Logout Button - Add this at the bottom of your sidebar */}
+        <div className="absolute bottom-5 w-full px-3">
         <button
           onClick={handleLogout}
-          className={`w-full py-2 px-3 text-gray-700 hover:bg-white/30 rounded-lg transition-all duration-300 flex items-center ${
+          className={`w-full py-2 px-3 text-black hover:bg-white/30 rounded-lg transition-all duration-300 flex items-center ${
             isCollapsed ? "justify-center" : "justify-start"
           }`}
         >
