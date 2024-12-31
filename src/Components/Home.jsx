@@ -7,8 +7,6 @@ const Home = () => {
   const { user } = useAuth();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
-
-
   const [tasks] = useState([
     { id: 1, text: "Fundamentals of Research", status: "upcoming" },
     { id: 2, text: "Web Development", status: "upcoming" },
