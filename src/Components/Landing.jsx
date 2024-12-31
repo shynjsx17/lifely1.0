@@ -79,12 +79,9 @@ const Landing = () => {
 
             </h1>
             <p className="text-sm sm:text-3xl text-black mt-10">
-              Simplify your routine, track progress, and stay on top of what matters most, all with an 
+              Simplify your routine, track progress, and stay on top of what matters most, all with an intuitive and user-friendly  interface designed to make your life easier.
             </p>
-            <p className="text-sm sm:text-3xl text-black mt-0">
-              intuitive and user-friendly  interface designed to make your life easier.
-            </p>
-            
+
 
             {/* Get Started Button with animation */}
             <motion.div 
@@ -254,8 +251,8 @@ const Landing = () => {
        {/* ABOUT US */}
        <div className="text-sm max-w-xs text-center lg:text-left ml-80 mr-10">
         <div className="text-lg font-bold mb-2 mt-14">ABOUT US</div>
-        <span className="text-sm sm:text-1xl text-justify">
-           Welcome to Lifely, your all-in-one companion for staying organized, productive, and mindful. Designed to simplify your daily routine, Lifely combines powerful task management, a personal diary for capturing thoughts and experiences, and an interactive calendar to mark important events.
+        <span className="text-base text-justify">
+           Welcome to Lifely, your all-in-one companion for staying organized, productive, and mindful. 
         </span>
         </div>
         </div>

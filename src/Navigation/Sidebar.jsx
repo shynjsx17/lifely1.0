@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {FaArrowLeft} from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import { useAuth } from '../context/AuthContext'; // Fix import
+
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
+  const { user } = useAuth(); // Use the hook instead of useContext
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const location = useLocation(); // Used to make the sidebar highlight the active page
+  const location = useLocation();
   const [showProfileopen, setShowProfileopen] = useState(false);
   const [setProfile, setProfilepic] = useState(require("../icons/profile.svg").default);
   const [showEditUsername, setShowEditUsername] = useState(false);
   const [editUsername, setEditUsername] = useState(false);
-  const [username, setUsername] = useState("Shane");
-  const [tempUsername, setTempUsername] = useState(" ");
+  const [username, setUsername] = useState(user?.userName || 'User');
+  const [tempUsername, setTempUsername] = useState("");
   const navigate = useNavigate();
   
   const toggleProfile = (e) => {
@@ -89,10 +92,10 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       <ul className="list-none mt-5">
         <li
           className={`flex items-center px-5 py-4 ${
-            isActive("/") ? "bg-white" : "hover:bg-white"
+            isActive("/landing") ? "bg-white" : "hover:bg-white"
           } transition-all duration-300`}
         >
-          <Link to={"/"} className="flex items-center space-x-2">
+          <Link to={"/Home"} className="flex items-center space-x-2">
             <img
               src={require("../icons/icons8-home.svg").default}
               alt="Home Icon"
@@ -151,7 +154,9 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                     </div>
                   </div>
                   <div className="flex justify-center mb-10">
-                    <div className="text-center text-sm hover:underline">(shane07@gmail.com)</div>
+                    <div className="text-center text-sm hover:underline">
+                      ({user?.email || 'email@example.com'})
+                    </div>
                   </div>
 
                   {/* Options */}

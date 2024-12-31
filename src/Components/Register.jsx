@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bgImage from "../Images/BG.png"; 
 import registerIcon from "../Images/RegisterIcon.png"; 
-import Swal from 'sweetalert2'
-
+import Swal from 'sweetalert2';
 
 const Register = () => {
   const [userName, setUserName] = useState('');
@@ -13,47 +12,77 @@ const Register = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const validateEmail = (email) => {
+    // Regex to validate email and ensure it ends with '.com'
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email) && email.endsWith('.com');
+  };
+
+  const validatePassword = (password) => {
+    // Password must be at least 8 characters long, include a number, and a special character
+    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
 
+    // Basic validations
+    if (!userName.trim() || !userEmail.trim() || !userPass.trim() || !repeatPass.trim()) {
+      setError('All fields are required.');
+      return;
+    }
+
+    if (!validateEmail(userEmail)) {
+      setError('Invalid email address. Ensure it includes ".com".');
+      return;
+    }
+
+    if (!validatePassword(userPass)) {
+      setError(
+        'Password must be at least 8 characters long, include a number, and a special character.'
+      );
+      return;
+    }
+
     if (userPass !== repeatPass) {
-        setError('Passwords do not match.');
-        return;
+      setError('Passwords do not match.');
+      return;
     }
 
     try {
-        const response = await fetch('http://localhost/lifely1.0/backend/api/register.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                userName,
-                userEmail,
-                userPass
-            })
-        });
+      const response = await fetch('http://localhost/lifely1.0/backend/api/register.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName,
+          userEmail,
+          userPass,
+        }),
+      });
 
-        const data = await response.json();
-        
-        if (data.status) {
-            await Swal.fire({
-                icon: 'success',
-                title: 'Registration Successful!',
-                text: 'Welcome to Lifely',
-                confirmButtonColor: '#FB923C',
-                confirmButtonText: 'Continue to Login'
-            });
-            navigate('/login');
-        } else {
-            setError(data.message || 'Registration failed');
-        }
+      const data = await response.json();
+
+      if (data.status) {
+        await Swal.fire({
+          icon: 'success',
+          title: 'Registration Successful!',
+          text: 'Welcome to Lifely',
+          confirmButtonColor: '#FB923C',
+          confirmButtonText: 'Continue to Login',
+        });
+        navigate('/login');
+      } else {
+        setError(data.message || 'Registration failed');
+      }
     } catch (error) {
-        console.error('Registration error:', error);
-        setError('Network error: Please check your connection and try again');
+      console.error('Registration error:', error);
+      setError('Network error: Please check your connection and try again');
     }
-};
+  };
 
   return (
     <div
@@ -61,7 +90,7 @@ const Register = () => {
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        backgroundPosition: 'center',
       }}
     >
       <div className="flex flex-col md:flex-row bg-white shadow-xl rounded-lg overflow-hidden max-w-4xl w-full">
@@ -70,7 +99,7 @@ const Register = () => {
           <h2 className="text-black-500 text-2xl">Hello there,</h2>
           <h1 className="text-4xl font-bold" style={{ color: '#FFB78B' }}>Welcome to Lifely</h1>
           <p className="text-black-500 text-sm mb-6 mt-3">Please enter your details</p>
-          
+
           <button className="flex items-center justify-center w-full py-3 border border-gray-300 rounded-lg bg-white hover:shadow-md mb-6">
             <span className="text-lg font-semibold text-gray-700 mr-2">G</span>
             Sign up with Google Account

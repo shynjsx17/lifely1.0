@@ -12,8 +12,6 @@ import ErrorBoundary from "./Components/ErrorBoundary";
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './Components/ProtectedRoute';
 
-
-
 function App() {
   return (
     <AuthProvider>
@@ -32,6 +30,11 @@ function App() {
               <Route path="/home" element={
                 <ProtectedRoute>
                   <Home />
+                </ProtectedRoute>
+              } />
+              <Route path="/archivecomponent" element={
+                <ProtectedRoute>
+                  <ArchiveComponent />
                 </ProtectedRoute>
               } />
               <Route path="/myday" element={
