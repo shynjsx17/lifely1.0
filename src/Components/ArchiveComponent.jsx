@@ -105,7 +105,7 @@ const ArchiveComponent = () => {
         </div>
 
         {/* Select All, Restore All, and Delete All Buttons */}
-        <div className="flex space-x-4 mr-64">
+        <div className="flex flex-wrap space-x-4 mr-64">
           <button
             onClick={handleSelectAll}
             className="bg-white text-black-700 font-semibold shadow py-1 px-3 text-sm rounded-md hover:bg-gray-300"
