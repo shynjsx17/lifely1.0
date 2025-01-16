@@ -6,7 +6,6 @@ import "react-calendar/dist/Calendar.css";
 import { useAuth } from '../context/AuthContext';
 import { taskService } from '../services/taskService';
 import Swal from 'sweetalert2';
-import { toast } from 'react-hot-toast';
 
 const MyDay = () => {
   const { user } = useAuth();
@@ -200,25 +199,24 @@ const MyDay = () => {
     }
   };
 
-  const handleSetReminder = async (taskId, date) => {
-    try {
-      // Format the date and time
-      const reminderDate = new Date(date);
-      const formattedDate = reminderDate.toISOString().split('T')[0];
-      const formattedTime = reminderDate.toTimeString().split(' ')[0];
-
-      await taskService.updateTask(taskId, {
-        reminder_date: formattedDate,
-        reminder_time: formattedTime
-      });
-
-      // Refresh the tasks list
-      fetchTasks();
-      
-      toast.success('Reminder set successfully');
-    } catch (error) {
-      console.error('Error setting reminder:', error);
-      toast.error('Failed to set reminder');
+  const handleSetReminder = async () => {
+    if (selectedTaskId) {
+      try {
+        await taskService.updateTask({
+          id: selectedTaskId,
+          reminder_date: selectedDate.toISOString().split('T')[0],
+          reminder_time: time
+        });
+        setShowReminder(false);
+        fetchTasks();
+      } catch (error) {
+        console.error('Error setting reminder:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to set reminder'
+        });
+      }
     }
   };
 
@@ -787,7 +785,7 @@ const MyDay = () => {
                   Cancel
                 </button>
                 <button
-                  onClick={() => handleSetReminder(selectedTaskId, selectedDate)}
+                  onClick={handleSetReminder}
                   className="w-1/2 py-2 text-sm text-[#1E76E8] bg-[#F0EFF9] rounded-br-lg hover:bg-gray-300 transition-all"
                 >
                   Set

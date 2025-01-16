@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from "../Navigation/Sidebar";
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { diaryService } from '../services/diaryService';
 
 const MyDiary = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -21,11 +21,9 @@ const MyDiary = () => {
 
   const fetchEntries = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/diary.php`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (response.data.status && response.data.data) {
-        setEntries(response.data.data);
+      const response = await diaryService.getEntries();
+      if (response.status && response.data) {
+        setEntries(response.data);
       } else {
         setEntries([]);
       }
@@ -49,15 +47,12 @@ const MyDiary = () => {
     };
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/diary.php`, newEntry, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
-      if (response.data.status) {
+      const response = await diaryService.createEntry(newEntry);
+      if (response.status) {
         await fetchEntries();
         setShowPopup(true);
       } else {
-        console.error('Failed to save entry:', response.data.message);
+        console.error('Failed to save entry:', response.message);
       }
     } catch (error) {
       console.error('Error saving entry:', error);
@@ -76,17 +71,10 @@ const MyDiary = () => {
   const archiveEntry = async (index) => {
     const entryToArchive = entries[index];
     try {
-      await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/diary.php`,
-        {
-          id: entryToArchive.id,
-          archived: true
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
-      await fetchEntries();
+      const response = await diaryService.archiveEntry(entryToArchive.id);
+      if (response.status) {
+        await fetchEntries();
+      }
       setDropdownVisible(null);
     } catch (error) {
       console.error('Error archiving entry:', error);

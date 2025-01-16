@@ -1,8 +1,18 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:3000");
+// Set CORS headers for development
+$allowed_origins = array(
+    'http://localhost:3000',
+    'http://localhost'
+);
+
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: " . $origin);
+}
+
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
-header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -15,14 +25,15 @@ require_once '../models/user.php';
 require_once '../models/task.php';
 require_once '../models/subtask.php';
 
-// Debug: Log all headers
-$headers = getallheaders();
-error_log('All received headers: ' . print_r($headers, true));
-
-// Debug: Log specific Authorization header
-$auth_header = isset($headers['Authorization']) ? $headers['Authorization'] : 
-              (isset($headers['authorization']) ? $headers['authorization'] : 'not set');
-error_log('Authorization header: ' . $auth_header);
+// Get the Authorization header
+$auth_header = null;
+if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    $auth_header = $_SERVER['HTTP_AUTHORIZATION'];
+} elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+    $auth_header = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+} elseif (isset($_SERVER['HTTP_AUTHORIZATION_TOKEN'])) {
+    $auth_header = 'Bearer ' . $_SERVER['HTTP_AUTHORIZATION_TOKEN'];
+}
 
 // Initialize database connection
 $database = new Database();
@@ -33,13 +44,17 @@ $user = new User($db);
 $task = new Task($db);
 $subtask = new Subtask($db);
 
-// Verify authentication with debug logging
-$user_id = $user->verifySession();
-error_log('User verification result: ' . ($user_id ? $user_id : 'failed'));
+// Verify authentication
+if (!$auth_header) {
+    http_response_code(401);
+    echo json_encode(['status' => false, 'message' => 'No authorization header provided']);
+    exit();
+}
 
+$user_id = $user->verifySession();
 if (!$user_id) {
     http_response_code(401);
-    echo json_encode(['status' => false, 'message' => 'Unauthorized']);
+    echo json_encode(['status' => false, 'message' => 'Invalid or expired session']);
     exit();
 }
 
@@ -138,50 +153,38 @@ switch($_SERVER['REQUEST_METHOD']) {
         
         if (!isset($data['id'])) {
             http_response_code(400);
-            echo json_encode(['status' => false, 'message' => 'Task ID is required']);
+            echo json_encode(['status' => false, 'message' => 'Task ID required']);
             exit();
         }
 
-        $updateFields = [];
-        $params = [];
+        $fields = [];
+        $params = [':user_id' => $user_id, ':id' => $data['id']];
 
-        // Map fields that can be updated
-        $allowedFields = [
+        $updateableFields = [
             'title', 'list_type', 'priority_tag', 'notes', 
             'completed', 'pinned', 'archived', 
-            'reminder_date', 'reminder_time', 'calendar_event_id'
+            'reminder_date', 'reminder_time'
         ];
 
-        foreach ($allowedFields as $field) {
-            if (array_key_exists($field, $data)) {
-                $updateFields[] = "`$field` = ?";
-                $params[] = $data[$field];
+        foreach ($updateableFields as $field) {
+            if (isset($data[$field])) {
+                $fields[] = "$field = :$field";
+                $params[":$field"] = $data[$field];
             }
         }
 
-        if (empty($updateFields)) {
+        if (empty($fields)) {
             http_response_code(400);
             echo json_encode(['status' => false, 'message' => 'No fields to update']);
             exit();
         }
 
-        $params[] = $data['id'];
-        $params[] = $user_id;
-
-        $sql = "UPDATE tasks SET " . implode(', ', $updateFields) . 
-               " WHERE id = ? AND user_id = ?";
-
-        try {
-            $stmt = $db->prepare($sql);
-            $stmt->execute($params);
-
-            if ($stmt->rowCount() > 0) {
-                echo json_encode(['status' => true, 'message' => 'Task updated successfully']);
-            } else {
-                http_response_code(404);
-                echo json_encode(['status' => false, 'message' => 'Task not found or no changes made']);
-            }
-        } catch (PDOException $e) {
+        $query = "UPDATE tasks SET " . implode(', ', $fields) . " WHERE user_id = :user_id AND id = :id";
+        $stmt = $db->prepare($query);
+        
+        if ($stmt->execute($params)) {
+            echo json_encode(['status' => true, 'message' => 'Task updated successfully']);
+        } else {
             http_response_code(500);
             echo json_encode(['status' => false, 'message' => 'Failed to update task']);
         }

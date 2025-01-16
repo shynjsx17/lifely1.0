@@ -1,16 +1,27 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
+// Set CORS headers for development
+$allowed_origins = array(
+    'http://localhost:3000',
+    'http://localhost'
+);
 
-require_once '../config/database.php';
-require_once '../models/user.php';
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: " . $origin);
+}
+
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
+
+require_once '../config/database.php';
+require_once '../models/user.php';
 
 // Initialize database connection
 $database = new Database();
@@ -19,11 +30,29 @@ $db = $database->connect();
 // Initialize user object
 $user = new User($db);
 
+// Get the Authorization header
+$auth_header = null;
+if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    $auth_header = $_SERVER['HTTP_AUTHORIZATION'];
+} elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+    $auth_header = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+} elseif (isset($_SERVER['HTTP_AUTHORIZATION_TOKEN'])) {
+    $auth_header = 'Bearer ' . $_SERVER['HTTP_AUTHORIZATION_TOKEN'];
+}
+
 // Verify authentication
+if (!$auth_header) {
+    error_log('No authorization header provided in diary.php');
+    http_response_code(401);
+    echo json_encode(['status' => false, 'message' => 'No authorization header provided']);
+    exit();
+}
+
 $user_id = $user->verifySession();
 if (!$user_id) {
+    error_log('Invalid or expired session in diary.php');
     http_response_code(401);
-    echo json_encode(['status' => false, 'message' => 'Unauthorized']);
+    echo json_encode(['status' => false, 'message' => 'Invalid or expired session']);
     exit();
 }
 

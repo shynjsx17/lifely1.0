@@ -1,17 +1,17 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+header("Access-Control-Allow-Credentials: true");
+header("Content-Type: application/json; charset=UTF-8");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 require_once '../config/database.php';
 require_once '../models/user.php';
-
-// Handle preflight request
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(204);
-    exit();
-}
 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -43,7 +43,9 @@ try {
         // Update existing user's Google credentials
         $user->id = $existingUser['id'];
         $user->google_id = $data->credential;
-        $user->updateGoogleCredentials();
+        if (!$user->updateGoogleCredentials()) {
+            throw new Exception("Failed to update Google credentials");
+        }
         
         // Log the user in
         $login_result = $user->googleAuth($data->email, $data->credential);
@@ -89,6 +91,7 @@ try {
         }
     }
 } catch(Exception $e) {
+    error_log("Google Auth Error: " . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         'status' => false,

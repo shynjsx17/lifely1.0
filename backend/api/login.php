@@ -41,20 +41,21 @@ try {
         // Remove sensitive data before sending response
         unset($result['userPass']);
         
+        // Ensure session token exists
+        if (!isset($result['session_token'])) {
+            throw new Exception('Session token not generated');
+        }
+
+        error_log('Login successful for user: ' . $data->userEmail . ', token: ' . substr($result['session_token'], 0, 10) . '...');
+        
         http_response_code(200);
         echo json_encode([
             'status' => true,
             'message' => 'Login successful',
-            'data' => [
-                'id' => $result['id'],
-                'userName' => $result['userName'],
-                'userEmail' => $result['userEmail'],
-                'session_token' => $result['session_token'],
-                'created_at' => $result['created_at'],
-                'updated_at' => $result['updated_at']
-            ]
+            'data' => $result  // Send the entire result including session_token
         ]);
     } else {
+        error_log('Login failed for user: ' . $data->userEmail);
         http_response_code(401);
         echo json_encode([
             'status' => false,
@@ -62,6 +63,7 @@ try {
         ]);
     }
 } catch(Exception $e) {
+    error_log('Login error: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         'status' => false,

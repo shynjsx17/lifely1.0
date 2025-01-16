@@ -5,7 +5,6 @@ import Sidebar from "./Navigation/Sidebar";
 import ArchiveComponent from "./Components/ArchiveComponent";
 import MyDiary from "./Components/MyDiary";
 import MyDay from "./Components/MyDay";
-import MyCalendar from "./Components/MyCalendar";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Landing from "./Components/Landing";
@@ -50,16 +49,6 @@ function App() {
               <Route path="/mydiary" element={
                 <ProtectedRoute>
                   <MyDiary />
-                </ProtectedRoute>
-              } />
-              <Route path="/mycalendar" element={
-                <ProtectedRoute>
-                  <MyCalendar />
-                </ProtectedRoute>
-              } />
-              <Route path="/calendar/callback" element={
-                <ProtectedRoute>
-                  <MyCalendar />
                 </ProtectedRoute>
               } />
             </Routes>

@@ -14,25 +14,32 @@ export const AuthProvider = ({ children }) => {
   });
   
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    // Initialize authentication state from localStorage
-    return localStorage.getItem('session_token') !== null;
+    const token = localStorage.getItem('session_token');
+    console.log('Initial auth state, token exists:', !!token);
+    return !!token;
   });
 
   const [token, setToken] = useState(() => {
     // Initialize token from localStorage
-    return localStorage.getItem('session_token') || null;
+    const storedToken = localStorage.getItem('session_token');
+    console.log('Initial token state:', storedToken ? `${storedToken.substring(0, 10)}...` : 'none');
+    return storedToken || null;
   });
 
   useEffect(() => {
     // Update authentication state whenever user changes
-    if (user) {
+    console.log('User state changed:', user ? 'logged in' : 'logged out');
+    
+    if (user && user.session_token) {
+      console.log('Storing user session token:', user.session_token.substring(0, 10) + '...');
+      console.log('Token expiry:', user.token_expiry || 'not set');
+      
       localStorage.setItem('user', JSON.stringify(user));
-      if (user.session_token) {
-        localStorage.setItem('session_token', user.session_token);
-        setToken(user.session_token);
-      }
+      localStorage.setItem('session_token', user.session_token);
+      setToken(user.session_token);
       setIsAuthenticated(true);
-    } else {
+    } else if (!user) {
+      console.log('Clearing user data and token');
       localStorage.removeItem('user');
       localStorage.removeItem('session_token');
       setToken(null);
@@ -42,16 +49,20 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userData) => {
     try {
+      console.log('Login called with userData:', { 
+        hasToken: !!userData.session_token,
+        email: userData.userEmail,
+        tokenExpiry: userData.token_expiry || 'not set'
+      });
+
       // Ensure session_token is present
       if (!userData.session_token) {
         throw new Error('No session token in response');
       }
       
       // Store user data and token
+      console.log('Setting session token:', userData.session_token.substring(0, 10) + '...');
       setUser(userData);
-      localStorage.setItem('session_token', userData.session_token);
-      setToken(userData.session_token);
-      setIsAuthenticated(true);
     } catch (error) {
       console.error('Login error:', error);
       throw error;
@@ -65,7 +76,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       const decoded = jwtDecode(credentialResponse.credential);
-      console.log('Decoded token:', decoded);
+      console.log('Google login attempt for:', decoded.email);
       
       // Send the token to your backend for verification
       const response = await fetch('http://localhost/lifely1.0/backend/api/google-auth.php', {
@@ -84,11 +95,15 @@ export const AuthProvider = ({ children }) => {
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Server response:', errorText);
+        console.error('Google auth server response:', errorText);
         throw new Error(errorText || 'Failed to authenticate with Google');
       }
 
       const userData = await response.json();
+      console.log('Google auth response:', { 
+        status: response.status,
+        hasToken: !!userData.data?.session_token 
+      });
       
       // Ensure we have a session token
       if (!userData.data?.session_token) {
@@ -103,11 +118,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('session_token');
+    console.log('Logout called');
     setUser(null);
-    setToken(null);
-    setIsAuthenticated(false);
   };
 
   return (
