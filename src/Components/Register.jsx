@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { GoogleLogin } from '@react-oauth/google';
 import bgImage from "../Images/BG.png"; 
 import registerIcon from "../Images/RegisterIcon.png"; 
 import Swal from 'sweetalert2';
@@ -11,6 +13,7 @@ const Register = () => {
   const [repeatPass, setRepeatPass] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { googleLogin } = useAuth();
 
   const validateEmail = (email) => {
     // Regex to validate email and ensure it ends with '.com'
@@ -22,6 +25,27 @@ const Register = () => {
     // Password must be at least 8 characters long, include a number, and a special character
     const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
     return passwordRegex.test(password);
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      await googleLogin(credentialResponse);
+      await Swal.fire({
+        icon: 'success',
+        title: 'Registration Successful!',
+        text: 'Welcome to Lifely',
+        confirmButtonColor: '#FB923C',
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      navigate('/home');
+    } catch (err) {
+      setError('Google sign-up failed');
+    }
+  };
+
+  const handleGoogleError = () => {
+    setError('Google sign-up failed');
   };
 
   const handleRegister = async (e) => {
@@ -100,10 +124,30 @@ const Register = () => {
           <h1 className="text-4xl font-bold" style={{ color: '#FFB78B' }}>Welcome to Lifely</h1>
           <p className="text-black-500 text-sm mb-6 mt-3">Please enter your details</p>
 
-          <button className="flex items-center justify-center w-full py-3 border border-gray-300 rounded-lg bg-white hover:shadow-md mb-6">
-            <span className="text-lg font-semibold text-gray-700 mr-2">G</span>
-            Sign up with Google Account
-          </button>
+          <div className="w-full flex justify-center mb-6">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={(error) => {
+                console.error('Google login error:', error);
+                if (error.message?.includes('blocked')) {
+                  setError('Please disable your ad blocker or privacy extensions to use Google login.');
+                } else if (error.message?.includes('declined')) {
+                  setError('Login was cancelled. Please try again.');
+                } else if (error.message?.includes('Cross-Origin-Opener-Policy')) {
+                  setError('Browser security policy is blocking the login. Please try a different browser.');
+                } else if (error.message?.includes('Invalid response')) {
+                  setError('Server error. Please try again later.');
+                } else {
+                  handleGoogleError(error);
+                }
+              }}
+              useOneTap={false}
+              theme="outline"
+              size="large"
+              text="signup_with"
+              shape="rectangular"
+            />
+          </div>
 
           <div className="flex items-center justify-center mb-6 w-full">
             <span className="w-full border-b border-gray-300"></span>

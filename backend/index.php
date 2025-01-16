@@ -1,30 +1,26 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Handle CORS
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json");
 
-require_once './config/config.php';
-require_once './config/db_connect.php';
+require_once './config/database.php';
+require_once './models/user.php';
 
+// Initialize database connection
 $database = new Database();
-$db = $database->connect(); 
+$db = $database->connect();
+
+if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") {
+    http_response_code(200);
+    exit();
+}
 
 $request = $_SERVER['REQUEST_URI'];
-$method = $_SERVER['REQUEST_METHOD'];
-
 $uri = parse_url($request, PHP_URL_PATH);
 $uri = explode('/', $uri);
 $endpoint = end($uri);
-
-if ($method === "OPTIONS") {
-    header("HTTP/1.1 200 OK");
-    exit();
-}
 
 switch ($endpoint) {
     case 'login':
@@ -35,10 +31,22 @@ switch ($endpoint) {
         require_once './api/register.php';
         break;
         
+    case 'google-auth':
+        require_once './api/google-auth.php';
+        break;
+
+    case 'tasks':
+        require_once './api/tasks.php';
+        break;
+
+    case 'diary':
+        require_once './api/diary.php';
+        break;
+        
     default:
         http_response_code(404);
         echo json_encode([
-            'success' => false,
+            'status' => false,
             'message' => 'Endpoint not found'
         ]);
         break;

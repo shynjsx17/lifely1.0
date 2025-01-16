@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bgImage from "../Images/BG.png";
 import { useAuth } from "../context/AuthContext";
 import loginIcon from "../Images/LoginIcon.png";
 import Swal from "sweetalert2";
+import { GoogleLogin } from '@react-oauth/google';
+import { authService } from '../services/authService';
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, googleLogin } = useAuth();
   const [userEmail, setUserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -35,25 +37,12 @@ const Login = () => {
     }
 
     try {
-      // Check email and password against the backend
-      const response = await fetch(
-        "http://localhost/lifely1.0/backend/api/login.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userEmail,
-            userPass,
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (data.status) {
-        login(data.data);
+      // Use authService for login
+      const response = await authService.login(userEmail, userPass);
+      
+      if (response.status) {
+        // Use the login function from AuthContext
+        await login(response.data);
 
         await Swal.fire({
           icon: "success",
@@ -66,13 +55,25 @@ const Login = () => {
 
         navigate("/home");
       } else {
-        // Handle specific backend errors
-        setError(data.message || "Invalid email or password.");
+        setError(response.message || "Invalid email or password.");
       }
     } catch (error) {
       console.error("Login error:", error);
       setError("Network error: Please check your connection and try again.");
     }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      await googleLogin(credentialResponse);
+      navigate('/home');
+    } catch (err) {
+      setError('Google login failed');
+    }
+  };
+
+  const handleGoogleError = () => {
+    setError('Google login failed');
   };
 
   return (
@@ -95,10 +96,30 @@ const Login = () => {
             Please enter your details
           </p>
 
-          <button className="flex items-center justify-center w-full py-3 border border-gray-300 rounded-lg bg-white hover:shadow-md mb-6">
-            <span className="text-lg font-semibold text-gray-700 mr-2">G</span>
-            Log in with Google Account
-          </button>
+          <div className="flex justify-center w-full mb-6">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={(error) => {
+                console.error('Google login error:', error);
+                if (error.message?.includes('blocked')) {
+                  setError('Please disable your ad blocker or privacy extensions to use Google login.');
+                } else if (error.message?.includes('declined')) {
+                  setError('Login was cancelled. Please try again.');
+                } else if (error.message?.includes('Cross-Origin-Opener-Policy')) {
+                  setError('Browser security policy is blocking the login. Please try a different browser.');
+                } else if (error.message?.includes('Invalid response')) {
+                  setError('Server error. Please try again later.');
+                } else {
+                  handleGoogleError(error);
+                }
+              }}
+              useOneTap={false}
+              theme="outline"
+              size="large"
+              text="continue_with"
+              shape="rectangular"
+            />
+          </div>
 
           <div className="flex items-center justify-center mb-6 w-full">
             <span className="w-full border-b border-gray-300"></span>
@@ -148,9 +169,9 @@ const Login = () => {
 
           <p className="mt-4 text-center text-black-600">
             Don't have an Account?{" "}
-            <a href="/register" className="text-orange-500 hover:underline">
+            <Link to="/register" className="text-orange-500 hover:underline">
               Sign Up
-            </a>
+            </Link>
           </p>
         </div>
 

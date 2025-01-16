@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from 'react-icons/fa';
 import Swal from 'sweetalert2';
-import { useAuth } from '../context/AuthContext'; // Fix import
-
+import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
-  const { user } = useAuth(); // Use the hook instead of useContext
+  const { user, logout } = useAuth();
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
   const [showProfileopen, setShowProfileopen] = useState(false);
@@ -26,65 +25,72 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       filereader.readAsDataURL(e.target.files[0]);
     }
   };
+
   const toggleDropdown = (index) => {
     setActiveDropdown(activeDropdown === index ? null : index);
   };
 
-  // Function to check if the current route matches the path
   const isActive = (path) => location.pathname === path;
 
-    const EditSave = () => {
-      setUsername(tempUsername);
-      setShowEditUsername(false);
-    }
-    const handleLogout = () => {
-      Swal.fire({
-        title: "Are you sure you want to logout?",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        cancelButtonText: "Cancel",
-        confirmButtonColor: "#FB923C",
-        cancelButtonColor: "#d33",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          localStorage.removeItem('token');
-          Swal.fire({
-            title: "Logged Out!",
-            text: "You have been successfully logged out.",
-            icon: "success",
-            confirmButtonColor: '#FB923C'
-          }).then(() => {
-              navigate('/login');
-            });
-        }
-      });
-    };  
+  const EditSave = () => {
+    setUsername(tempUsername);
+    setShowEditUsername(false);
+  };
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure you want to logout?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#FB923C",
+      cancelButtonColor: "#d33",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Call the logout function from AuthContext
+        logout();
+        
+        // Show success message
+        Swal.fire({
+          title: "Logged Out!",
+          text: "You have been successfully logged out.",
+          icon: "success",
+          confirmButtonColor: '#FB923C'
+        }).then(() => {
+          // Navigate to login page
+          navigate('/login');
+        });
+      }
+    });
+  };
 
   return (
     <div
-      className={`h-full bg-gradient-to-b from-[#add1c8] via-[#b4d2c8] to-[#e0cbb8] pt-5 fixed shadow-lg transition-all duration-500 ${
-        isCollapsed ? "w-[70px]" : "w-[200px]"
+      className={`h-full bg-gradient-to-b from-[#add1c8] via-[#b4d2c8] to-[#e0cbb8] pt-5 fixed shadow-lg transition-all duration-300 ease-in-out ${
+        isCollapsed ? "w-[60px]" : "w-[250px]"
       }`}
     >
       {/* Sidebar Header */}
-      <div className="px-5 mb-10 flex items-center space-x-3 cursor-pointer">
+      <div className={`px-4 mb-10 flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'}`}>
         <img
-          src={setProfile} // Replace with the actual path to your profile image
+          src={setProfile}
           alt="Profile"
-          className="w-10 h-10 rounded-full"
+          className="w-10 h-10 rounded-full cursor-pointer"
           onClick={() => setShowProfileopen(true)}
         />
         {!isCollapsed && (
-          <div>
+          <div className="flex-grow">
             <h3 className="text-sm font-semibold">Welcome,</h3>
             <h2 className="text-sm font-normal">{username}</h2>
           </div>
         )}
         <button
-          className="bg-gray-300 text-black p-2 rounded-full ml-auto"
+          className={`bg-gray-300 text-black p-2 rounded-full hover:bg-gray-400 transition-all ${
+            isCollapsed ? 'ml-0' : 'ml-auto'
+          }`}
           onClick={() => setIsCollapsed(!isCollapsed)}
         >
-          {isCollapsed ? "<" : ">"}
+          <span className="text-sm font-bold">{isCollapsed ? ">" : "<"}</span>
         </button>
       </div>
 
@@ -104,112 +110,105 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             {!isCollapsed && <span>Home</span>}
           </Link>
         </li>
-        {/*Profile pop up */}
-        {
-          showProfileopen && (
-             <div  className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-                 <div className="bg-system-background rounded-lg w-[30rem] shadow-lg rounded-full">
-                 <div className="bg-[#F0EFF9] text-black py-2 rounded-t-lg shadow-md">
-                  <div className="flex items-center justify-between px-4">
-                    {/* Left Aligned Arrow Icon */}
-                    <div className="flex items-center">
-                      <FaArrowLeft size={20} className="mr-2" onClick={() => setShowProfileopen(false)}/> {/* Left Arrow Icon */}
-                    </div>
 
-                    {/* Centered Text */}
-                    <h2 className="text-lg font-bold text-center flex-1">Profile</h2>
+        {/* Profile pop up */}
+        {showProfileopen && (
+          <div className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+            <div className="bg-system-background rounded-lg w-[30rem] shadow-lg rounded-full">
+              <div className="bg-[#F0EFF9] text-black py-2 rounded-t-lg shadow-md">
+                <div className="flex items-center justify-between px-4">
+                  <div className="flex items-center">
+                    <FaArrowLeft size={20} className="mr-2" onClick={() => setShowProfileopen(false)}/>
+                  </div>
+                  <h2 className="text-lg font-bold text-center flex-1">Profile</h2>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="justify-center items-center flex">
+                  <div
+                    onClick={() => document.getElementById("fileInput").click()}
+                    className="cursor-pointer w-20 h-20 rounded-full overflow-hidden"
+                  >
+                    <img
+                      src={setProfile}
+                      alt="Profile"
+                      className="w-20 h-20 rounded-full"
+                    />
                   </div>
                 </div>
-                <div className="p-6">
-                  {/* Profile Image */}
-                  <div className="justify-center items-center flex">
-                    <div
-                      onClick={() => document.getElementById("fileInput").click()} // Trigger file input when clicked
-                      className="cursor-pointer w-20 h-20 rounded-full overflow-hidden"
-                    >
-                      <img
-                        src={setProfile} // Replace with the actual path to your profile image
-                        alt="Profile"
-                        className="w-20 h-20 rounded-full"
-                      />
-                    </div>
-                  </div>
 
-                  {/* Hidden File Input */}
-                  <input
-                    type="file"
-                    id="fileInput"
-                    className="hidden"
-                    accept="image/*"
-                    onChange={toggleProfile}
-                  />
+                <input
+                  type="file"
+                  id="fileInput"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={toggleProfile}
+                />
 
-                  {/* Username Section */}
-                  <div className="flex justify-center">
-                    <div
-                      className="text-center text-base font-semibold hover:underline cursor-pointer"
-                      onClick={() => setShowEditUsername(true)}
-                    >
-                      {username}
-                    </div>
-                  </div>
-                  <div className="flex justify-center mb-10">
-                    <div className="text-center text-sm hover:underline">
-                      ({user?.email || 'email@example.com'})
-                    </div>
-                  </div>
-
-                  {/* Options */}
-                  {[
-                    { label: "Reset Password", onClick: () => {} },
-                    { label: "Delete Account", onClick: () => {} },
-                  ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center cursor-pointer border-t border-black p-3"
-                      onClick={item.onClick}
-                    >
-                      <div className="text-sm">{item.label}</div>
-                      <div className="text-lg font-bold">&gt;</div>
-                    </div>
-                  ))}
-                </div>
-
-                 </div>
-             </div>
-          )}
-          {/*Edit Username pop up*/}
-          {showEditUsername && (
-            <div  className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-10 z-50">
-              <div className="bg-white rounded-lg w-[30rem] shadow-lg rounded-full">
-                <div className="text-base text-center font-semibold p-3 border-b border-gray-300 mb-6">Edit Username</div>
                 <div className="flex justify-center">
-                <div className="flex justify-center">
-              <input
-                value={tempUsername}
-                onChange={(e) => setTempUsername(e.target.value)} // Update temp username
-                className="w-80 h-10 border border-gray-300 rounded px-2"
-              />
-            </div>
+                  <div
+                    className="text-center text-base font-semibold hover:underline cursor-pointer"
+                    onClick={() => setShowEditUsername(true)}
+                  >
+                    {username}
+                  </div>
                 </div>
-                {/*buttons*/}
-              <div className="flex justify-between items-center border-gray-200 pt-4">
-              <button
-                onClick={() => setShowEditUsername(false)}
-                className="w-1/2 py-2 text-sm text-gray-700 bg-[#F0EFF9] rounded-bl-lg hover:bg-gray-300 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-              onClick={EditSave}
-                className="w-1/2 py-2 text-sm text-[#1E76E8] bg-[#F0EFF9] rounded-br-lg hover:bg-gray-300 transition-all"
-              >
-                Save
-              </button>
-            </div>
+                <div className="flex justify-center mb-10">
+                  <div className="text-center text-sm hover:underline">
+                    ({user?.email || 'email@example.com'})
+                  </div>
+                </div>
+
+                {[
+                  { label: "Reset Password", onClick: () => {} },
+                  { label: "Delete Account", onClick: () => {} },
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-between items-center cursor-pointer border-t border-black p-3"
+                    onClick={item.onClick}
+                  >
+                    <div className="text-sm">{item.label}</div>
+                    <div className="text-lg font-bold">&gt;</div>
+                  </div>
+                ))}
               </div>
             </div>
-          )}
+          </div>
+        )}
+
+        {/* Edit Username pop up */}
+        {showEditUsername && (
+          <div className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-10 z-50">
+            <div className="bg-white rounded-lg w-[30rem] shadow-lg rounded-full">
+              <div className="text-base text-center font-semibold p-3 border-b border-gray-300 mb-6">Edit Username</div>
+              <div className="flex justify-center">
+                <div className="flex justify-center">
+                  <input
+                    value={tempUsername}
+                    onChange={(e) => setTempUsername(e.target.value)}
+                    className="w-80 h-10 border border-gray-300 rounded px-2"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-between items-center border-gray-200 pt-4">
+                <button
+                  onClick={() => setShowEditUsername(false)}
+                  className="w-1/2 py-2 text-sm text-gray-700 bg-[#F0EFF9] rounded-bl-lg hover:bg-gray-300 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={EditSave}
+                  className="w-1/2 py-2 text-sm text-[#1E76E8] bg-[#F0EFF9] rounded-br-lg hover:bg-gray-300 transition-all"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <li
           className={`flex items-center px-5 py-4 ${
             isActive("/MyDay") ? "bg-white" : "hover:bg-white"
@@ -224,6 +223,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             {!isCollapsed && <span>My Day</span>}
           </Link>
         </li>
+
         <li
           className={`flex items-center px-5 py-4 ${
             isActive("/MyCalendar") ? "bg-white" : "hover:bg-white"
@@ -238,6 +238,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             {!isCollapsed && <span>My Calendar</span>}
           </Link>
         </li>
+
         <li
           className={`flex items-center px-5 py-4 ${
             isActive("/MyDiary") ? "bg-white" : "hover:bg-white"
@@ -252,6 +253,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             {!isCollapsed && <span>My Diary</span>}
           </Link>
         </li>
+
         <li
           className={`flex items-center px-5 py-4 ${
             isActive("/ArchiveComponent") ? "bg-white" : "hover:bg-white"
@@ -303,8 +305,9 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           )}
         </li>
       </ul>
-        {/* Logout Button - Add this at the bottom of your sidebar */}
-        <div className="absolute bottom-5 w-full px-3">
+
+      {/* Logout Button */}
+      <div className="absolute bottom-5 w-full px-3">
         <button
           onClick={handleLogout}
           className={`w-full py-2 px-3 text-black hover:bg-white/30 rounded-lg transition-all duration-300 flex items-center ${

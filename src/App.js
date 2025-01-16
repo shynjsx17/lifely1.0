@@ -5,12 +5,15 @@ import Sidebar from "./Navigation/Sidebar";
 import ArchiveComponent from "./Components/ArchiveComponent";
 import MyDiary from "./Components/MyDiary";
 import MyDay from "./Components/MyDay";
+import MyCalendar from "./Components/MyCalendar";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Landing from "./Components/Landing";
 import ErrorBoundary from "./Components/ErrorBoundary";
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './Components/ProtectedRoute';
+import PrivacyPolicy from './Components/PrivacyPolicy';
+import Terms from './Components/Terms';
 
 function App() {
   return (
@@ -25,6 +28,8 @@ function App() {
               {/* Auth routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<Terms />} />
               
               {/* Protected routes */}
               <Route path="/home" element={
@@ -45,6 +50,16 @@ function App() {
               <Route path="/mydiary" element={
                 <ProtectedRoute>
                   <MyDiary />
+                </ProtectedRoute>
+              } />
+              <Route path="/mycalendar" element={
+                <ProtectedRoute>
+                  <MyCalendar />
+                </ProtectedRoute>
+              } />
+              <Route path="/calendar/callback" element={
+                <ProtectedRoute>
+                  <MyCalendar />
                 </ProtectedRoute>
               } />
             </Routes>
