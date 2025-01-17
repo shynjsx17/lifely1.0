@@ -1,72 +1,117 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bgImage from "../Images/BG.png"; 
 import registerIcon from "../Images/RegisterIcon.png"; 
 import Swal from 'sweetalert2';
 
 const Register = () => {
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userPass, setUserPass] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [repeatPass, setRepeatPass] = useState('');
   const [error, setError] = useState('');
+  const [passwordStrength, setPasswordStrength] = useState({
+    score: 0,
+    message: '',
+    color: 'gray'
+  });
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
-    // Regex to validate email and ensure it ends with '.com'
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email) && email.endsWith('.com');
+    return emailRegex.test(email);
+  };
+
+  const checkPasswordStrength = (password) => {
+    let score = 0;
+    let feedback = '';
+
+    // Length check
+    if (password.length >= 8) score++;
+    if (password.length >= 12) score++;
+
+    // Complexity checks
+    if (/[A-Z]/.test(password)) score++; // Has uppercase
+    if (/[0-9]/.test(password)) score++; // Has number
+    if (/[^A-Za-z0-9]/.test(password)) score++; // Has special char
+
+    // Determine message and color based on score
+    switch (score) {
+      case 0:
+        feedback = 'Very Weak';
+        return { score, message: feedback, color: 'red' };
+      case 1:
+        feedback = 'Weak';
+        return { score, message: feedback, color: '#ff4e50' };
+      case 2:
+        feedback = 'Fair';
+        return { score, message: feedback, color: '#ffa700' };
+      case 3:
+        feedback = 'Good';
+        return { score, message: feedback, color: '#9bc158' };
+      case 4:
+      case 5:
+        feedback = 'Strong';
+        return { score, message: feedback, color: '#4CAF50' };
+      default:
+        return { score: 0, message: '', color: 'gray' };
+    }
   };
 
   const validatePassword = (password) => {
-    // Password must be at least 8 characters long, include a number, and a special character
-    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
-    return passwordRegex.test(password);
+    // Password must be at least 8 characters long
+    return password.length >= 8;
   };
+
+  useEffect(() => {
+    if (password) {
+      setPasswordStrength(checkPasswordStrength(password));
+    } else {
+      setPasswordStrength({ score: 0, message: '', color: 'gray' });
+    }
+  }, [password]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
 
     // Basic validations
-    if (!userName.trim() || !userEmail.trim() || !userPass.trim() || !repeatPass.trim()) {
+    if (!username.trim() || !email.trim() || !password.trim() || !repeatPass.trim()) {
       setError('All fields are required.');
       return;
     }
 
-    if (!validateEmail(userEmail)) {
-      setError('Invalid email address. Ensure it includes ".com".');
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address.');
       return;
     }
 
-    if (!validatePassword(userPass)) {
-      setError(
-        'Password must be at least 8 characters long, include a number, and a special character.'
-      );
+    if (!validatePassword(password)) {
+      setError('Password must be at least 8 characters long.');
       return;
     }
 
-    if (userPass !== repeatPass) {
+    if (password !== repeatPass) {
       setError('Passwords do not match.');
       return;
     }
 
     try {
-      const response = await fetch('http://localhost/lifely1.0/backend/api/register.php', {
+      const response = await fetch('http://localhost/lifely1.0/backend/api/auth.php?action=signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userName,
-          userEmail,
-          userPass,
+          username,
+          email,
+          password,
         }),
       });
 
       const data = await response.json();
 
-      if (data.status) {
+      if (data.success) {
         await Swal.fire({
           icon: 'success',
           title: 'Registration Successful!',
@@ -82,6 +127,40 @@ const Register = () => {
       console.error('Registration error:', error);
       setError('Network error: Please check your connection and try again');
     }
+  };
+
+  // Password strength indicator component
+  const PasswordStrengthIndicator = () => {
+    if (!password) return null;
+    
+    return (
+      <div className="mb-4">
+        <div className="flex justify-between mb-1">
+          <span className="text-sm text-gray-600">Password Strength:</span>
+          <span className="text-sm" style={{ color: passwordStrength.color }}>
+            {passwordStrength.message}
+          </span>
+        </div>
+        <div className="w-full h-2 bg-gray-200 rounded-full">
+          <div
+            className="h-full rounded-full transition-all duration-300"
+            style={{
+              width: `${(passwordStrength.score / 5) * 100}%`,
+              backgroundColor: passwordStrength.color
+            }}
+          ></div>
+        </div>
+        <div className="mt-2 text-xs text-gray-500">
+          Password should contain:
+          <ul className="list-disc ml-5 mt-1">
+            <li className={password.length >= 8 ? "text-green-500" : ""}>At least 8 characters</li>
+            <li className={/[A-Z]/.test(password) ? "text-green-500" : ""}>One uppercase letter</li>
+            <li className={/[0-9]/.test(password) ? "text-green-500" : ""}>One number</li>
+            <li className={/[^A-Za-z0-9]/.test(password) ? "text-green-500" : ""}>One special character</li>
+          </ul>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -100,39 +179,29 @@ const Register = () => {
           <h1 className="text-4xl font-bold" style={{ color: '#FFB78B' }}>Welcome to Lifely</h1>
           <p className="text-black-500 text-sm mb-6 mt-3">Please enter your details</p>
 
-          <button className="flex items-center justify-center w-full py-3 border border-gray-300 rounded-lg bg-white hover:shadow-md mb-6">
-            <span className="text-lg font-semibold text-gray-700 mr-2">G</span>
-            Sign up with Google Account
-          </button>
-
-          <div className="flex items-center justify-center mb-6 w-full">
-            <span className="w-full border-b border-gray-300"></span>
-            <span className="px-4 text-gray-500">or</span>
-            <span className="w-full border-b border-gray-300"></span>
-          </div>
-
-          <form onSubmit={handleRegister}>
+          <form onSubmit={handleRegister} className="w-full">
             <input
               type="text"
               placeholder="Username *"
               className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring focus:ring-orange-200"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <input
               type="email"
               placeholder="Email Address *"
               className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring focus:ring-orange-200"
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <input
               type="password"
               placeholder="Password *"
-              className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring focus:ring-orange-200"
-              value={userPass}
-              onChange={(e) => setUserPass(e.target.value)}
+              className="w-full px-4 py-2 mb-2 border rounded-md focus:outline-none focus:ring focus:ring-orange-200"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
+            <PasswordStrengthIndicator />
             <input
               type="password"
               placeholder="Repeat Password *"

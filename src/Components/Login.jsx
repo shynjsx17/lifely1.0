@@ -7,15 +7,14 @@ import Swal from "sweetalert2";
 
 const Login = () => {
   const { login } = useAuth();
-  const [userEmail, setUserEmail] = useState("");
-  const [userPass, setUserPass] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
-    // Ensure the email is in a valid Gmail format
-    const emailRegex = /^[^\s@]+@gmail\.com$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
@@ -24,36 +23,43 @@ const Login = () => {
     setError("");
 
     // Basic validations
-    if (!validateEmail(userEmail)) {
-      setError("Invalid email address. Only Gmail addresses are allowed.");
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
       return;
     }
 
-    if (!userPass.trim()) {
+    if (!password.trim()) {
       setError("Password cannot be empty.");
       return;
     }
 
     try {
-      // Check email and password against the backend
       const response = await fetch(
-        "http://localhost/lifely1.0/backend/api/login.php",
+        "http://localhost/lifely1.0/backend/api/auth.php?action=login",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userEmail,
-            userPass,
+            email,
+            password,
           }),
         }
       );
 
       const data = await response.json();
 
-      if (data.status) {
-        login(data.data);
+      if (data.success) {
+        // Store session token if remember me is checked
+        if (rememberMe) {
+          localStorage.setItem('session_token', data.session_token);
+        } else {
+          sessionStorage.setItem('session_token', data.session_token);
+        }
+
+        // Store user data
+        login(data.user);
 
         await Swal.fire({
           icon: "success",
@@ -66,7 +72,6 @@ const Login = () => {
 
         navigate("/home");
       } else {
-        // Handle specific backend errors
         setError(data.message || "Invalid email or password.");
       }
     } catch (error) {
@@ -95,31 +100,20 @@ const Login = () => {
             Please enter your details
           </p>
 
-          <button className="flex items-center justify-center w-full py-3 border border-gray-300 rounded-lg bg-white hover:shadow-md mb-6">
-            <span className="text-lg font-semibold text-gray-700 mr-2">G</span>
-            Log in with Google Account
-          </button>
-
-          <div className="flex items-center justify-center mb-6 w-full">
-            <span className="w-full border-b border-gray-300"></span>
-            <span className="px-4 text-gray-500">or</span>
-            <span className="w-full border-b border-gray-300"></span>
-          </div>
-
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} className="w-full">
             {error && <p className="text-red-500 mb-4">{error}</p>}
             <input
               type="email"
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Email Address *"
               className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
               required
             />
             <input
               type="password"
-              value={userPass}
-              onChange={(e) => setUserPass(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Password *"
               className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
               required
