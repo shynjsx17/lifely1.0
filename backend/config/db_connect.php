@@ -1,26 +1,29 @@
 <?php
-class Database {
-    private $host = "localhost";
-    private $db_name = "lifely"; 
-    private $username = "root";
-    private $password = "";
-    public $conn;
+function get_database_connection() {
+    static $conn = null;
+    
+    if ($conn === null) {
+        $host = 'localhost';
+        $db   = 'lifely';
+        $user = 'root';
+        $pass = '';
+        $charset = 'utf8mb4';
 
-    public function connect() {
-        $this->conn = null;
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
 
         try {
-            $this->conn = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->db_name,
-                $this->username,
-                $this->password
-            );
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e) {
-            throw new Exception("Connection Error: " . $e->getMessage());
+            $conn = new PDO($dsn, $user, $pass, $options);
+        } catch (\PDOException $e) {
+            error_log("Database connection failed: " . $e->getMessage());
+            throw new \Exception("Database connection failed");
         }
-
-        return $this->conn;
     }
+    
+    return $conn;
 }
 ?>

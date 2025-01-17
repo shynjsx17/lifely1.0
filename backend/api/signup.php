@@ -24,18 +24,38 @@ try {
     // Get POST data
     $data = json_decode(file_get_contents('php://input'), true);
     
-    if (!isset($data['email']) || !isset($data['password'])) {
-        throw new Exception('Email and password are required');
+    if (!isset($data['email']) || !isset($data['password']) || !isset($data['name'])) {
+        throw new Exception('Name, email and password are required');
     }
 
-    // Get user by email
-    $stmt = $conn->prepare("SELECT id, email, password_hash, username FROM users WHERE email = :email");
+    // Validate email
+    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        throw new Exception('Invalid email format');
+    }
+
+    // Check if email already exists
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = :email");
     $stmt->execute(['email' => $data['email']]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$user || !password_verify($data['password'], $user['password_hash'])) {
-        throw new Exception('Invalid email or password');
+    if ($stmt->fetch()) {
+        throw new Exception('Email already exists');
     }
+
+    // Hash password
+    $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
+
+    // Insert new user
+    $stmt = $conn->prepare("
+        INSERT INTO users (username, email, password_hash) 
+        VALUES (:username, :email, :password_hash)
+    ");
+    
+    $stmt->execute([
+        'username' => $data['name'],
+        'email' => $data['email'],
+        'password_hash' => $password_hash
+    ]);
+
+    $user_id = $conn->lastInsertId();
 
     // Generate session token
     $token = bin2hex(random_bytes(32));
@@ -48,7 +68,7 @@ try {
     ");
     
     $stmt->execute([
-        'user_id' => $user['id'],
+        'user_id' => $user_id,
         'session_token' => $token,
         'expires_at' => $expires_at
     ]);
@@ -59,9 +79,9 @@ try {
         'data' => [
             'token' => $token,
             'user' => [
-                'id' => $user['id'],
-                'email' => $user['email'],
-                'username' => $user['username']
+                'id' => $user_id,
+                'email' => $data['email'],
+                'username' => $data['name']
             ]
         ]
     ]);
@@ -72,5 +92,4 @@ try {
         'status' => 'error',
         'message' => $e->getMessage()
     ]);
-}
-?>
+} 

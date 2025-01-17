@@ -1,161 +1,217 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from "../Navigation/Sidebar";
+import { useAuth } from '../context/AuthContext';
 
 const MyDiary = () => {
+  const { user } = useAuth();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [headerText, setHeaderText] = useState("Why I'm Writing...");
   const [mood, setMood] = useState('neutral');
   const [showPopup, setShowPopup] = useState(false);
-  const [viewSavedEntries, setViewSavedEntries] = useState(false); // Track if saved entries are shown
+  const [viewSavedEntries, setViewSavedEntries] = useState(false);
   const [entries, setEntries] = useState([]);
   const [dropdownVisible, setDropdownVisible] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // Fetch diary entries from database
+  const fetchEntries = async () => {
+    try {
+      console.log('Fetching diary entries...'); // Debug log
+      const token = sessionStorage.getItem('session_token');
+      console.log('Using token:', token); // Debug log
+
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/diary.php?page=${currentPage}&limit=10&archived=false`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      console.log('Response status:', response.status); // Debug log
+      const data = await response.json();
+      console.log('Full API response:', data); // Debug log
+
+      if (data.status === 'success' && data.data && Array.isArray(data.data.entries)) {
+        console.log('Setting entries:', data.data.entries); // Debug log
+        setEntries(data.data.entries);
+        setTotalPages(data.data.pagination?.total_pages || 1);
+      } else {
+        console.error('Invalid response format:', data);
+        setEntries([]);
+        setTotalPages(1);
+      }
+    } catch (error) {
+      console.error('Error fetching entries:', error);
+      setEntries([]);
+      setTotalPages(1);
+    }
+  };
 
   useEffect(() => {
-    const savedEntries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
-    setEntries(savedEntries);
-  }, []);
+    if (viewSavedEntries) {
+      fetchEntries();
+    }
+  }, [currentPage, viewSavedEntries]);
 
-  const saveContent = () => {
+  const saveContent = async () => {
     const content = document.getElementById('editable-content').innerHTML;
     const newEntry = {
-      headerText,
-      content,
-      mood,
-      date: new Date().toLocaleDateString(),
+      title: headerText,
+      content: content,
+      mood: mood
     };
 
-    const savedEntries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
-    savedEntries.push(newEntry);
-    localStorage.setItem('diaryEntries', JSON.stringify(savedEntries));
-    setEntries(savedEntries);
+    try {
+      const response = await fetch('http://localhost/lifely1.0/backend/api/diary.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+        },
+        body: JSON.stringify(newEntry)
+      });
 
-    setShowPopup(true);
+      const data = await response.json();
+      if (data.status === 'success') {
+        // Clear the content
+        document.getElementById('editable-content').innerHTML = '';
+        setHeaderText("Why I'm Writing...");
+        setMood('neutral');
+        
+        // Show success modal instead of popup
+        setShowSuccessModal(true);
+        
+        // Fetch updated entries if viewing saved entries
+        if (viewSavedEntries) {
+          fetchEntries();
+        }
+      } else {
+        console.error('Error saving entry:', data.message);
+      }
+    } catch (error) {
+      console.error('Error saving entry:', error);
+    }
   };
 
-  const handleHeaderChange = (event) => {
-    setHeaderText(event.target.value);
-    localStorage.setItem('headerText', event.target.value);
+  const editEntry = async (entryId) => {
+    try {
+      const response = await fetch('http://localhost/lifely1.0/backend/api/diary.php', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+        },
+        body: JSON.stringify({
+          id: entryId,
+          title: headerText,
+          content: document.getElementById('editable-content').innerHTML,
+          mood: mood
+        })
+      });
+
+      const data = await response.json();
+      if (data.status === 'success') {
+        fetchEntries();
+        setDropdownVisible(null);
+      } else {
+        console.error('Error updating entry:', data.message);
+      }
+    } catch (error) {
+      console.error('Error updating entry:', error);
+    }
   };
 
-  const toggleFormat = (command) => {
-    document.execCommand(command, false, null);
+  const archiveEntry = async (entryId) => {
+    try {
+      const response = await fetch('http://localhost/lifely1.0/backend/api/diary.php', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+        },
+        body: JSON.stringify({
+          id: entryId,
+          is_archived: true
+        })
+      });
+
+      const data = await response.json();
+      if (data.status === 'success') {
+        // Immediately remove the archived entry from the local state
+        setEntries(prevEntries => prevEntries.filter(entry => entry.id !== entryId));
+        setDropdownVisible(null);
+      } else {
+        console.error('Error archiving entry:', data.message);
+      }
+    } catch (error) {
+      console.error('Error archiving entry:', error);
+    }
   };
 
-  const editEntry = (index) => {
-    const entryToEdit = entries[index];
-    setHeaderText(entryToEdit.headerText);
-    document.getElementById('editable-content').innerHTML = entryToEdit.content;
-    setDropdownVisible(null);
-  };
+  const handleArchiveDiary = async (entryId) => {
+    try {
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/diary.php?id=${entryId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+        },
+        body: JSON.stringify({
+          is_archived: true
+        })
+      });
 
-  const archiveEntry = (index) => {
-    const updatedEntries = entries.filter((_, i) => i !== index);
-    setEntries(updatedEntries);
-    localStorage.setItem('diaryEntries', JSON.stringify(updatedEntries));
-    setDropdownVisible(null);
+      if (response.ok) {
+        fetchEntries();
+      }
+    } catch (error) {
+      console.error('Error archiving diary entry:', error);
+    }
   };
 
   const today = new Date().toLocaleDateString();
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-
-      <div className="flex-1 p-8 bg-system-background bg-no-repeat bg-fixed">
-        <h1 className="text-4xl font-extrabold tracking-tight mb-2 pl-[160px]">Good Day,</h1>
-        <h1 className="text-2xl font-bold tracking-tight mb-4 pl-[160px]" style={{ color: '#FFB78B' }}>
+    <div className="flex min-h-screen bg-system-background">
+      <Sidebar 
+        isCollapsed={isSidebarCollapsed}
+        setIsCollapsed={setIsSidebarCollapsed}
+      />
+      <div className={`flex-1 transition-all duration-300 ${
+        isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
+      } p-8 bg-system-background`}>
+        <h1 className="text-4xl font-extrabold tracking-tight mb-2">Good Day, {user?.userName || 'User'}!</h1>
+        <h1 className="text-2xl font-bold tracking-tight mb-4" style={{ color: '#FFB78B' }}>
           Something troubling you? Write it down.
         </h1>
 
-        {/* Buttons for Viewing and Writing Entries */}
-        {!viewSavedEntries && (
-          <div className="flex mb-4 pl-[160px] space-x-4">
-            <button
-              onClick={() => setViewSavedEntries(true)} // Toggle to view saved entries
-              className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
-            >
-              View Saved Entries
-            </button>
+        {/* Success Popup */}
+        {showPopup && (
+          <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded shadow-lg">
+            Entry saved successfully!
           </div>
         )}
 
-        {/* Conditional Rendering of Content */}
-        {viewSavedEntries ? (
-          <div className="w-full max-w-7xl mx-auto bg-transparent p-6 rounded-xl bg-opacity-90">
-            {entries.length === 0 ? (
-              <p className="text-center text-xl">No entries saved yet.</p>
-            ) : (
-              <div className="space-y-6">
-                {entries.map((entry, index) => (
-                  <div key={index} className="p-4 border-b relative bg-white shadow-md rounded-xl">
-                    <div className="absolute top-2 right-2">
-                      <button
-                        onClick={() => setDropdownVisible(dropdownVisible === index ? null : index)}
-                        className="text-xl"
-                      >
-                        &#x22EE;
-                      </button>
-                      {dropdownVisible === index && (
-                        <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md border w-32">
-                          <button
-                            onClick={() => editEntry(index)}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => archiveEntry(index)}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                          >
-                            Archive
-                          </button>
-                          
-                        </div>
-                      )}
-                    </div>
+        {/* View Entries Button */}
+        <div className="flex mb-4 space-x-4">
+          <button
+            onClick={() => setViewSavedEntries(!viewSavedEntries)}
+            className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
+          >
+            {viewSavedEntries ? 'Write New Entry' : 'View Saved Entries'}
+          </button>
+        </div>
 
-                    <h2 className="text-xl font-bold">{entry.headerText}</h2>
-                    <p className="text-gray-500">{entry.date}</p>
-                    <div className="mt-2" dangerouslySetInnerHTML={{ __html: entry.content }} />
-                    
-                    <div className="mt-2">
-                      <span
-                        className={`px-4 py-2 rounded-full ${
-                          entry.mood === 'sad'
-                            ? 'bg-[#FFB6A6]' // Light Pink
-                            : entry.mood === 'angry'
-                            ? 'bg-[#FFCF55]' // Yellow
-                            : entry.mood === 'neutral'
-                            ? 'bg-[#FFF731]' // Bright Yellow
-                            : entry.mood === 'happy'
-                            ? 'bg-[#00FFFF]' // Cyan
-                            : entry.mood === 'very happy'
-                            ? 'bg-[#29E259]' // Green
-                            : 'bg-gray-300'
-                        } text-white`}
-                      >
-                        {entry.mood.charAt(0).toUpperCase() + entry.mood.slice(1)}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-            <div className="flex justify-center mt-4">
-              <button
-                onClick={() => setViewSavedEntries(false)} // Toggle back to write new entry
-                className="px-10 py-3 w-full max-w-7xl bg-white text-gray-400 shadow-lg rounded-xl hover:bg-gray-300 flex justify-between items-center"
-              >
-                <span>Add Entry</span>
-                <div className="px-6 py-2 rounded-xl bg-[#FFB78B] text-black">Add</div>
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="w-full max-w-7xl mx-auto h-4/5 bg-white p-6 rounded-xl shadow-lg bg-opacity-90 relative">
+        {/* Writing Area */}
+        {!viewSavedEntries && (
+          <div className="w-full max-w-7xl mx-auto bg-white p-6 rounded-xl shadow-lg relative">
+            {/* Title Input */}
             <input
               value={headerText}
-              onChange={handleHeaderChange}
+              onChange={(e) => setHeaderText(e.target.value)}
               onFocus={() => {
                 if (headerText === "Why I'm Writing...") {
                   setHeaderText('');
@@ -169,112 +225,180 @@ const MyDiary = () => {
               className="text-gray-500 text-2xl tracking-tight w-72 mb-4 border-b focus:outline-none"
             />
 
+            {/* Date Display */}
             <div className="flex items-center mt-4 mb-4">
               <img src={require("../icons/calendar.svg").default} alt="Calendar Icon" className="w-6 h-6 mr-2" />
               <span className="text-sm">{today}</span>
             </div>
 
-            <div
-              id="editable-content"
-              contentEditable
-              className="w-full h-4/5 p-4 border rounded bg-white bg-opacity-90 overflow-y-auto focus:outline-none"
-            />
+            {/* Text Editor Area */}
+            <div className="relative">
+              <div
+                id="editable-content"
+                contentEditable
+                className="w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 overflow-y-auto focus:outline-none mb-16"
+              />
 
-            <div className="mt-2 bottom-4 left-4 flex w-full items-center">
-              <div className="flex space-x-4">
-                <button onClick={() => toggleFormat('bold')} className="px-4 py-2 bg-transparent border-none">
-                  <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
-                </button>
-                <button onClick={() => toggleFormat('italic')} className="px-4 py-2 bg-transparent border-none">
-                  <img src={require("../icons/Italic.svg").default} alt="Italic" className="w-6 h-6" />
-                </button>
-                <button onClick={() => toggleFormat('underline')} className="px-4 py-2 bg-transparent border-none">
-                  <img src={require("../icons/underline.svg").default} alt="Underline" className="w-6 h-6" />
+              {/* Formatting Tools - Fixed at bottom */}
+              <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-between items-center">
+                <div className="flex space-x-4">
+                  <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
+                    <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
+                  </button>
+                  <button onClick={() => document.execCommand('italic')} className="p-2 hover:bg-gray-100 rounded">
+                    <img src={require("../icons/Italic.svg").default} alt="Italic" className="w-6 h-6" />
+                  </button>
+                  <button onClick={() => document.execCommand('underline')} className="p-2 hover:bg-gray-100 rounded">
+                    <img src={require("../icons/underline.svg").default} alt="Underline" className="w-6 h-6" />
+                  </button>
+                </div>
+                <button
+                  onClick={saveContent}
+                  className="px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
+                >
+                  Save
                 </button>
               </div>
-              <button
-                onClick={saveContent}
-                className="ml-auto px-4 py-2 mr-10 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
-              >
-                Save
-              </button>
             </div>
 
+            {/* Mood Tracker */}
             <div className="absolute top-4 right-4 space-y-2">
-            <h2 className="text-gray-500 text-lg">Mood Tracker:</h2>
-            <div className="flex space-x-4">
-              {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
-                let moodColor;
-          
-                // Assigning specific colors for each mood option
-                switch (moodOption) {
-                  case 'sad':
-                    moodColor = 'bg-[#FFB6A6]'; // Light Pink
-                    break;
-                  case 'angry':
-                    moodColor = 'bg-[#FFCF55]'; // Yellow
-                    break;
-                  case 'neutral':
-                    moodColor = 'bg-[#FFF731]'; // Bright Yellow
-                    break;
-                  case 'happy':
-                    moodColor = 'bg-[#00FFFF]'; // Cyan
-                    break;
-                  case 'very happy':
-                    moodColor = 'bg-[#29E259]'; // Green
-                    break;
-                  default:
-                    moodColor = 'bg-gray-300'; // Default gray
-                }
+              <h2 className="text-gray-500 text-lg">Mood Tracker:</h2>
+              <div className="flex flex-col space-y-2">
+                {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
+                  const moodColors = {
+                    'sad': 'bg-[#FFB6A6]',
+                    'angry': 'bg-[#FFCF55]',
+                    'neutral': 'bg-[#FFF731]',
+                    'happy': 'bg-[#00FFFF]',
+                    'very happy': 'bg-[#29E259]'
+                  };
 
-                return (
-                  <button
-                    key={moodOption}
-                    onClick={() => {
-                      setMood(moodOption);
-                      localStorage.setItem('mood', moodOption);
-                    }}
-                    className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColor}`}
-                  >
-                    {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
-                  </button>
-                );
-              })}
+                  return (
+                    <button
+                      key={moodOption}
+                      onClick={() => setMood(moodOption)}
+                      className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
+                    >
+                      {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
+        )}
 
+        {/* View Saved Entries */}
+        {viewSavedEntries && (
+          <div className="w-full max-w-7xl mx-auto space-y-6">
+            {entries.length === 0 ? (
+              <p className="text-center text-xl">No entries saved yet.</p>
+            ) : (
+              <>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {entries.map((entry) => (
+                    <div key={entry.id} className="bg-white p-6 rounded-xl shadow-lg relative">
+                      <div className="absolute top-4 right-4">
+                        <button
+                          onClick={() => setDropdownVisible(dropdownVisible === entry.id ? null : entry.id)}
+                          className="text-xl hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center"
+                        >
+                          &#x22EE;
+                        </button>
+                        {dropdownVisible === entry.id && (
+                          <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md border w-32 z-10">
+                            <button
+                              onClick={() => editEntry(entry.id)}
+                              className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => archiveEntry(entry.id)}
+                              className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
+                            >
+                              Archive
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      <h3 className="text-xl font-semibold mb-2">{entry.title}</h3>
+                      <div className="text-sm text-gray-500 mb-2">
+                        {new Date(entry.date).toLocaleDateString()}
+                      </div>
+                      <div className="text-sm mb-2">
+                        Mood: <span className="capitalize">{entry.mood}</span>
+                      </div>
+                      <div 
+                        className="prose max-w-none"
+                        dangerouslySetInnerHTML={{ __html: entry.content }}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center space-x-2 mt-6">
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] disabled:opacity-50"
+                    >
+                      Previous
+                    </button>
+                    <span className="px-4 py-2">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                      disabled={currentPage === totalPages}
+                      className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] disabled:opacity-50"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        {showSuccessModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-8 max-w-sm w-full mx-4 text-center">
+              <div className="mb-4">
+                <img src={require("../icons/diary.svg").default} alt="Diary" className="w-16 h-16 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold mb-2">ENTRY SAVED!</h2>
+                <p className="text-gray-600 italic">
+                  "Your memory is safe and sound. Someday, you'll look back on this moment and smile—trust the journey."
+                </p>
+              </div>
+              <div className="flex justify-center space-x-4">
+                <button
+                  onClick={() => {
+                    setShowSuccessModal(false);
+                    setViewSavedEntries(false);
+                  }}
+                  className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
+                >
+                  + New Entry
+                </button>
+                <button
+                  onClick={() => {
+                    setShowSuccessModal(false);
+                    setViewSavedEntries(true);
+                  }}
+                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
-
-      {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-10 w-2/6 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-bold mb-4">ENTRY SAVED!</h2>
-            <p className="text-black font-medium italic mb-6">
-              Your memory is safe and sound. Someday, you’ll look back<br />on this moment and smile—trust the journey.
-            </p>
-            <div className="flex justify-center space-x-4">
-              <button
-                onClick={() => {
-                  document.getElementById('editable-content').innerHTML = '';
-                  setHeaderText("Why I'm Writing...");
-                  setShowPopup(false);
-                }}
-                className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
-              >
-                + New Entry
-              </button>
-              <button
-                onClick={() => setShowPopup(false)}
-                className="px-4 py-2 bg-[#FF8585] text-white rounded-md hover:bg-[#ff5f5f]}"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
