@@ -14,9 +14,9 @@ import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
   return (
-    <AuthProvider>
-      <div className="App">
-        <Router>
+    <div className="App">
+      <Router>
+        <AuthProvider>
           <ErrorBoundary>
             <Routes>
               {/* Landing page route first */}
@@ -49,9 +49,9 @@ function App() {
               } />
             </Routes>
           </ErrorBoundary>
-        </Router>
-      </div>
-    </AuthProvider>
+        </AuthProvider>
+      </Router>
+    </div>
   );
 }
 

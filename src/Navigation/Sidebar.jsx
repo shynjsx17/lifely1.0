@@ -62,29 +62,37 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
 
   return (
     <div
-      className={`h-full bg-gradient-to-b from-[#add1c8] via-[#b4d2c8] to-[#e0cbb8] pt-5 fixed shadow-lg transition-all duration-500 ${
-        isCollapsed ? "w-[70px]" : "w-[200px]"
+      className={`h-screen bg-gradient-to-b from-[#add1c8] via-[#b4d2c8] to-[#e0cbb8] pt-5 fixed left-0 top-0 shadow-lg transition-all duration-500 z-50 ${
+        isCollapsed ? "w-[60px]" : "w-[240px]"
       }`}
     >
       {/* Sidebar Header */}
-      <div className="px-5 mb-10 flex items-center space-x-3 cursor-pointer">
-        <img
-          src={setProfile} // Replace with the actual path to your profile image
-          alt="Profile"
-          className="w-10 h-10 rounded-full"
-          onClick={() => setShowProfileopen(true)}
-        />
+      <div className="px-4 mb-10 flex items-center justify-between">
         {!isCollapsed && (
-          <div>
-            <h3 className="text-sm font-semibold">Welcome,</h3>
-            <h2 className="text-sm font-normal">{username}</h2>
+          <div className="flex items-center">
+            <img
+              src={setProfile}
+              alt="Profile"
+              className="w-10 h-10 rounded-full cursor-pointer"
+              onClick={() => setShowProfileopen(true)}
+            />
+            <div className="ml-3">
+              <h3 className="text-sm font-semibold">Welcome,</h3>
+              <h2 className="text-sm font-normal">{username}</h2>
+            </div>
           </div>
         )}
         <button
-          className="bg-gray-300 text-black p-2 rounded-full ml-auto"
+          className={`bg-gray-300 text-black p-1 rounded-full hover:bg-gray-400 transition-colors ${isCollapsed ? 'ml-2' : 'ml-auto'}`}
           onClick={() => setIsCollapsed(!isCollapsed)}
         >
-          {isCollapsed ? "<" : ">"}
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            {isCollapsed ? (
+              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            ) : (
+              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L4.414 9H16a1 1 0 110 2H4.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+            )}
+          </svg>
         </button>
       </div>
 
@@ -267,38 +275,44 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           </Link>
         </li>
 
-        {/* Dropdown Menu for "My List" */}
+        {/* My List Dropdown */}
         <li className={`relative ${activeDropdown === 0 ? "bg-gray-200" : ""}`}>
           <button
             className="flex items-center px-5 py-4 w-full text-left hover:bg-white transition-all duration-300"
             onClick={() => toggleDropdown(0)}
           >
-            <span className="mr-auto">My List</span>
-            <span>{activeDropdown === 0 ? "v" : ">"}</span>
+            {isCollapsed ? (
+              <img
+                src={require("../icons/edit.svg").default}
+                alt="My List"
+                className="w-6 h-6"
+              />
+            ) : (
+              <>
+                <span className="mr-auto">My List</span>
+                <span>{activeDropdown === 0 ? "v" : ">"}</span>
+              </>
+            )}
           </button>
           {activeDropdown === 0 && (
-            <ul className="absolute left-0 w-full bg-white shadow-md">
-              <li
-                className={`px-5 py-2 text-center ${
-                  isActive("/Personal") ? "bg-white" : "hover:bg-gray-300"
-                }`}
-              >
-                <Link to={"/Personal"}>Personal</Link>
-              </li>
-              <li
-                className={`px-5 py-2 text-center ${
-                  isActive("/Work") ? "bg-white" : "hover:bg-gray-300"
-                }`}
-              >
-                <Link to={"/Work"}>Work</Link>
-              </li>
-              <li
-                className={`px-5 py-2 text-center ${
-                  isActive("/School") ? "bg-white" : "hover:bg-gray-300"
-                }`}
-              >
-                <Link to={"/School"}>School</Link>
-              </li>
+            <ul className={`${
+              isCollapsed 
+                ? "absolute left-full top-0 ml-1" 
+                : "absolute left-0 w-full"
+              } bg-white shadow-md rounded-md overflow-hidden`}
+            >
+              {["Personal", "Work", "School"].map((list) => (
+                <li
+                  key={list}
+                  className={`px-5 py-2 text-center hover:bg-gray-100 ${
+                    isActive(`/${list}`) ? "bg-gray-50" : ""
+                  }`}
+                >
+                  <Link to={`/${list}`} className="block w-full">
+                    {list}
+                  </Link>
+                </li>
+              ))}
             </ul>
           )}
         </li>
