@@ -325,6 +325,7 @@ const MyDay = () => {
 
   const handleToggleSubtask = async (subtaskId) => {
     try {
+      console.log('Toggling subtask:', subtaskId); // Debug log
       const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtask=true&id=${subtaskId}`, {
         method: 'PUT',
         headers: {
@@ -335,6 +336,8 @@ const MyDay = () => {
       });
 
       const data = await response.json();
+      console.log('Toggle response:', data); // Debug log
+
       if (data.success) {
         fetchTasks();
       } else {

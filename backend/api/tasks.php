@@ -107,15 +107,14 @@ try {
             break;
 
         case 'PUT':
-            $data = json_decode(file_get_contents("php://input"), true);
-            if (!$data) {
-                throw new Exception('Invalid request data');
-            }
-
             // If toggling a subtask
             if (isset($_GET['subtask']) && isset($_GET['id'])) {
                 $result = $taskController->toggleSubtask($_GET['id']);
             } else {
+                $data = json_decode(file_get_contents("php://input"), true);
+                if (!$data) {
+                    throw new Exception('Invalid request data');
+                }
                 $result = $taskController->updateTask($user_id, $_GET['id'], $data);
             }
 
