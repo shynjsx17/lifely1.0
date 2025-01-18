@@ -7,8 +7,7 @@ class MigrationManager {
 
     public function __construct() {
         $this->createDatabase();
-        $db = new Database();
-        $this->conn = $db->connect();
+        $this->conn = get_database_connection();
         $this->createMigrationsTable();
     }
 
