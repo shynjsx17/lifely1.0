@@ -182,9 +182,9 @@ const MyDiary = () => {
       />
       <div className={`flex-1 transition-all duration-300 ${
         isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
-      } p-8 bg-system-background`}>
-        <h1 className="text-4xl font-extrabold tracking-tight mb-2">Good Day, {user?.userName || 'User'}!</h1>
-        <h1 className="text-2xl font-bold tracking-tight mb-4" style={{ color: '#FFB78B' }}>
+      } p-8 bg-system-background font-poppins`}>
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Good Day, {user?.userName || 'User'}!</h1>
+        <h1 className="text-xl font-bold tracking-tight mb-4" style={{ color: '#FFB78B' }}>
           Something troubling you? Write it down.
         </h1>
 
