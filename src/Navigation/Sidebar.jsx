@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaCalendarAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { useAuth } from '../context/AuthContext';
 
@@ -110,6 +110,16 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
               className="w-6 h-6 "
             />
             {!isCollapsed && <span>Home</span>}
+          </Link>
+        </li>
+        <li
+          className={`flex items-center px-5 py-4 ${
+            isActive("/calendar") ? "bg-white" : "hover:bg-white"
+          } transition-all duration-300`}
+        >
+          <Link to={"/calendar"} className="flex items-center space-x-2">
+            <FaCalendarAlt className="w-6 h-6" />
+            {!isCollapsed && <span>Calendar</span>}
           </Link>
         </li>
         {/*Profile pop up */}

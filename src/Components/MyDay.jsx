@@ -33,9 +33,11 @@ const MyDay = () => {
   // Fetch tasks from backend
   const fetchTasks = async () => {
     try {
-      console.log('Fetching tasks...'); // Debug log
       const token = sessionStorage.getItem('session_token');
-      console.log('Using token:', token); // Debug log
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
 
       const response = await fetch('http://localhost/lifely1.0/backend/api/tasks.php', {
         headers: {
@@ -44,17 +46,34 @@ const MyDay = () => {
         }
       });
 
-      console.log('Response status:', response.status); // Debug log
-      const data = await response.json();
-      console.log('Full API response:', data); // Debug log
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
+      const data = await response.json();
+      
       if (data.success && Array.isArray(data.tasks)) {
-        // Filter out archived tasks
-        const nonArchivedTasks = data.tasks.filter(task => !task.is_archived);
-        console.log('Non-archived tasks:', nonArchivedTasks); // Debug log
+        // Filter and sort tasks
+        const nonArchivedTasks = data.tasks
+          .filter(task => !task.is_archived)
+          .sort((a, b) => {
+            // Sort by priority first
+            const priorityOrder = { high: 1, medium: 2, low: 3 };
+            const priorityDiff = priorityOrder[a.priority] - priorityOrder[b.priority];
+            if (priorityDiff !== 0) return priorityDiff;
+            
+            // Then by completion status
+            if (a.is_completed !== b.is_completed) {
+              return a.is_completed ? 1 : -1;
+            }
+            
+            // Finally by creation date
+            return new Date(b.created_at) - new Date(a.created_at);
+          });
+
         setTasks(nonArchivedTasks);
       } else {
-        console.error('Invalid response format or no tasks:', data);
+        console.error('Invalid response format:', data);
         setTasks([]);
       }
     } catch (error) {
@@ -72,36 +91,54 @@ const MyDay = () => {
     console.log('Current tasks state:', tasks);
   }, [tasks]);
 
+  // Add task with better error handling
   const handleAddTask = async () => {
-    if (newTask.trim()) {
-      try {
-        const response = await fetch('http://localhost/lifely1.0/backend/api/tasks.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
-          },
-          body: JSON.stringify({
-            title: newTask,
-            list_type: selectedList,
-            priority: selectedTag.toLowerCase().replace(' priority', ''),
-            description: '',
-            is_archived: false
-          })
-        });
+    if (!newTask.trim()) {
+      return;
+    }
 
-        const data = await response.json();
-        console.log('Add task response:', data); // Debug log
-        if (data.success) {
-          fetchTasks();
-          setNewTask("");
-          setShowPopup(false);
-        } else {
-          console.error('Failed to add task:', data.message);
-        }
-      } catch (error) {
-        console.error('Error adding task:', error);
+    try {
+      const token = sessionStorage.getItem('session_token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
       }
+
+      const taskData = {
+        title: newTask.trim(),
+        list_type: selectedList,
+        priority: selectedTag.toLowerCase().replace(' priority', ''),
+        description: '',
+        is_archived: false,
+        reminder_date: null // Add reminder date if needed
+      };
+
+      const response = await fetch('http://localhost/lifely1.0/backend/api/tasks.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(taskData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.success) {
+        await fetchTasks(); // Refresh task list
+        setNewTask("");
+        setShowPopup(false);
+      } else {
+        console.error('Failed to add task:', data.message);
+        // You might want to show an error message to the user here
+      }
+    } catch (error) {
+      console.error('Error adding task:', error);
+      // You might want to show an error message to the user here
     }
   };
 
@@ -136,22 +173,105 @@ const MyDay = () => {
 
   const handleToggleTask = async (taskId, completed) => {
     try {
+      const token = sessionStorage.getItem('session_token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
       const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          is_completed: !completed
+          is_completed: !completed,
+          completed_at: !completed ? new Date().toISOString() : null
         })
       });
 
-      if (response.ok) {
-        fetchTasks();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        await fetchTasks();
+      } else {
+        console.error('Failed to toggle task:', data.message);
       }
     } catch (error) {
       console.error('Error toggling task completion:', error);
+    }
+  };
+
+  const handleDeleteTask = async (taskId) => {
+    if (!window.confirm('Are you sure you want to delete this task?')) {
+      return;
+    }
+
+    try {
+      const token = sessionStorage.getItem('session_token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        await fetchTasks();
+      } else {
+        console.error('Failed to delete task:', data.message);
+      }
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
+  };
+
+  const handleArchiveTask = async (taskId) => {
+    try {
+      const token = sessionStorage.getItem('session_token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          is_archived: true,
+          archived_at: new Date().toISOString()
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        await fetchTasks();
+      } else {
+        console.error('Failed to archive task:', data.message);
+      }
+    } catch (error) {
+      console.error('Error archiving task:', error);
     }
   };
 
@@ -265,28 +385,6 @@ const MyDay = () => {
     }
   };
 
-  const handleArchiveTask = async (taskId) => {
-    try {
-      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
-        },
-        body: JSON.stringify({
-          is_archived: true
-        })
-      });
-
-      if (response.ok) {
-        setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
-        setDropdownIndex(null);
-      }
-    } catch (error) {
-      console.error('Error archiving task:', error);
-    }
-  };
-
   // Format the date in the desired format (e.g., 'Wednesday, December 11, 2024')
   const formattedDate = currentDate.toLocaleDateString('en-US', {
     weekday: 'long',
@@ -305,49 +403,69 @@ const MyDay = () => {
   };
   
   const handleAddSubtask = async () => {
-    if (newSubtask.trim() !== "") {
-      try {
-        const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtask=true&task_id=${selectedTaskId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
-          },
-          body: JSON.stringify({
-            title: newSubtask
-          })
-        });
+    if (!newSubtask.trim() || !selectedTaskId) {
+      return;
+    }
 
-        const data = await response.json();
-        if (data.success) {
-          fetchTasks();
-          setNewSubtask("");
-        } else {
-          console.error('Failed to add subtask:', data.message);
-        }
-      } catch (error) {
-        console.error('Error adding subtask:', error);
+    try {
+      const token = sessionStorage.getItem('session_token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
       }
+
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtasks&task_id=${selectedTaskId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: newSubtask.trim()
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        // Fetch updated task list to get the new subtask
+        await fetchTasks();
+        setNewSubtask('');
+      } else {
+        console.error('Failed to add subtask:', data.message);
+      }
+    } catch (error) {
+      console.error('Error adding subtask:', error);
     }
   };
 
   const handleToggleSubtask = async (subtaskId) => {
     try {
-      console.log('Toggling subtask:', subtaskId); // Debug log
-      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtask=true&id=${subtaskId}`, {
+      const token = sessionStorage.getItem('session_token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtask&id=${subtaskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
-        },
-        body: JSON.stringify({})
+          'Authorization': `Bearer ${token}`
+        }
       });
 
-      const data = await response.json();
-      console.log('Toggle response:', data); // Debug log
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
+      const data = await response.json();
       if (data.success) {
-        fetchTasks();
+        // Fetch updated task list to get the updated subtask status
+        await fetchTasks();
       } else {
         console.error('Failed to toggle subtask:', data.message);
       }
@@ -355,6 +473,46 @@ const MyDay = () => {
       console.error('Error toggling subtask:', error);
     }
   };
+
+  const fetchSubtasks = async (taskId) => {
+    try {
+      const token = sessionStorage.getItem('session_token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtasks&task_id=${taskId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        setSubtasks(data.subtasks);
+      } else {
+        console.error('Failed to fetch subtasks:', data.message);
+        setSubtasks([]);
+      }
+    } catch (error) {
+      console.error('Error fetching subtasks:', error);
+      setSubtasks([]);
+    }
+  };
+
+  // Add useEffect to fetch subtasks when a task is selected
+  useEffect(() => {
+    if (selectedTaskId) {
+      fetchSubtasks(selectedTaskId);
+    } else {
+      setSubtasks([]);
+    }
+  }, [selectedTaskId]);
 
   const handleKeyPress = (e, index) => {
     if (e.key === "Enter") {

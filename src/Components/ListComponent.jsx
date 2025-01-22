@@ -166,6 +166,7 @@ const ListComponent = () => {
 
     const handleToggleSubtask = async (taskId, subtaskId) => {
         try {
+            console.log('Toggling subtask:', subtaskId, 'for task:', taskId); // Debug log
             const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtask=true&id=${subtaskId}`, {
                 method: 'PUT',
                 headers: {
@@ -175,8 +176,31 @@ const ListComponent = () => {
             });
 
             const data = await response.json();
+            console.log('Toggle subtask response:', data); // Debug log
+
             if (data.success) {
-                fetchTasks();
+                // Update the selected task's subtasks immediately
+                const updatedSubtasks = selectedTask.subtasks.map(subtask =>
+                    subtask.id === subtaskId
+                        ? { ...subtask, is_completed: !subtask.is_completed }
+                        : subtask
+                );
+
+                // Update selected task
+                const updatedSelectedTask = {
+                    ...selectedTask,
+                    subtasks: updatedSubtasks
+                };
+                setSelectedTask(updatedSelectedTask);
+
+                // Update the task in the tasks list
+                setTasks(prevTasks =>
+                    prevTasks.map(task =>
+                        task.id === taskId
+                            ? { ...task, subtasks: updatedSubtasks }
+                            : task
+                    )
+                );
             }
         } catch (error) {
             console.error('Error toggling subtask:', error);

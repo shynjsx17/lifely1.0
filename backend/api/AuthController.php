@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/db_connect.php';
+require_once __DIR__ . '/../config/Database.php';
 
 class AuthController {
     private $conn;

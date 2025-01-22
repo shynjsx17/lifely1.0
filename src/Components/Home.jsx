@@ -12,25 +12,109 @@ const Home = () => {
   const fetchTasks = async () => {
     try {
       const token = sessionStorage.getItem('session_token');
-      const response = await fetch('http://localhost/lifely1.0/backend/api/tasks.php?archived=false', {
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
+      // Changed the URL to fetch non-archived tasks
+      const response = await fetch('http://localhost/lifely1.0/backend/api/tasks.php', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
       if (data.success) {
-        setTasks(data.tasks || []);
+        // Filter out archived tasks and sort the remaining ones
+        const nonArchivedTasks = (data.tasks || [])
+          .filter(task => !task.is_archived)
+          .sort((a, b) => {
+            // Sort by priority first
+            const priorityOrder = { high: 1, medium: 2, low: 3 };
+            const priorityDiff = priorityOrder[a.priority] - priorityOrder[b.priority];
+            if (priorityDiff !== 0) return priorityDiff;
+            
+            // Then by reminder date if exists
+            const dateA = a.reminder_date ? new Date(a.reminder_date) : new Date(9999, 11, 31);
+            const dateB = b.reminder_date ? new Date(b.reminder_date) : new Date(9999, 11, 31);
+            return dateA - dateB;
+          });
+
+        setTasks(nonArchivedTasks);
       }
     } catch (error) {
       console.error('Error fetching tasks:', error);
+      setTasks([]);
     }
+  };
+
+  // Function to filter and organize tasks
+  const getFilteredTasks = () => {
+    const now = new Date();
+    
+    switch (filter) {
+      case "upcoming":
+        return tasks.filter(task => {
+          if (task.is_completed) return false;
+          
+          // If no reminder date, it's upcoming
+          if (!task.reminder_date) return true;
+          
+          // If has reminder date and not overdue
+          const reminderDate = new Date(task.reminder_date);
+          return reminderDate >= now;
+        });
+        
+      case "overdue":
+        return tasks.filter(task => {
+          if (task.is_completed || !task.reminder_date) return false;
+          
+          const reminderDate = new Date(task.reminder_date);
+          return reminderDate < now;
+        });
+        
+      case "completed":
+        return tasks.filter(task => task.is_completed);
+        
+      default:
+        return tasks;
+    }
+  };
+
+  // Get task count for each category
+  const getTaskCounts = () => {
+    const now = new Date();
+    
+    return {
+      upcoming: tasks.filter(task => {
+        if (task.is_completed) return false;
+        if (!task.reminder_date) return true;
+        return new Date(task.reminder_date) >= now;
+      }).length,
+      overdue: tasks.filter(task => {
+        if (task.is_completed || !task.reminder_date) return false;
+        return new Date(task.reminder_date) < now;
+      }).length,
+      completed: tasks.filter(task => task.is_completed).length
+    };
   };
 
   useEffect(() => {
     fetchTasks();
+    // Set up auto-refresh every minute to update overdue status
+    const interval = setInterval(fetchTasks, 60000);
+    return () => clearInterval(interval);
   }, []);
+
+  // Get filtered tasks and counts
+  const filteredTasks = getFilteredTasks();
+  const taskCounts = getTaskCounts();
 
   const handleToggleTask = async (taskId, completed) => {
     try {
@@ -97,19 +181,19 @@ const Home = () => {
                 className={`cursor-pointer pb-2 hover:border-b-4 hover:border-[#808080] ${filter === "upcoming" ? "border-b-4 border-[#808080]" : ""}`}
                 onClick={() => setFilter("upcoming")}
               >
-                Upcoming
+                Upcoming ({taskCounts.upcoming})
               </span>
               <span
                 className={`cursor-pointer pb-2 hover:border-b-4 hover:border-[#808080] ${filter === "overdue" ? "border-b-4 border-[#808080]" : ""}`}
                 onClick={() => setFilter("overdue")}
               >
-                Overdue
+                Overdue ({taskCounts.overdue})
               </span>
               <span
                 className={`cursor-pointer pb-2 hover:border-b-4 hover:border-[#808080] ${filter === "completed" ? "border-b-4 border-[#808080]" : ""}`}
                 onClick={() => setFilter("completed")}
               >
-                Completed
+                Completed ({taskCounts.completed})
               </span>
             </div>
           </div>
@@ -122,17 +206,16 @@ const Home = () => {
             <div className="col-span-3 text-center">List</div>
           </div>
 
+          {/* Task List */}
           <div className="space-y-2">
-            {tasks
-              .filter((task) => {
-                if (filter === "completed") return task.is_completed;
-                if (filter === "overdue") {
-                  const reminderDate = task.reminder_date ? new Date(task.reminder_date) : null;
-                  return reminderDate && reminderDate < new Date() && !task.is_completed;
-                }
-                return !task.is_completed;
-              })
-              .map((task) => (
+            {filteredTasks.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                {filter === "upcoming" && "No upcoming tasks"}
+                {filter === "overdue" && "No overdue tasks"}
+                {filter === "completed" && "No completed tasks"}
+              </div>
+            ) : (
+              filteredTasks.map((task) => (
                 <div key={task.id} className="grid grid-cols-12 gap-4 items-center p-3 hover:bg-gray-50 rounded-lg">
                   <div className="col-span-4 flex items-center space-x-3">
                     <input
@@ -148,14 +231,16 @@ const Home = () => {
                     </label>
                   </div>
                   <div className="col-span-2 text-center">
-                    <span className="text-gray-600">
+                    <span className={`text-sm ${
+                      filter === "overdue" ? "text-red-500 font-medium" : "text-gray-600"
+                    }`}>
                       {task.reminder_date ? 
                         new Date(task.reminder_date).toLocaleDateString('en-US', {
                           month: 'short',
                           day: 'numeric',
                           year: 'numeric'
                         }) : 
-                        "No reminder date"
+                        "No reminder"
                       }
                     </span>
                   </div>
@@ -168,7 +253,8 @@ const Home = () => {
                     {task.list_type.charAt(0).toUpperCase() + task.list_type.slice(1)}
                   </div>
                 </div>
-              ))}
+              ))
+            )}
           </div>
         </div>
       </div>
