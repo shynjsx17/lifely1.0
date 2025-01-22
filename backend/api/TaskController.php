@@ -158,10 +158,9 @@ class TaskController {
                 $query .= " AND t.is_completed = ?";
                 $params[] = $filters['is_completed'];
             }
-            if (isset($filters['is_archived'])) {
-                $query .= " AND t.is_archived = ?";
-                $params[] = $filters['is_archived'];
-            }
+            // Always include is_archived filter
+            $query .= " AND t.is_archived = ?";
+            $params[] = isset($filters['is_archived']) ? $filters['is_archived'] : false;
 
             $query .= " ORDER BY t.created_at DESC";
 

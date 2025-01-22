@@ -12,6 +12,7 @@ const ArchiveComponent = () => {
   // Fetch archived tasks
   const fetchArchivedTasks = async () => {
     try {
+      console.log('Fetching archived tasks...'); // Debug log
       const response = await fetch('http://localhost/lifely1.0/backend/api/tasks.php?archived=true', {
         headers: {
           'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`,
@@ -22,7 +23,7 @@ const ArchiveComponent = () => {
       console.log('Archived tasks response:', data); // Debug log
       if (data.success) {
         // Make sure we only get archived tasks
-        const archivedOnly = (data.tasks || []).filter(task => task.is_archived === true);
+        const archivedOnly = data.tasks || [];
         setArchivedTasks(archivedOnly);
       } else {
         console.error('Failed to fetch archived tasks:', data.message);

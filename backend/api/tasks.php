@@ -79,6 +79,8 @@ try {
                 'is_archived' => isset($_GET['archived']) ? (bool)$_GET['archived'] : false
             ];
 
+            error_log("Request filters: " . json_encode($filters)); // Debug log
+
             // If subtasks endpoint is called
             if (isset($_GET['subtasks']) && isset($_GET['task_id'])) {
                 $result = $taskController->getSubtasks($_GET['task_id']);

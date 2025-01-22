@@ -11,6 +11,7 @@ import Landing from "./Components/Landing";
 import ErrorBoundary from "./Components/ErrorBoundary";
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './Components/ProtectedRoute';
+import ListComponent from './Components/ListComponent';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
                   <MyDiary />
                 </ProtectedRoute>
               } />
+              <Route path="/lists/:listType" element={<ListComponent />} />
             </Routes>
           </ErrorBoundary>
         </AuthProvider>

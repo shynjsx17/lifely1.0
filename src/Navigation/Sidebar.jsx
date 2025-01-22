@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from 'react-icons/fa';
 import Swal from 'sweetalert2';
-import { useAuth } from '../context/AuthContext'; // Fix import
-
+import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
-  const { user } = useAuth(); // Use the hook instead of useContext
+  const { user } = useAuth();
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
   const [showProfileopen, setShowProfileopen] = useState(false);
@@ -26,39 +25,40 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       filereader.readAsDataURL(e.target.files[0]);
     }
   };
+
   const toggleDropdown = (index) => {
     setActiveDropdown(activeDropdown === index ? null : index);
   };
 
-  // Function to check if the current route matches the path
   const isActive = (path) => location.pathname === path;
 
-    const EditSave = () => {
-      setUsername(tempUsername);
-      setShowEditUsername(false);
-    }
-    const handleLogout = () => {
-      Swal.fire({
-        title: "Are you sure you want to logout?",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        cancelButtonText: "Cancel",
-        confirmButtonColor: "#FB923C",
-        cancelButtonColor: "#d33",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          localStorage.removeItem('token');
-          Swal.fire({
-            title: "Logged Out!",
-            text: "You have been successfully logged out.",
-            icon: "success",
-            confirmButtonColor: '#FB923C'
-          }).then(() => {
-              navigate('/login');
-            });
-        }
-      });
-    };  
+  const EditSave = () => {
+    setUsername(tempUsername);
+    setShowEditUsername(false);
+  }
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure you want to logout?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#FB923C",
+      cancelButtonColor: "#d33",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem('token');
+        Swal.fire({
+          title: "Logged Out!",
+          text: "You have been successfully logged out.",
+          icon: "success",
+          confirmButtonColor: '#FB923C'
+        }).then(() => {
+          navigate('/login');
+        });
+      }
+    });
+  };
 
   return (
     <div
@@ -234,20 +234,6 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         </li>
         <li
           className={`flex items-center px-5 py-4 ${
-            isActive("/MyCalendar") ? "bg-white" : "hover:bg-white"
-          } transition-all duration-300`}
-        >
-          <Link to={"/MyCalendar"} className="flex items-center space-x-2">
-            <img
-              src={require("../icons/calendar.svg").default}
-              alt="My Calendar Icon"
-              className="w-6 h-6"
-            />
-            {!isCollapsed && <span>My Calendar</span>}
-          </Link>
-        </li>
-        <li
-          className={`flex items-center px-5 py-4 ${
             isActive("/MyDiary") ? "bg-white" : "hover:bg-white"
           } transition-all duration-300`}
         >
@@ -300,19 +286,16 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                 ? "absolute left-full top-0 ml-1" 
                 : "absolute left-0 w-full"
               } bg-white shadow-md rounded-md overflow-hidden`}
-            >
-              {["Personal", "Work", "School"].map((list) => (
-                <li
-                  key={list}
-                  className={`px-5 py-2 text-center hover:bg-gray-100 ${
-                    isActive(`/${list}`) ? "bg-gray-50" : ""
-                  }`}
-                >
-                  <Link to={`/${list}`} className="block w-full">
-                    {list}
-                  </Link>
-                </li>
-              ))}
+          >
+              <li className="px-5 py-2 text-center hover:bg-gray-100">
+                <Link to="/lists/personal" className="block w-full">Personal</Link>
+              </li>
+              <li className="px-5 py-2 text-center hover:bg-gray-100">
+                <Link to="/lists/work" className="block w-full">Work</Link>
+              </li>
+              <li className="px-5 py-2 text-center hover:bg-gray-100">
+                <Link to="/lists/school" className="block w-full">School</Link>
+              </li>
             </ul>
           )}
         </li>
