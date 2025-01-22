@@ -19,6 +19,7 @@ class TasksSchema {
             priority ENUM('high', 'medium', 'low') NOT NULL,
             reminder_date DATETIME,
             is_completed BOOLEAN DEFAULT FALSE,
+            is_archived BOOLEAN DEFAULT FALSE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

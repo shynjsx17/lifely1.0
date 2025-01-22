@@ -35,27 +35,31 @@ const MyDay = () => {
     try {
       console.log('Fetching tasks...'); // Debug log
       const token = sessionStorage.getItem('session_token');
-      console.log('Token:', token); // Debug log
+      console.log('Using token:', token); // Debug log
 
-      const response = await fetch('http://localhost/lifely1.0/backend/api/tasks.php?archived=false', {
+      const response = await fetch('http://localhost/lifely1.0/backend/api/tasks.php', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
 
+      console.log('Response status:', response.status); // Debug log
       const data = await response.json();
-      console.log('Response data:', data); // Debug log
+      console.log('Full API response:', data); // Debug log
 
-      if (data.success) {
-        const tasksArray = Array.isArray(data.tasks) ? data.tasks : [];
-        console.log('Setting tasks:', tasksArray); // Debug log
-        setTasks(tasksArray);
+      if (data.success && Array.isArray(data.tasks)) {
+        // Filter out archived tasks
+        const nonArchivedTasks = data.tasks.filter(task => !task.is_archived);
+        console.log('Non-archived tasks:', nonArchivedTasks); // Debug log
+        setTasks(nonArchivedTasks);
       } else {
-        console.error('Failed to fetch tasks:', data.message);
+        console.error('Invalid response format or no tasks:', data);
+        setTasks([]);
       }
     } catch (error) {
       console.error('Error fetching tasks:', error);
+      setTasks([]);
     }
   };
 
@@ -81,15 +85,19 @@ const MyDay = () => {
             title: newTask,
             list_type: selectedList,
             priority: selectedTag.toLowerCase().replace(' priority', ''),
-            description: ''
+            description: '',
+            is_archived: false
           })
         });
 
         const data = await response.json();
+        console.log('Add task response:', data); // Debug log
         if (data.success) {
           fetchTasks();
           setNewTask("");
           setShowPopup(false);
+        } else {
+          console.error('Failed to add task:', data.message);
         }
       } catch (error) {
         console.error('Error adding task:', error);

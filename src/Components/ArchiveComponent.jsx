@@ -230,9 +230,9 @@ const ArchiveComponent = () => {
 
   return (
     <div className="flex h-screen">
-      <Sidebar
-        isCollapsed={isSidebarCollapsed}
-        setIsCollapsed={setIsSidebarCollapsed}
+      <Sidebar 
+        isCollapsed={isSidebarCollapsed} 
+        setIsCollapsed={setIsSidebarCollapsed} 
       />
       <div className={`flex-1 transition-all duration-300 ${
         isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
@@ -267,21 +267,21 @@ const ArchiveComponent = () => {
 
         {/* Action Buttons */}
         <div className="flex justify-end space-x-4 mb-6">
-          <button 
+          <button
             onClick={handleRestoreAll}
             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50"
             disabled={activeTab === 'tasks' ? archivedTasks.length === 0 : archivedDiaries.length === 0}
           >
             Restore All
           </button>
-          <button 
+          <button
             onClick={handleDeleteAll}
             className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50"
             disabled={activeTab === 'tasks' ? archivedTasks.length === 0 : archivedDiaries.length === 0}
           >
             Delete All
           </button>
-        </div>
+      </div>
 
         {/* Content Area */}
         <div className="bg-white rounded-lg shadow-md p-6">
@@ -290,8 +290,8 @@ const ArchiveComponent = () => {
               {archivedTasks.map((task) => (
                 <div key={task.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center space-x-4">
-                    <input
-                      type="checkbox"
+                  <input
+                    type="checkbox"
                       className="w-5 h-5 rounded border-gray-300"
                       checked={task.is_completed}
                       readOnly
@@ -361,7 +361,7 @@ const ArchiveComponent = () => {
             </div>
           )}
         </div>
-      </div>
+    </div>
     </div>
   );
 };

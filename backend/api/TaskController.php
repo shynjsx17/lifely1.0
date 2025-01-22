@@ -96,6 +96,10 @@ class TaskController {
                 $updates[] = "is_completed = ?";
                 $params[] = $data['is_completed'];
             }
+            if (isset($data['is_archived'])) {
+                $updates[] = "is_archived = ?";
+                $params[] = $data['is_archived'];
+            }
 
             if (empty($updates)) {
                 return ['success' => false, 'message' => 'No fields to update'];
@@ -130,6 +134,10 @@ class TaskController {
 
     public function getTasks($user_id, $filters = []) {
         try {
+            // Debug logging
+            error_log("Fetching tasks for user_id: " . $user_id);
+            error_log("Filters: " . json_encode($filters));
+
             // First get tasks without subtasks to avoid GROUP_CONCAT issues
             $query = "SELECT t.*, tn.note
                      FROM {$this->tasks_table} t 
@@ -150,12 +158,23 @@ class TaskController {
                 $query .= " AND t.is_completed = ?";
                 $params[] = $filters['is_completed'];
             }
+            if (isset($filters['is_archived'])) {
+                $query .= " AND t.is_archived = ?";
+                $params[] = $filters['is_archived'];
+            }
 
             $query .= " ORDER BY t.created_at DESC";
+
+            // Debug logging
+            error_log("Final query: " . $query);
+            error_log("Query params: " . json_encode($params));
 
             $stmt = $this->conn->prepare($query);
             $stmt->execute($params);
             $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Debug logging
+            error_log("Found tasks: " . json_encode($tasks));
 
             // Now get subtasks for each task
             foreach ($tasks as &$task) {

@@ -75,7 +75,8 @@ try {
             $filters = [
                 'list_type' => $_GET['list_type'] ?? null,
                 'priority' => $_GET['priority'] ?? null,
-                'is_completed' => isset($_GET['is_completed']) ? (bool)$_GET['is_completed'] : null
+                'is_completed' => isset($_GET['is_completed']) ? (bool)$_GET['is_completed'] : null,
+                'is_archived' => isset($_GET['archived']) ? (bool)$_GET['archived'] : false
             ];
 
             // If subtasks endpoint is called

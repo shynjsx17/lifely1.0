@@ -22,8 +22,7 @@ const MyDiary = () => {
       const token = sessionStorage.getItem('session_token');
       console.log('Using token:', token); // Debug log
 
-      const response = await fetch(`http://localhost/lifely1.0/backend/api/diary.php?page=${currentPage}&limit=10&archived=false`, {
-        method: 'GET',
+      const response = await fetch('http://localhost/lifely1.0/backend/api/diary.php', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -35,18 +34,17 @@ const MyDiary = () => {
       console.log('Full API response:', data); // Debug log
 
       if (data.status === 'success' && data.data && Array.isArray(data.data.entries)) {
-        console.log('Setting entries:', data.data.entries); // Debug log
-        setEntries(data.data.entries);
-        setTotalPages(data.data.pagination?.total_pages || 1);
+        // Filter out archived entries
+        const nonArchivedEntries = data.data.entries.filter(entry => !entry.is_archived);
+        console.log('Non-archived entries:', nonArchivedEntries); // Debug log
+        setEntries(nonArchivedEntries);
       } else {
-        console.error('Invalid response format:', data);
+        console.error('Invalid response format or no entries:', data);
         setEntries([]);
-        setTotalPages(1);
       }
     } catch (error) {
-      console.error('Error fetching entries:', error);
+      console.error('Error fetching diary entries:', error);
       setEntries([]);
-      setTotalPages(1);
     }
   };
 

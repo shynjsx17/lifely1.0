@@ -4,6 +4,7 @@ require_once __DIR__ . '/001_initial_schema.php';
 require_once __DIR__ . '/002_tasks_schema.php';
 require_once __DIR__ . '/003_subtasks_schema.php';
 require_once __DIR__ . '/004_diary_schema.php';
+require_once __DIR__ . '/005_add_archived_to_tasks.php';
 
 try {
     $migrationManager = new MigrationManager();
@@ -13,7 +14,8 @@ try {
         ['name' => 'InitialSchema', 'class' => new InitialSchema($migrationManager->getConnection())],
         ['name' => 'TasksSchema', 'class' => new TasksSchema($migrationManager->getConnection())],
         ['name' => 'SubtasksSchema', 'class' => new SubtasksSchema($migrationManager->getConnection())],
-        ['name' => 'DiarySchema', 'class' => new DiarySchema($migrationManager->getConnection())]
+        ['name' => 'DiarySchema', 'class' => new DiarySchema($migrationManager->getConnection())],
+        ['name' => 'AddArchivedToTasks', 'class' => new AddArchivedToTasks($migrationManager->getConnection())]
     ];
 
     // Run migrations
