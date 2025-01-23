@@ -237,57 +237,59 @@ const MyDiary = () => {
                 className="w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 overflow-y-auto focus:outline-none mb-16"
               />
 
-              {/* Formatting Tools - Fixed at bottom */}
-              <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-between items-center">
-                <div className="flex space-x-4">
-                  <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
-                    <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
-                  </button>
-                  <button onClick={() => document.execCommand('italic')} className="p-2 hover:bg-gray-100 rounded">
-                    <img src={require("../icons/Italic.svg").default} alt="Italic" className="w-6 h-6" />
-                  </button>
-                  <button onClick={() => document.execCommand('underline')} className="p-2 hover:bg-gray-100 rounded">
-                    <img src={require("../icons/underline.svg").default} alt="Underline" className="w-6 h-6" />
-                  </button>
-                </div>
-                <button
-                  onClick={saveContent}
-                  className="px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
-                >
-                  Save
-                </button>
-              </div>
-            </div>
+              /* Formatting Tools - Fixed at bottom */}
+                      <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-between items-center">
+                      <div className="flex space-x-4">
+                        <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
+                        <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
+                        </button>
+                        <button onClick={() => document.execCommand('italic')} className="p-2 hover:bg-gray-100 rounded">
+                        <img src={require("../icons/Italic.svg").default} alt="Italic" className="w-6 h-6" />
+                        </button>
+                        <button onClick={() => document.execCommand('underline')} className="p-2 hover:bg-gray-100 rounded">
+                        <img src={require("../icons/underline.svg").default} alt="Underline" className="w-6 h-6" />
+                        </button>
+                      </div>
+                      <button
+                        onClick={saveContent}
+                        className="px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
+                      >
+                        Save
+                      </button>
+                      </div>
+                    </div>
 
-            {/* Mood Tracker */}
-            <div className="absolute top-4 right-4 space-y-2">
-              <h2 className="text-gray-500 text-lg">Mood Tracker:</h2>
-              <div className="flex flex-col space-y-2">
-                {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
-                  const moodColors = {
-                    'sad': 'bg-[#FFB6A6]',
-                    'angry': 'bg-[#FFCF55]',
-                    'neutral': 'bg-[#FFF731]',
-                    'happy': 'bg-[#00FFFF]',
-                    'very happy': 'bg-[#29E259]'
-                  };
+                    {/* Mood Tracker */}
+                    <div className="absolute top-4 right-4">
+                      <div className="flex items-center gap-4">
+                      <h2 className="text-gray-500 text-lg whitespace-nowrap">Mood Tracker:</h2>
+                      <div className="flex space-x-2">
+                        {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
+                        const moodColors = {
+                          'sad': 'bg-[#FFB6A6]',
+                          'angry': 'bg-[#FFCF55]',
+                          'neutral': 'bg-[#FFF731]',
+                          'happy': 'bg-[#00FFFF]',
+                          'very happy': 'bg-[#29E259]'
+                        };
 
-                  return (
-                    <button
-                      key={moodOption}
-                      onClick={() => setMood(moodOption)}
-                      className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
-                    >
-                      {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
+                        return (
+                          <button
+                          key={moodOption}
+                          onClick={() => setMood(moodOption)}
+                          className={`px-3 py-1 rounded-full text-sm ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
+                          >
+                          {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
+                          </button>
+                        );
+                        })}
+                      </div>
+                      </div>
+                    </div>
+                    </div>
+                  )}
 
-        {/* View Saved Entries */}
+                  {/* View Saved Entries */}
         {viewSavedEntries && (
           <div className="w-full max-w-7xl mx-auto space-y-6">
             {entries.length === 0 ? (
