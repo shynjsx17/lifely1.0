@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Navigation/Sidebar';
 import { useAuth } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 
 const ArchiveComponent = () => {
   const { user } = useAuth();
@@ -129,68 +130,115 @@ const ArchiveComponent = () => {
   };
 
   // Handle delete diary
-  const handleDeleteDiary = async (entryId) => {
+  const handleDeleteDiary = (entryId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this diary entry!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#FB923C',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteDiaryEntry(entryId);
+      }
+    });
+  };
+
+  const deleteDiaryEntry = async (entryId) => {
     try {
-      const response = await fetch('http://localhost/lifely1.0/backend/api/diary.php', {
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/diary.php?id=${entryId}`, {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
-        },
-        body: JSON.stringify({
-          id: entryId
-        })
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`,
+          'Content-Type': 'application/json'
+        }
       });
 
-      if (response.ok) {
-        fetchArchivedDiaries();
+      const data = await response.json();
+      
+      if (data.success) {
+        setArchivedDiaries(prev => prev.filter(entry => entry.id !== entryId));
+        Swal.fire('Deleted!', 'Your diary entry has been deleted.', 'success');
+      } else {
+        Swal.fire('Error!', 'Failed to delete diary entry.', 'error');
       }
     } catch (error) {
       console.error('Error deleting diary:', error);
+      Swal.fire('Error!', 'An error occurred while deleting.', 'error');
     }
   };
 
   // Handle restore all
   const handleRestoreAll = async () => {
-    try {
-      if (activeTab === 'tasks') {
-        // Restore all archived tasks
-        await Promise.all(archivedTasks.map(task => 
-          fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${task.id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
-            },
-            body: JSON.stringify({
-              is_archived: false
+    const itemType = activeTab === 'tasks' ? 'tasks' : 'diary entries';
+    
+    const result = await Swal.fire({
+      title: 'Restore All',
+      text: `Are you sure you want to restore all archived ${itemType}?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#FB923C',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, restore all!'
+    });
+  
+    if (result.isConfirmed) {
+      try {
+        if (activeTab === 'tasks') {
+          await Promise.all(archivedTasks.map(task => 
+            fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${task.id}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+              },
+              body: JSON.stringify({
+                is_archived: false
+              })
             })
-          })
-        ));
-        // Clear the archived tasks list
-        setArchivedTasks([]);
-      } else {
-        // Restore all archived diaries
-        await Promise.all(archivedDiaries.map(entry =>
-          fetch('http://localhost/lifely1.0/backend/api/diary.php', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
-            },
-            body: JSON.stringify({
-              id: entry.id,
-              is_archived: false
+          ));
+          setArchivedTasks([]);
+          
+          Swal.fire(
+            'Restored!',
+            'All tasks have been restored successfully.',
+            'success'
+          );
+        } else {
+          await Promise.all(archivedDiaries.map(entry =>
+            fetch('http://localhost/lifely1.0/backend/api/diary.php', {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+              },
+              body: JSON.stringify({
+                id: entry.id,
+                is_archived: false
+              })
             })
-          })
-        ));
-        // Clear the archived diaries list
-        setArchivedDiaries([]);
+          ));
+          setArchivedDiaries([]);
+          
+          Swal.fire(
+            'Restored!',
+            'All diary entries have been restored successfully.',
+            'success'
+          );
+        }
+      } catch (error) {
+        console.error('Error restoring all items:', error);
+        Swal.fire(
+          'Error!',
+          `Failed to restore all ${itemType}. Please try again.`,
+          'error'
+        );
       }
-    } catch (error) {
-      console.error('Error restoring all items:', error);
     }
   };
+  
 
   // Handle delete all
   const handleDeleteAll = async () => {
@@ -227,6 +275,34 @@ const ArchiveComponent = () => {
     } catch (error) {
       console.error('Error deleting all items:', error);
     }
+  };
+
+  const handleDelete = (taskId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this task!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#FB923C',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Call your delete function here
+        handleDeleteTask(taskId);
+        Swal.fire(
+          'Deleted!',
+          'Your task has been deleted.',
+          'success'
+        );
+      } else {
+        Swal.fire(
+          'Cancelled',
+          'Your task is safe!',
+          'error'
+        );
+      }
+    });
   };
 
   return (
@@ -314,7 +390,7 @@ const ArchiveComponent = () => {
                       </svg>
                     </button>
                     <button
-                      onClick={() => handleDeleteTask(task.id)}
+                      onClick={() => handleDelete(task.id)}
                       className="p-2 text-red-500 hover:bg-red-50 rounded-full"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

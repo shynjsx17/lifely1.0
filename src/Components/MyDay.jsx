@@ -770,11 +770,6 @@ const MyDay = () => {
                       />
                       <span className="text-gray-700 text-sm">{list}</span>
                     </div>
-                    <img
-                      src={require("../icons/edit.svg").default}
-                      alt="Edit icon"
-                      className="w-4 h-4 opacity-50"
-                    />
                   </label>
                 ))}
               </div>
@@ -885,7 +880,7 @@ const MyDay = () => {
                             }}
                             className="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center"
                           >
-                            <img src={require("../icons/edit.svg").default} className="w-4 h-4 mr-2" alt={list}/>
+                     
                             {list}
                           </button>
                         ))}
