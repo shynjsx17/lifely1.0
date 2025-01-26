@@ -9,12 +9,16 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
   const [showProfileopen, setShowProfileopen] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
   const [setProfile, setProfilepic] = useState(require("../icons/profile.svg").default);
   const [showEditUsername, setShowEditUsername] = useState(false);
   const [editUsername, setEditUsername] = useState(false);
   const [username, setUsername] = useState(user?.userName || 'User');
   const [tempUsername, setTempUsername] = useState("");
   const navigate = useNavigate();
+  const [showDeleteAccount, setShowDeleteAccount] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   
   const toggleProfile = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -58,6 +62,89 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         });
       }
     });
+  };
+
+  const handleResetPassword = async () => {
+    try {
+      const response = await fetch('http://localhost/lifely1.0/backend/api/reset_password.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: user?.email
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.status === 'success') {
+        Swal.fire({
+          title: 'Success!',
+          text: data.message,
+          icon: 'success',
+          confirmButtonColor: '#FB923C'
+        });
+        setShowResetPassword(false);
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: data.message,
+          icon: 'error',
+          confirmButtonColor: '#FB923C'
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#FB923C'
+      });
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      const response = await fetch('http://localhost/lifely1.0/backend/api/delete_account.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: user?.id,
+          password: deletePassword
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.status === 'success') {
+        localStorage.removeItem('token');
+        Swal.fire({
+          title: 'Account Deleted',
+          text: 'Your account has been successfully deleted.',
+          icon: 'success',
+          confirmButtonColor: '#FB923C'
+        }).then(() => {
+          navigate('/');
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: data.message,
+          icon: 'error',
+          confirmButtonColor: '#FB923C'
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Something went wrong. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#FB923C'
+      });
+    }
   };
 
   return (
@@ -180,8 +267,8 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
 
                             {/* Options */}
                   {[
-                    { label: "Reset Password", onClick: () => {} },
-                    { label: "Delete Account", onClick: () => {} },
+                    { label: "Reset Password", onClick: () => setShowResetPassword(true) },
+                    { label: "Delete Account", onClick: () => setShowDeleteAccount(true) },
                   ].map((item, index) => (
                     <div
                       key={index}
@@ -226,6 +313,83 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                 Save
               </button>
             </div>
+              </div>
+            </div>
+          )}
+          {showResetPassword && (
+            <div className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+              <div className="bg-white rounded-lg w-[30rem] shadow-lg">
+                <div className="bg-[#F0EFF9] text-black py-2 rounded-t-lg shadow-md">
+                  <div className="flex items-center justify-between px-4">
+                    <div className="flex items-center">
+                      <FaArrowLeft size={20} className="mr-2 cursor-pointer" onClick={() => setShowResetPassword(false)}/>
+                    </div>
+                    <h2 className="text-lg font-bold text-center flex-1">Reset Password</h2>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-center mb-4">We will send instructions to this email address:</p>
+                  <p className="text-center font-semibold mb-6">{user?.email}</p>
+                  <button
+                    onClick={handleResetPassword}
+                    className="w-full py-3 bg-[#FB923C] text-white rounded-lg hover:bg-[#FB923C]/90 transition-all"
+                  >
+                    Reset Password
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {showDeleteAccount && (
+            <div className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+              <div className="bg-white rounded-lg w-[30rem] shadow-lg">
+                <div className="bg-[#F0EFF9] text-black py-2 rounded-t-lg shadow-md">
+                  <div className="flex items-center justify-between px-4">
+                    <div className="flex items-center">
+                      <FaArrowLeft size={20} className="mr-2 cursor-pointer" onClick={() => setShowDeleteAccount(false)}/>
+                    </div>
+                    <h2 className="text-lg font-bold text-center flex-1">Delete Account</h2>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-center text-red-500 mb-6">
+                    This will permanently delete all of your tasks & history. You can't Undo this
+                  </p>
+                  <div className="relative mb-4">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={deletePassword}
+                      onChange={(e) => setDeletePassword(e.target.value)}
+                      placeholder="Password"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#FB923C]"
+                    />
+                    <button
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                    >
+                      {showPassword ? "👁️" : "👁️‍🗨️"}
+                    </button>
+                  </div>
+                  <div className="text-center mb-4">
+                    <span className="text-sm text-gray-600">In case you haven't set a password yet or forgot yours</span>
+                    <br />
+                    <button
+                      onClick={() => {
+                        setShowDeleteAccount(false);
+                        setShowResetPassword(true);
+                      }}
+                      className="text-blue-600 hover:underline text-sm"
+                    >
+                      Set Password
+                    </button>
+                  </div>
+                  <button
+                    onClick={handleDeleteAccount}
+                    className="w-full py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
+                  >
+                    Delete Account
+                  </button>
+                </div>
               </div>
             </div>
           )}
