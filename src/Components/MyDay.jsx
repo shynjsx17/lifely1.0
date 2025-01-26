@@ -588,7 +588,7 @@ const MyDay = () => {
         className={`flex-1 transition-all duration-300 ${isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"} p-8 bg-system-background bg-no-repeat bg-fixed flex flex-col`}
       >
         <div className="text-left mb-10 font-poppins">
-          <h1 className="font-bold text-3xl">Good Day, {user?.userName || 'User'}!</h1>
+         <h1 className="font-bold text-3xl">Good Day, {user?.username || 'User'}!</h1>
           <p className="font-bold text-xl text-[#FFB78B]">
             What's your plan for today?
           </p>

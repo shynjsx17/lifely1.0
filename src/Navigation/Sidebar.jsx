@@ -78,7 +78,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             />
             <div className="ml-3">
               <h3 className="text-sm font-semibold">Welcome,</h3>
-              <h2 className="text-sm font-normal">{username}</h2>
+              <h2 className="text-sm font-normal">{user?.username || 'User'}</h2>
             </div>
           </div>
         )}
@@ -154,30 +154,31 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                   </div>
 
                   {/* Hidden File Input */}
-                  <input
-                    type="file"
-                    id="fileInput"
-                    className="hidden"
-                    accept="image/*"
-                    onChange={toggleProfile}
-                  />
+                            <input
+                            type="file"
+                            id="fileInput"
+                            className="hidden"
+                            accept="image/*"
+                            onChange={toggleProfile}
+                            />
 
-                  {/* Username Section */}
-                  <div className="flex justify-center">
-                    <div
-                      className="text-center text-base font-semibold hover:underline cursor-pointer"
-                      onClick={() => setShowEditUsername(true)}
-                    >
-                      {username}
-                    </div>
-                  </div>
-                  <div className="flex justify-center mb-10">
-                    <div className="text-center text-sm hover:underline">
-                      ({user?.email || 'email@example.com'})
-                    </div>
-                  </div>
+                            {/* Username Section */}
+                            <div className="flex justify-center">
+                            <div
+                              className="text-center text-base font-semibold hover:underline cursor-pointer"
+                              onClick={() => setShowEditUsername(true)}
+                              
+                            >
+                              {user?.username || 'User'}
+                            </div>
+                            </div>
+                            <div className="flex justify-center mb-10">
+                            <div className="text-center text-sm hover:underline">
+                              ({user?.email || 'email@example.com'})
+                            </div>
+                            </div>
 
-                  {/* Options */}
+                            {/* Options */}
                   {[
                     { label: "Reset Password", onClick: () => {} },
                     { label: "Delete Account", onClick: () => {} },

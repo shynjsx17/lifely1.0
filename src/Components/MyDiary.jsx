@@ -261,33 +261,31 @@ const MyDiary = () => {
 
                     {/* Mood Tracker */}
                     <div className="absolute top-4 right-4">
-                      <div className="flex items-center gap-4">
-                      <h2 className="text-gray-500 text-lg whitespace-nowrap">Mood Tracker:</h2>
+                      <h2 className="text-gray-500 text-lg mb-2">Mood Tracker:</h2>
                       <div className="flex space-x-2">
-                        {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
+                      {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
                         const moodColors = {
-                          'sad': 'bg-[#FFB6A6]',
-                          'angry': 'bg-[#FFCF55]',
-                          'neutral': 'bg-[#FFF731]',
-                          'happy': 'bg-[#00FFFF]',
-                          'very happy': 'bg-[#29E259]'
+                        'sad': 'bg-[#FFB6A6]',
+                        'angry': 'bg-[#FFCF55]',
+                        'neutral': 'bg-[#FFF731]',
+                        'happy': 'bg-[#00FFFF]',
+                        'very happy': 'bg-[#29E259]'
                         };
 
                         return (
-                          <button
+                        <button
                           key={moodOption}
                           onClick={() => setMood(moodOption)}
-                          className={`px-3 py-1 rounded-full text-sm ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
-                          >
+                          className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
+                        >
                           {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
-                          </button>
+                        </button>
                         );
-                        })}
-                      </div>
+                      })}
                       </div>
                     </div>
                     </div>
-                  )}
+                  ) }
 
                   {/* View Saved Entries */}
         {viewSavedEntries && (
