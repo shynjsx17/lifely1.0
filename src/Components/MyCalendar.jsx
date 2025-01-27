@@ -104,85 +104,70 @@ const MyCalendar = () => {
           isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
         }`}
       >
-        {/* Navbar */}
+        {/* Compressed Navbar */}
         <div className="flex-none w-full bg-white bg-opacity-70 z-10 shadow-md fixed top-0">
-          <div className="flex items-center p-4 justify-between">
-            {/* Left Side */}
-            <div className="flex items-center">
-              {/* Hamburger Menu */}
-              <button className="w-6 h-6 mr-2 flex justify-center items-center">
-                <FaBars className="w-5 h-5 text-gray-600" />
-              </button>            
+          <div className="flex items-center p-2">
+            {/* All elements aligned to the left */}
+            <div className="flex items-center space-x-4">
+              {/* Menu and Calendar Icons */}
+              <div className="flex items-center space-x-2">
+                <button className="p-1">
+                  <FaBars className="w-4 h-4 text-gray-600" />
+                </button>            
+                <FaCalendarAlt className="w-4 h-4 text-gray-600" />
+                <h1 className="text-lg font-semibold">My Calendar</h1>
+              </div>
 
-              {/* Calendar Icon */}
-              <FaCalendarAlt className="w-6 h-6 text-gray-600 mr-2" />
-
-              {/* Title */}
-              <h1 className="text-xl font-semibold">My Calendar</h1>
-
-              {/* Today Button */}
-              <button
-                onClick={goToToday}
-                className="px-4 py-2 text-black bg-white border border-black rounded-md hover:bg-gray-100 ml-4"
-              >
-                Today
-              </button>
-
-              {/* Month Navigation */}
-              <div className="flex items-center ml-4">
+              {/* Today Button and Navigation */}
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={goToToday}
+                  className="px-3 py-1 text-sm text-black bg-white border border-black rounded-md hover:bg-gray-100"
+                >
+                  Today
+                </button>
                 <button
                   onClick={goToPreviousMonth}
-                  className="p-2 text-gray-600 hover:bg-gray-200 rounded-full"
+                  className="p-1 text-gray-600 hover:bg-gray-200 rounded-full"
                 >
-                  <FaChevronLeft className="w-4 h-4" />
+                  <FaChevronLeft className="w-3 h-3" />
                 </button>
-                
-                <h2 className="text-lg font-semibold mx-4">
+                <h2 className="text-sm font-medium">
                   {`${months[currentMonth]} ${currentYear}`}
                 </h2>
-                
                 <button
                   onClick={goToNextMonth}
-                  className="p-2 text-gray-600 hover:bg-gray-200 rounded-full"
+                  className="p-1 text-gray-600 hover:bg-gray-200 rounded-full"
                 >
-                  <FaChevronRight className="w-4 h-4" />
+                  <FaChevronRight className="w-3 h-3" />
                 </button>
               </div>
-            </div>
 
-            {/* Right Side Icons */}
-            <div className="flex items-center gap-4">
-              <button className="p-2 hover:bg-gray-200 rounded-full">
-                <FaSearch className="w-5 h-5 text-gray-600" />
-              </button>
-              <button className="p-2 hover:bg-gray-200 rounded-full">
-                <FaQuestionCircle className="w-5 h-5 text-gray-600" />
-              </button>
-              <button className="p-2 hover:bg-gray-200 rounded-full">
-                <FaCog className="w-5 h-5 text-gray-600" />
-              </button>
+              {/* Search Icon */}
+              <div className="flex items-center space-x-2 border-l border-r px-4">
+                <button className="p-1 hover:bg-gray-200 rounded-full">
+                  <FaSearch className="w-4 h-4 text-gray-600" />
+                </button>
+              </div>
 
-              {/* Month and Year Picker */}
-              <div className="flex items-center gap-2">
+              {/* Month and Year Selectors */}
+              <div className="flex items-center space-x-2">
                 <select 
                   value={currentMonth} 
                   onChange={(e) => setCurrentMonth(parseInt(e.target.value))} 
-                  className="bg-white border border-gray-300 rounded-md p-1">
+                  className="text-sm bg-white border border-gray-300 rounded-md p-1"
+                >
                   {months.map((month, index) => (
-                    <option key={index} value={index}>
-                      {month}
-                    </option>
+                    <option key={index} value={index}>{month}</option>
                   ))}
                 </select>
-
                 <select 
                   value={currentYear} 
                   onChange={(e) => setCurrentYear(parseInt(e.target.value))} 
-                  className="bg-white border border-gray-300 rounded-md p-1">
+                  className="text-sm bg-white border border-gray-300 rounded-md p-1"
+                >
                   {Array.from({ length: 50 }, (_, i) => currentYear - 20 + i).map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
+                    <option key={year} value={year}>{year}</option>
                   ))}
                 </select>
               </div>

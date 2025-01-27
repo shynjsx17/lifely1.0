@@ -19,6 +19,10 @@ const MyDiary = () => {
   const [editedEntry, setEditedEntry] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState("");
+  const WORD_LIMIT = 500;
+  const [wordCount, setWordCount] = useState(0);
+  const [editWordCount, setEditWordCount] = useState(0);
+  const [editContentError, setEditContentError] = useState('');
 
   // Fetch diary entries from database
   const fetchEntries = async () => {
@@ -59,7 +63,22 @@ const MyDiary = () => {
     }
   }, [currentPage, viewSavedEntries]);
 
+  const countWords = (text) => {
+    const strippedText = text.replace(/<[^>]*>/g, ''); // Remove HTML tags
+    return strippedText.trim().split(/\s+/).filter(word => word.length > 0).length;
+  };
+
+  const handleContentChange = () => {
+    const content = document.getElementById('editable-content');
+    const words = countWords(content.innerHTML);
+    setWordCount(words);
+    return words <= WORD_LIMIT;
+  };
+
   const saveContent = async () => {
+    if (!handleContentChange()) {
+      return;
+    }
     const content = document.getElementById('editable-content').innerHTML;
     const newEntry = {
       title: headerText,
@@ -217,6 +236,19 @@ const MyDiary = () => {
     );
   };
 
+  const handleEditContentChange = (e) => {
+    const content = e.target.innerHTML;
+    const words = countWords(content);
+    setEditWordCount(words);
+
+    if (words > WORD_LIMIT) {
+      setEditContentError(`Content cannot exceed ${WORD_LIMIT} words`);
+      return false;
+    }
+    setEditContentError('');
+    return true;
+  };
+
   return (
     <div className="flex min-h-screen bg-system-background">
       <Sidebar 
@@ -226,164 +258,79 @@ const MyDiary = () => {
       <div className={`flex-1 transition-all duration-300 ${
         isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
       } p-8 bg-system-background font-poppins`}>
-        {viewSavedEntries ? (
-          <div className="w-full max-w-7xl mx-auto">
-            <div className="flex justify-between items-start mb-10">
-              {/* Left side - Greeting */}
-              <div>
-                <h1 className="text-3xl font-bold tracking-tight mb-2">Good Day, {user?.username || 'User'}!</h1>
-                <h1 className="text-xl font-bold tracking-tight" style={{ color: '#FFB78B' }}>
-                  Something troubling you? Write it down.
-                </h1>
-              </div>
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Good Day, {user?.username || 'User'}!</h1>
+        <h1 className="text-xl font-bold tracking-tight mb-4" style={{ color: '#FFB78B' }}>
+          Something troubling you? Write it down.
+        </h1>
 
-              {/* Right side - Search Bar */}
-              <div className="relative w-72 mt-2">
-                <input
-                  type="text"
-                  placeholder="Search entries"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  maxLength={50}
-                  className={`w-full pl-10 pr-4 py-2 rounded-full border ${
-                    searchError ? 'border-red-500' : 'border-gray-300'
-                  } focus:outline-none focus:border-gray-400 focus:ring-0`}
-                />
-                <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                  <svg
-                    className={`w-5 h-5 ${searchError ? 'text-red-500' : 'text-gray-400'}`}
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                {searchError && (
-                  <div className="absolute -bottom-6 left-0 text-red-500 text-xs">
-                    {searchError}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Rest of your content */}
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {getFilteredEntries().map((entry) => (
-                <div key={entry.id} className="bg-white p-6 rounded-xl shadow-lg relative">
-                  <div className="absolute top-4 right-4">
-                    <button
-                      onClick={(e) => setDropdownVisible(dropdownVisible === entry.id ? null : entry.id)}
-                      className="text-xl hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center"
-                    >
-                      &#x22EE;
-                    </button>
-                    {dropdownVisible === entry.id && (
-                      <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md border w-32 z-10">
-                        <button
-                          onClick={(e) => openEntryView(entry, e)}
-                          className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
-                        >
-                          View
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setEditedEntry({...entry});
-                            setIsEditing(true);
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            archiveEntry(entry.id);
-                          }}
-                          className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
-                        >
-                          Archive
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Make the card clickable to view entry */}
-                  <div onClick={(e) => openEntryView(entry, e)} className="cursor-pointer">
-                    <h3 className="text-xl font-semibold mb-2">{entry.title}</h3>
-                    <div className="text-sm text-gray-500 mb-2">
-                      {new Date(entry.date).toLocaleDateString()}
-                    </div>
-                    <div className="text-sm mb-2">
-                      Mood: <span className="capitalize">{entry.mood}</span>
-                    </div>
-                    <div 
-                      className="prose max-w-none line-clamp-3"
-                      dangerouslySetInnerHTML={{ __html: entry.content }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+        {/* Success Popup */}
+        {showPopup && (
+          <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded shadow-lg">
+            Entry saved successfully!
           </div>
-        ) : (
-          <>
-            <h1 className="text-3xl font-bold tracking-tight mb-2">Good Day, {user?.username || 'User'}!</h1>
-            <h1 className="text-xl font-bold tracking-tight mb-4" style={{ color: '#FFB78B' }}>
-              Something troubling you? Write it down.
-            </h1>
+        )}
 
-            {/* Success Popup */}
-            {showPopup && (
-              <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded shadow-lg">
-                Entry saved successfully!
-              </div>
-            )}
+        {/* View Entries Button */}
+        <div className="flex mb-4 space-x-4">
+          <button
+            onClick={() => setViewSavedEntries(!viewSavedEntries)}
+            className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
+          >
+            {viewSavedEntries ? 'Write New Entry' : 'View Saved Entries'}
+          </button>
+        </div>
 
-            {/* View Entries Button */}
-            <div className="flex mb-4 space-x-4">
-              <button
-                onClick={() => setViewSavedEntries(!viewSavedEntries)}
-                className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
-              >
-                {viewSavedEntries ? 'Write New Entry' : 'View Saved Entries'}
-              </button>
+        {/* Writing Area */}
+        {!viewSavedEntries && (
+          <div className="w-full max-w-7xl mx-auto bg-white p-6 rounded-xl shadow-lg relative">
+            {/* Title Input */}
+            <input
+              value={headerText}
+              onChange={(e) => setHeaderText(e.target.value)}
+              onFocus={() => {
+                if (headerText === "Why I'm Writing...") {
+                  setHeaderText('');
+                }
+              }}
+              onBlur={() => {
+                if (headerText.trim() === '') {
+                  setHeaderText("Why I'm Writing...");
+                }
+              }}
+              className="text-gray-500 text-2xl tracking-tight w-72 mb-4 border-b focus:outline-none"
+            />
+
+            {/* Date Display */}
+            <div className="flex items-center mt-4 mb-4">
+              <img src={require("../icons/calendar.svg").default} alt="Calendar Icon" className="w-6 h-6 mr-2" />
+              <span className="text-sm">{today}</span>
             </div>
 
-            {/* Writing Area */}
-            <div className="w-full max-w-7xl mx-auto bg-white p-6 rounded-xl shadow-lg relative">
-              {/* Title Input */}
-              <input
-                value={headerText}
-                onChange={(e) => setHeaderText(e.target.value)}
-                onFocus={() => {
-                  if (headerText === "Why I'm Writing...") {
-                    setHeaderText('');
-                  }
+            {/* Text Editor Area with Auto-expanding Container */}
+            <div className="relative">
+              <div
+                id="editable-content"
+                contentEditable
+                onInput={(e) => {
+                  handleContentChange();
+                  // Automatically adjust height
+                  e.target.style.height = 'auto';
+                  e.target.style.height = `${Math.max(400, e.target.scrollHeight)}px`;
                 }}
-                onBlur={() => {
-                  if (headerText.trim() === '') {
-                    setHeaderText("Why I'm Writing...");
-                  }
+                className="w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 
+                           overflow-y-auto focus:outline-none mb-16 transition-all duration-200
+                           whitespace-pre-wrap break-words"
+                style={{
+                  resize: 'none',
+                  height: 'auto',
+                  maxHeight: '70vh' // Maximum height before scrolling
                 }}
-                className="text-gray-500 text-2xl tracking-tight w-72 mb-4 border-b focus:outline-none"
               />
 
-              {/* Date Display */}
-              <div className="flex items-center mt-4 mb-4">
-                <img src={require("../icons/calendar.svg").default} alt="Calendar Icon" className="w-6 h-6 mr-2" />
-                <span className="text-sm">{today}</span>
-              </div>
-
-              {/* Text Editor Area */}
-              <div className="relative">
-                <div
-                  id="editable-content"
-                  contentEditable
-                  className="w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 overflow-y-auto focus:outline-none mb-16"
-                />
-
-                {/* Formatting Tools - Fixed at bottom */}
-                <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-between items-center">
+              {/* Formatting Tools with Word Count - Fixed at bottom */}
+              <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t">
+                <div className="flex justify-between items-center">
+                  {/* Formatting buttons */}
                   <div className="flex space-x-4">
                     <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
                       <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
@@ -395,42 +342,187 @@ const MyDiary = () => {
                       <img src={require("../icons/underline.svg").default} alt="Underline" className="w-6 h-6" />
                     </button>
                   </div>
-                  <button
-                    onClick={saveContent}
-                    className="px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
 
-              {/* Mood Tracker */}
-              <div className="absolute top-4 right-4">
-                <h2 className="text-gray-500 text-lg mb-2">Mood Tracker:</h2>
-                <div className="flex space-x-2">
-                  {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
-                    const moodColors = {
-                      'sad': 'bg-[#FFB6A6]',
-                      'angry': 'bg-[#FFCF55]',
-                      'neutral': 'bg-[#FFF731]',
-                      'happy': 'bg-[#00FFFF]',
-                      'very happy': 'bg-[#29E259]'
-                    };
-
-                    return (
-                      <button
-                        key={moodOption}
-                        onClick={() => setMood(moodOption)}
-                        className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
-                      >
-                        {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
-                      </button>
-                    );
-                  })}
+                  {/* Right side with word count and save button */}
+                  <div className="flex items-center space-x-4">
+                    {/* Word Count Indicator */}
+                    <span className="text-sm text-gray-400">
+                      {wordCount}/{WORD_LIMIT} words
+                    </span>
+                    
+                    <button
+                      onClick={saveContent}
+                      className={`px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] ${
+                        wordCount > WORD_LIMIT ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                      disabled={wordCount > WORD_LIMIT}
+                    >
+                      Save
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </>
+
+            {/* Mood Tracker */}
+            <div className="absolute top-4 right-4">
+              <h2 className="text-gray-500 text-lg mb-2">Mood Tracker:</h2>
+              <div className="flex space-x-2">
+              {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
+                const moodColors = {
+                'sad': 'bg-[#FFB6A6]',
+                'angry': 'bg-[#FFCF55]',
+                'neutral': 'bg-[#FFF731]',
+                'happy': 'bg-[#00FFFF]',
+                'very happy': 'bg-[#29E259]'
+                };
+
+                return (
+                <button
+                  key={moodOption}
+                  onClick={() => setMood(moodOption)}
+                  className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
+                >
+                  {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
+                </button>
+                );
+              })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* View Saved Entries */}
+        {viewSavedEntries && (
+          <div className="w-full max-w-7xl mx-auto">
+            {/* Header Section with Search */}
+            <div className="flex justify-between items-center mb-8">
+              {/* Left side - Greeting and Button */}
+              <div className="flex flex-col">
+                <div className="mb-4">
+                 
+                </div>
+                
+               
+              </div>
+
+              {/* Right side - Search Bar */}
+              <div className="relative w-72">
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                    <svg
+                      className="w-5 h-5 text-gray-400"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    maxLength={50}
+                    className="w-full pl-10 pr-4 py-2.5 rounded-full border border-gray-300 focus:outline-none focus:border-gray-400 focus:ring-0 bg-white shadow-sm"
+                  />
+                </div>
+                {searchError && (
+                  <div className="absolute -bottom-6 left-0 text-red-500 text-xs">
+                    {searchError}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {entries.length === 0 ? (
+              <p className="text-center text-xl">No entries saved yet.</p>
+            ) : (
+              <>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {getFilteredEntries().map((entry) => (
+                    <div key={entry.id} className="bg-white p-6 rounded-xl shadow-lg relative">
+                      <div className="absolute top-4 right-4">
+                        <button
+                          onClick={(e) => setDropdownVisible(dropdownVisible === entry.id ? null : entry.id)}
+                          className="text-xl hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center"
+                        >
+                          &#x22EE;
+                        </button>
+                        {dropdownVisible === entry.id && (
+                          <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md border w-32 z-10">
+                            <button
+                              onClick={(e) => openEntryView(entry, e)}
+                              className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
+                            >
+                              View
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setEditedEntry({...entry});
+                                setIsEditing(true);
+                              }}
+                          
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                archiveEntry(entry.id);
+                              }}
+                              className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
+                            >
+                              Archive
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Make the card clickable to view entry */}
+                      <div onClick={(e) => openEntryView(entry, e)} className="cursor-pointer">
+                        <h3 className="text-xl font-semibold mb-2">{entry.title}</h3>
+                        <div className="text-sm text-gray-500 mb-2">
+                          {new Date(entry.date).toLocaleDateString()}
+                        </div>
+                        <div className="text-sm mb-2">
+                          Mood: <span className="capitalize">{entry.mood}</span>
+                        </div>
+                        <div 
+                          className="prose max-w-none line-clamp-3"
+                          dangerouslySetInnerHTML={{ __html: entry.content }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center space-x-2 mt-6">
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] disabled:opacity-50"
+                    >
+                      Previous
+                    </button>
+                    <span className="px-4 py-2">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                      disabled={currentPage === totalPages}
+                      className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] disabled:opacity-50"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         )}
 
         {showSuccessModal && (
@@ -512,33 +604,59 @@ const MyDiary = () => {
                       </div>
                     </div>
 
-                    <div
-                      contentEditable
-                      className="min-h-[400px] w-full p-4 border rounded-lg focus:outline-none focus:border-[#FFB78B] mb-6"
-                      dangerouslySetInnerHTML={{ __html: editedEntry.content }}
-                      onBlur={(e) => setEditedEntry({...editedEntry, content: e.target.innerHTML})}
-                    />
+                    <div className="relative">
+                      <div
+                        contentEditable
+                        className="min-h-[400px] w-full p-4 border rounded-lg focus:outline-none focus:border-[#FFB78B] mb-16"
+                        dangerouslySetInnerHTML={{ __html: editedEntry.content }}
+                        onInput={(e) => {
+                          handleEditContentChange(e);
+                          setEditedEntry({...editedEntry, content: e.target.innerHTML});
+                        }}
+                      />
 
-                    <div className="flex justify-end space-x-3">
-                      <button
-                        onClick={async () => {
-                          await editEntry(editedEntry.id);
-                          setIsEditing(false);
-                          setViewingEntry({...editedEntry});
-                        }}
-                        className="px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
-                      >
-                        Save Changes
-                      </button>
-                      <button
-                        onClick={() => {
-                          setIsEditing(false);
-                          setEditedEntry(null);
-                        }}
-                        className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                      >
-                        Cancel
-                      </button>
+                      <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t">
+                        <div className="flex justify-between items-center">
+                          {editContentError && (
+                            <span className="text-red-500 text-sm">
+                              {editContentError}
+                            </span>
+                          )}
+                          
+                          <div className="flex items-center space-x-4">
+                            <span className="text-sm text-gray-400">
+                              {editWordCount}/{WORD_LIMIT} words
+                            </span>
+
+                            <div className="flex space-x-3">
+                              <button
+                                onClick={async () => {
+                                  if (handleEditContentChange({ target: document.querySelector('[contenteditable]') })) {
+                                    await editEntry(editedEntry.id);
+                                    setIsEditing(false);
+                                    setViewingEntry({...editedEntry});
+                                  }
+                                }}
+                                className={`px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] ${
+                                  editWordCount > WORD_LIMIT ? 'opacity-50 cursor-not-allowed' : ''
+                                }`}
+                                disabled={editWordCount > WORD_LIMIT}
+                              >
+                                Save Changes
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setIsEditing(false);
+                                  setEditedEntry(null);
+                                }}
+                                className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </>
                 ) : (
