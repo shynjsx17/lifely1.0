@@ -23,6 +23,8 @@ const MyDiary = () => {
   const [wordCount, setWordCount] = useState(0);
   const [editWordCount, setEditWordCount] = useState(0);
   const [editContentError, setEditContentError] = useState('');
+  const [titleError, setTitleError] = useState('');
+  const [contentError, setContentError] = useState('');
 
   // Fetch diary entries from database
   const fetchEntries = async () => {
@@ -76,10 +78,27 @@ const MyDiary = () => {
   };
 
   const saveContent = async () => {
+    // Reset error states
+    setTitleError('');
+    setContentError('');
+    
+    // Validate title
+    if (!headerText || headerText === "Why I'm Writing...") {
+      setTitleError('Please enter a title for your diary entry');
+      return;
+    }
+
+    // Validate content
+    const content = document.getElementById('editable-content').innerHTML;
+    if (!content || content.trim() === '') {
+      setContentError('Please write something in your diary entry');
+      return;
+    }
+
     if (!handleContentChange()) {
       return;
     }
-    const content = document.getElementById('editable-content').innerHTML;
+
     const newEntry = {
       title: headerText,
       content: content,
@@ -119,6 +138,22 @@ const MyDiary = () => {
   };
 
   const editEntry = async (entryId) => {
+    // Reset error states
+    setTitleError('');
+    setContentError('');
+
+    // Validate title
+    if (!editedEntry.title || editedEntry.title.trim() === '') {
+      setTitleError('Please enter a title for your diary entry');
+      return;
+    }
+
+    // Validate content
+    if (!editedEntry.content || editedEntry.content.trim() === '') {
+      setContentError('Please write something in your diary entry');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost/lifely1.0/backend/api/diary.php', {
         method: 'PUT',
@@ -245,7 +280,12 @@ const MyDiary = () => {
       setEditContentError(`Content cannot exceed ${WORD_LIMIT} words`);
       return false;
     }
+
     setEditContentError('');
+    setEditedEntry(prev => ({
+      ...prev,
+      content: content
+    }));
     return true;
   };
 
@@ -283,22 +323,20 @@ const MyDiary = () => {
         {/* Writing Area */}
         {!viewSavedEntries && (
           <div className="w-full max-w-7xl mx-auto bg-white p-6 rounded-xl shadow-lg relative">
-            {/* Title Input */}
             <input
+              type="text"
               value={headerText}
-              onChange={(e) => setHeaderText(e.target.value)}
-              onFocus={() => {
-                if (headerText === "Why I'm Writing...") {
-                  setHeaderText('');
-                }
+              onChange={(e) => {
+                setHeaderText(e.target.value);
+                setTitleError(''); // Clear error on change
               }}
-              onBlur={() => {
-                if (headerText.trim() === '') {
-                  setHeaderText("Why I'm Writing...");
-                }
-              }}
-              className="text-gray-500 text-2xl tracking-tight w-72 mb-4 border-b focus:outline-none"
+              className={`text-xl text-gray-500 mb-2 w-full border-none focus:outline-none ${
+                titleError ? 'border-red-500' : ''
+              }`}
             />
+            {titleError && (
+              <div className="text-red-500 text-sm mb-2">{titleError}</div>
+            )}
 
             {/* Date Display */}
             <div className="flex items-center mt-4 mb-4">
@@ -317,15 +355,21 @@ const MyDiary = () => {
                   e.target.style.height = 'auto';
                   e.target.style.height = `${Math.max(400, e.target.scrollHeight)}px`;
                 }}
-                className="w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 
+                className={`w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 
                            overflow-y-auto focus:outline-none mb-16 transition-all duration-200
-                           whitespace-pre-wrap break-words"
+                           whitespace-pre-wrap break-words ${
+                             contentError ? 'border-red-500' : ''
+                           }`}
                 style={{
                   resize: 'none',
                   height: 'auto',
                   maxHeight: '70vh' // Maximum height before scrolling
                 }}
+               onInput={() => setContentError('')} // Clear error on change
               />
+              {contentError && (
+                <div className="text-red-500 text-sm mt-2">{contentError}</div>
+              )}
 
               {/* Formatting Tools with Word Count - Fixed at bottom */}
               <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t">
@@ -569,9 +613,17 @@ const MyDiary = () => {
                     <input
                       type="text"
                       value={editedEntry.title}
-                      onChange={(e) => setEditedEntry({...editedEntry, title: e.target.value})}
-                      className="text-3xl font-semibold mb-4 w-full border-none focus:outline-none"
+                      onChange={(e) => {
+                        setEditedEntry({...editedEntry, title: e.target.value});
+                        setTitleError(''); // Clear error on change
+                      }}
+                      className={`text-3xl font-semibold mb-4 w-full border-none focus:outline-none ${
+                        titleError ? 'border-red-500' : ''
+                      }`}
                     />
+                    {titleError && (
+                      <div className="text-red-500 text-sm mb-2">{titleError}</div>
+                    )}
                     
                     <div className="flex items-center mb-4">
                       <img src={require("../icons/calendar.svg").default} alt="Calendar" className="w-5 h-5 mr-2" />
@@ -610,8 +662,23 @@ const MyDiary = () => {
                         className="min-h-[400px] w-full p-4 border rounded-lg focus:outline-none focus:border-[#FFB78B] mb-16"
                         dangerouslySetInnerHTML={{ __html: editedEntry.content }}
                         onInput={(e) => {
-                          handleEditContentChange(e);
-                          setEditedEntry({...editedEntry, content: e.target.innerHTML});
+                          if (handleEditContentChange(e)) {
+                            const selection = window.getSelection();
+                            const range = selection.getRangeAt(0);
+                            const position = range.startOffset;
+                            
+                            // Preserve cursor position after state update
+                            requestAnimationFrame(() => {
+                              const newRange = document.createRange();
+                              const contentDiv = e.target;
+                              if (contentDiv.childNodes.length > 0) {
+                                newRange.setStart(contentDiv.childNodes[0], position);
+                                newRange.setEnd(contentDiv.childNodes[0], position);
+                                selection.removeAllRanges();
+                                selection.addRange(newRange);
+                              }
+                            });
+                          }
                         }}
                       />
 
