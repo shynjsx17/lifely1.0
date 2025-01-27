@@ -246,10 +246,10 @@ const MyDiary = () => {
                 className="w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 overflow-y-auto focus:outline-none mb-16"
               />
 
-              /* Formatting Tools - Fixed at bottom */}
-                      <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-between items-center">
-                      <div className="flex space-x-4">
-                        <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
+              {/* Formatting Tools - Fixed at bottom */}
+              <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-between items-center">
+                <div className="flex space-x-4">
+                  <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
                         <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
                         </button>
                         <button onClick={() => document.execCommand('italic')} className="p-2 hover:bg-gray-100 rounded">

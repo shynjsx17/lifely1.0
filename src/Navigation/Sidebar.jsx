@@ -201,12 +201,12 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         </li>
         <li
           className={`flex items-center px-5 py-4 ${
-            isActive("/calendar") ? "bg-white" : "hover:bg-white"
+            isActive("/MyCalendar") ? "bg-white" : "hover:bg-white"
           } transition-all duration-300`}
         >
-          <Link to={"/calendar"} className="flex items-center space-x-2">
+          <Link to="/MyCalendar" className="flex items-center space-x-2">
             <FaCalendarAlt className="w-6 h-6" />
-            {!isCollapsed && <span>Calendar</span>}
+            {!isCollapsed && <span>My Calendar</span>}
           </Link>
         </li>
         {/*Profile pop up */}

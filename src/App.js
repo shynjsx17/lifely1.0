@@ -12,6 +12,7 @@ import ErrorBoundary from "./Components/ErrorBoundary";
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './Components/ProtectedRoute';
 import ListComponent from './Components/ListComponent';
+import MyCalendar from './Components/MyCalendar';
 
 function App() {
   return (
@@ -48,7 +49,12 @@ function App() {
                   <MyDiary />
                 </ProtectedRoute>
               } />
-              <Route path="/lists/:listType" element={<ListComponent />} />
+               <Route path="/mycalendar" element={
+                <ProtectedRoute>
+                  <MyCalendar />
+                </ProtectedRoute>
+              } />
+              <Route path="/MyCalendar" element={<MyCalendar />} />
             </Routes>
           </ErrorBoundary>
         </AuthProvider>
