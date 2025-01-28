@@ -101,15 +101,32 @@ const Register = () => {
     }
 
     try {
-      await signup({ name, email, password });
-      
-      await Swal.fire({
-        icon: 'success',
-        title: 'Registration Successful!',
-        text: 'Welcome to Lifely',
-        confirmButtonColor: '#FB923C',
-        timer: 1500,
-        showConfirmButton: false,
+      // Check if email exists before proceeding
+      const checkResponse = await fetch('http://localhost/lifely1.0/backend/api/register.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: name,
+          email: email,
+          password: password,
+          checkOnly: true
+        })
+      });
+
+      const checkData = await checkResponse.json();
+      if (!checkData.status && !checkData.requiresVerification) {
+        throw new Error(checkData.message);
+      }
+
+      // Redirect to verification page with user details
+      navigate('/verify-email', {
+        state: {
+          email,
+          name,
+          password
+        }
       });
     } catch (error) {
       console.error('Registration error:', error);

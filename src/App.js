@@ -13,6 +13,7 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './Components/ProtectedRoute';
 import ListComponent from './Components/ListComponent';
 import MyCalendar from './Components/MyCalendar';
+import VerifyEmail from './Components/VerifyEmail';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               {/* Auth routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
               
               {/* Protected routes */}
               <Route path="/home" element={
