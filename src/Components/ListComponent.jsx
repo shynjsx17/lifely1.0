@@ -488,8 +488,8 @@ const ListComponent = () => {
                                             <span className="text-sm">{selectedTask.list_type}</span>
                                         </button>
                                         {showListDropdown && (
-                                            <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg py-2 min-w-[120px]">
-                                                {['personal', 'work', 'school'].map((type) => (
+                                            <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg py-2 min-w-[80px]">
+                                                {['Personal', 'Work', 'School'].map((type) => (
                                                     <button
                                                         key={type}
                                                         onClick={() => {
@@ -525,7 +525,7 @@ const ListComponent = () => {
                                             </span>
                                         </button>
                                         {showPriorityDropdown && (
-                                            <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg py-2 min-w-[120px]">
+                                            <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg py-2 min-w-[150px]">
                                                 <button
                                                     onClick={() => handleUpdatePriority(selectedTask.id, 'high')}
                                                     className="w-full px-4 py-2 text-left text-sm hover:bg-red-50 flex items-center space-x-2"

@@ -26,4 +26,26 @@ function get_database_connection() {
     
     return $conn;
 }
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "lifely";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Add reset token columns if they don't exist
+$alter_query = "
+    ALTER TABLE users 
+    ADD COLUMN IF NOT EXISTS reset_token VARCHAR(255),
+    ADD COLUMN IF NOT EXISTS reset_token_expiry DATETIME
+";
+
+mysqli_query($conn, $alter_query);
 ?>

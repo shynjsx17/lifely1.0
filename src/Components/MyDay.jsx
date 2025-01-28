@@ -588,7 +588,7 @@ const MyDay = () => {
         className={`flex-1 transition-all duration-300 ${isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"} p-8 bg-system-background bg-no-repeat bg-fixed flex flex-col`}
       >
         <div className="text-left mb-10 font-poppins">
-          <h1 className="font-bold text-3xl">Good Day, {user?.userName || 'User'}!</h1>
+         <h1 className="font-bold text-3xl">Good Day, {user?.username || 'User'}!</h1>
           <p className="font-bold text-xl text-[#FFB78B]">
             What's your plan for today?
           </p>
@@ -770,11 +770,6 @@ const MyDay = () => {
                       />
                       <span className="text-gray-700 text-sm">{list}</span>
                     </div>
-                    <img
-                      src={require("../icons/edit.svg").default}
-                      alt="Edit icon"
-                      className="w-4 h-4 opacity-50"
-                    />
                   </label>
                 ))}
               </div>
@@ -885,7 +880,7 @@ const MyDay = () => {
                             }}
                             className="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center"
                           >
-                            <img src={require("../icons/edit.svg").default} className="w-4 h-4 mr-2" alt={list}/>
+                     
                             {list}
                           </button>
                         ))}
