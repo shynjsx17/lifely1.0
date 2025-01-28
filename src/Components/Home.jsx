@@ -7,6 +7,8 @@ const Home = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState("upcoming");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchError, setSearchError] = useState("");
 
   // Fetch tasks from backend
   const fetchTasks = async () => {
@@ -57,33 +59,40 @@ const Home = () => {
   // Function to filter and organize tasks
   const getFilteredTasks = () => {
     const now = new Date();
+    let filtered = tasks;
     
+    // Only apply search filter if query is valid (2 or more characters)
+    if (searchQuery.trim().length >= 2) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(task => 
+        task.title.toLowerCase().includes(query) ||
+        task.list_type.toLowerCase().includes(query) ||
+        task.priority.toLowerCase().includes(query)
+      );
+    }
+    
+    // Then apply status filter
     switch (filter) {
       case "upcoming":
-        return tasks.filter(task => {
+        return filtered.filter(task => {
           if (task.is_completed) return false;
-          
-          // If no reminder date, it's upcoming
           if (!task.reminder_date) return true;
-          
-          // If has reminder date and not overdue
           const reminderDate = new Date(task.reminder_date);
           return reminderDate >= now;
         });
         
       case "overdue":
-        return tasks.filter(task => {
+        return filtered.filter(task => {
           if (task.is_completed || !task.reminder_date) return false;
-          
           const reminderDate = new Date(task.reminder_date);
           return reminderDate < now;
         });
         
       case "completed":
-        return tasks.filter(task => task.is_completed);
+        return filtered.filter(task => task.is_completed);
         
       default:
-        return tasks;
+        return filtered;
     }
   };
 
@@ -150,6 +159,30 @@ const Home = () => {
     }
   };
 
+  // Add search validation function
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    
+    // Clear error when input is empty
+    if (value === "") {
+      setSearchQuery("");
+      setSearchError("");
+      return;
+    }
+    
+    // Validate input length
+    if (value.length < 2) {
+      setSearchError("Search must be at least 2 characters");
+    } else if (value.length > 50) { // Maximum 50 characters
+      setSearchError("Search cannot exceed 50 characters");
+      return;
+    } else {
+      setSearchError("");
+    }
+    
+    setSearchQuery(value);
+  };
+
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -164,12 +197,47 @@ const Home = () => {
           isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
         } p-8 bg-system-background bg-no-repeat bg-fixed`}
       >
-        {/* Title Section */}
-        <div className="text-left mb-10 font-poppins">
-          <h1 className="font-bold text-3xl">Good Day, {user?.username || 'User'}!</h1>
-          <p className="font-bold text-xl text-[#FFB78B]">
-            What's your plan for today?
-          </p>
+        {/* Title and Search Section */}
+        <div className="flex justify-between items-center mb-10">
+          {/* Title Section */}
+          <div className="text-left font-poppins">
+            <h1 className="font-bold text-3xl">Good Day, {user?.username || 'User'}!</h1>
+            <p className="font-bold text-xl text-[#FFB78B]">
+              What's your plan for today?
+            </p>
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative w-72">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              maxLength={50} // Hard limit on input length
+              className={`w-full pl-10 pr-4 py-2 rounded-full border ${
+                searchError ? 'border-red-500' : 'border-gray-300'
+              } focus:outline-none focus:border-gray-400 focus:ring-0`}
+            />
+            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+              <svg
+                className={`w-5 h-5 ${searchError ? 'text-red-500' : 'text-gray-400'}`}
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            {searchError && (
+              <div className="absolute -bottom-6 left-0 text-red-500 text-xs">
+                {searchError}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Task Section */}

@@ -104,85 +104,70 @@ const MyCalendar = () => {
           isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
         }`}
       >
-        {/* Navbar */}
+        {/* Compressed Navbar */}
         <div className="flex-none w-full bg-white bg-opacity-70 z-10 shadow-md fixed top-0">
-          <div className="flex items-center p-4 justify-between">
-            {/* Left Side */}
-            <div className="flex items-center">
-              {/* Hamburger Menu */}
-              <button className="w-6 h-6 mr-2 flex justify-center items-center">
-                <FaBars className="w-5 h-5 text-gray-600" />
-              </button>            
+          <div className="flex items-center p-2">
+            {/* All elements aligned to the left */}
+            <div className="flex items-center space-x-4">
+              {/* Menu and Calendar Icons */}
+              <div className="flex items-center space-x-2">
+                <button className="p-1">
+                  <FaBars className="w-4 h-4 text-gray-600" />
+                </button>            
+                <FaCalendarAlt className="w-4 h-4 text-gray-600" />
+                <h1 className="text-lg font-semibold">My Calendar</h1>
+              </div>
 
-              {/* Calendar Icon */}
-              <FaCalendarAlt className="w-6 h-6 text-gray-600 mr-2" />
-
-              {/* Title */}
-              <h1 className="text-xl font-semibold">My Calendar</h1>
-
-              {/* Today Button */}
-              <button
-                onClick={goToToday}
-                className="px-4 py-2 text-black bg-white border border-black rounded-md hover:bg-gray-100 ml-4"
-              >
-                Today
-              </button>
-
-              {/* Month Navigation */}
-              <div className="flex items-center ml-4">
+              {/* Today Button and Navigation */}
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={goToToday}
+                  className="px-3 py-1 text-sm text-black bg-white border border-black rounded-md hover:bg-gray-100"
+                >
+                  Today
+                </button>
                 <button
                   onClick={goToPreviousMonth}
-                  className="p-2 text-gray-600 hover:bg-gray-200 rounded-full"
+                  className="p-1 text-gray-600 hover:bg-gray-200 rounded-full"
                 >
-                  <FaChevronLeft className="w-4 h-4" />
+                  <FaChevronLeft className="w-3 h-3" />
                 </button>
-                
-                <h2 className="text-lg font-semibold mx-4">
+                <h2 className="text-sm font-medium">
                   {`${months[currentMonth]} ${currentYear}`}
                 </h2>
-                
                 <button
                   onClick={goToNextMonth}
-                  className="p-2 text-gray-600 hover:bg-gray-200 rounded-full"
+                  className="p-1 text-gray-600 hover:bg-gray-200 rounded-full"
                 >
-                  <FaChevronRight className="w-4 h-4" />
+                  <FaChevronRight className="w-3 h-3" />
                 </button>
               </div>
-            </div>
 
-            {/* Right Side Icons */}
-            <div className="flex items-center gap-4">
-              <button className="p-2 hover:bg-gray-200 rounded-full">
-                <FaSearch className="w-5 h-5 text-gray-600" />
-              </button>
-              <button className="p-2 hover:bg-gray-200 rounded-full">
-                <FaQuestionCircle className="w-5 h-5 text-gray-600" />
-              </button>
-              <button className="p-2 hover:bg-gray-200 rounded-full">
-                <FaCog className="w-5 h-5 text-gray-600" />
-              </button>
+              {/* Search Icon */}
+              <div className="flex items-center space-x-2 border-l border-r px-4">
+                <button className="p-1 hover:bg-gray-200 rounded-full">
+                  <FaSearch className="w-4 h-4 text-gray-600" />
+                </button>
+              </div>
 
-              {/* Month and Year Picker */}
-              <div className="flex items-center gap-2">
+              {/* Month and Year Selectors */}
+              <div className="flex items-center space-x-2">
                 <select 
                   value={currentMonth} 
                   onChange={(e) => setCurrentMonth(parseInt(e.target.value))} 
-                  className="bg-white border border-gray-300 rounded-md p-1">
+                  className="text-sm bg-white border border-gray-300 rounded-md p-1"
+                >
                   {months.map((month, index) => (
-                    <option key={index} value={index}>
-                      {month}
-                    </option>
+                    <option key={index} value={index}>{month}</option>
                   ))}
                 </select>
-
                 <select 
                   value={currentYear} 
                   onChange={(e) => setCurrentYear(parseInt(e.target.value))} 
-                  className="bg-white border border-gray-300 rounded-md p-1">
+                  className="text-sm bg-white border border-gray-300 rounded-md p-1"
+                >
                   {Array.from({ length: 50 }, (_, i) => currentYear - 20 + i).map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
+                    <option key={year} value={year}>{year}</option>
                   ))}
                 </select>
               </div>
@@ -195,107 +180,7 @@ const MyCalendar = () => {
           className="flex-1 pt-[64px] bg-cover bg-center flex" 
           style={{ backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none' }}
         >
-          {/* Left Section: Create Button and Google Calendar Placeholder */}
-          <div className="w-1/4 p-4 pl-8 pt-10 bg-transparent border-r-2">
-            {/* Create Button */}
-            <button className="flex items-center px-5 py-3 text-black bg-white rounded-full hover:bg-gray-200 font-bold shadow-lg">
-              + Create
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4 ml-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
-          
-            {/* Google Calendar Placeholder */}
-            <div className="mt-8 p-4 bg-white shadow-lg rounded-md border">
-              <h2 className="text-lg font-semibold mb-4">Google Calendar</h2>
-              <div className="w-full h-64 bg-gray-100 flex items-center justify-center rounded-md">
-                <p className="text-gray-500">Google Calendar Placeholder</p>
-              </div>
-            </div>
-            {/* Meet With Section */}
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold mb-2">Meet with...</h3>
-              <input
-                type="text"
-                placeholder="Search for people"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-
-          {/* My Calendars Dropdown */}
-          <div className="mt-8">
-            <details className="rounded-md">
-              <summary className="px-4 py-2 text-lg font-semibold cursor-pointer bg-transparent hover:bg-gray-50">
-                My Calendars
-              </summary>
-              <ul className="bg-transparent border-t">
-                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    id="work-calendar"
-                    className="mr-2"
-                  />
-                  <label htmlFor="work-calendar" className="cursor-pointer">
-                    Work Calendar
-                  </label>
-                </li>
-                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    id="personal-calendar"
-                    className="mr-2"
-                  />
-                  <label htmlFor="personal-calendar" className="cursor-pointer">
-                    Personal Calendar
-                  </label>
-                </li>
-              </ul>
-            </details>
-          </div>
-
-          {/* Other Calendars Dropdown */}
-          <div className="mt-4">
-            <details className="rounded-md">
-              <summary className="px-4 py-2 text-lg font-semibold cursor-pointer bg-transparent hover:bg-gray-50">
-                Other Calendars
-              </summary>
-              <ul className="bg-transparent border-t">
-                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    id="team-calendar"
-                    className="mr-2"
-                  />
-                  <label htmlFor="team-calendar" className="cursor-pointer">
-                    Team Calendar
-                  </label>
-                </li>
-                <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    id="shared-calendar"
-                    className="mr-2"
-                  />
-                  <label htmlFor="shared-calendar" className="cursor-pointer">
-                    Shared Calendar
-                  </label>
-                </li>
-              </ul>
-            </details>
-          </div>
-
-          </div>
+         
 
           {/* Right Section: Calendar */}
           <div className="flex-1 p-6">

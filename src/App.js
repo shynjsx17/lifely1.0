@@ -49,12 +49,16 @@ function App() {
                   <MyDiary />
                 </ProtectedRoute>
               } />
-               <Route path="/mycalendar" element={
+              <Route path="/mycalendar" element={
                 <ProtectedRoute>
                   <MyCalendar />
                 </ProtectedRoute>
               } />
-              <Route path="/MyCalendar" element={<MyCalendar />} />
+              <Route path="/lists/:listType" element={
+                <ProtectedRoute>
+                  <ListComponent />
+                </ProtectedRoute>
+              } />
             </Routes>
           </ErrorBoundary>
         </AuthProvider>
