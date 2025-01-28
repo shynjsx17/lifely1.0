@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import bgImage from "../Images/BG.png";
 import { useAuth } from "../context/AuthContext";
 import loginIcon from "../Images/LoginIcon.png";
@@ -118,9 +118,9 @@ const Login = () => {
                 />
                 Remember me
               </label>
-              <a href="#" className="text-orange-500 hover:underline">
+              <Link to="/forgot-password" className="text-orange-500 hover:underline">
                 Forgot Password?
-              </a>
+              </Link>
             </div>
             <button
               type="submit"
@@ -130,12 +130,14 @@ const Login = () => {
             </button>
           </form>
 
-          <p className="mt-4 text-center text-black-600">
-            Don't have an Account?{" "}
-            <a href="/register" className="text-orange-500 hover:underline">
-              Sign Up
-            </a>
-          </p>
+          <div className="mt-4 text-center">
+            <p className="text-gray-600">
+              Don't have an account?{' '}
+              <Link to="/register" className="text-[#FFB78B] hover:text-[#ffa770]">
+                Register here
+              </Link>
+            </p>
+          </div>
         </div>
 
         {/* Right Section */}

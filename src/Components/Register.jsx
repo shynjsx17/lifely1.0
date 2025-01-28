@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import bgImage from "../Images/BG.png"; 
 import registerIcon from "../Images/RegisterIcon.png"; 
 import Swal from 'sweetalert2';
@@ -261,9 +261,9 @@ const Register = () => {
 
           <p className="mt-4 text-center text-black-600">
             Already have an Account?{' '}
-            <a href="/login" className="text-orange-500 hover:underline">
+            <Link to="/login" className="text-orange-500 hover:underline">
               Log In
-            </a>
+            </Link>
           </p>
         </div>
 

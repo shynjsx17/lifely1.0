@@ -101,25 +101,35 @@ class TaskController {
                 $params[] = $data['is_archived'];
             }
 
-            if (empty($updates)) {
-                return ['success' => false, 'message' => 'No fields to update'];
+            if (!empty($updates)) {
+                $params[] = $task_id;
+                $params[] = $user_id;
+
+                $query = "UPDATE {$this->tasks_table} SET " . implode(", ", $updates) . 
+                        " WHERE id = ? AND user_id = ?";
+                
+                $stmt = $this->conn->prepare($query);
+                $stmt->execute($params);
             }
 
-            $params[] = $task_id;
-            $params[] = $user_id;
-
-            $query = "UPDATE {$this->tasks_table} SET " . implode(", ", $updates) . 
-                    " WHERE id = ? AND user_id = ?";
-            
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute($params);
-
-            // Update or add note if provided
+            // Handle note update if provided
             if (isset($data['note'])) {
-                $note_query = "INSERT INTO {$this->notes_table} (task_id, note) VALUES (?, ?)
-                              ON DUPLICATE KEY UPDATE note = VALUES(note)";
-                $note_stmt = $this->conn->prepare($note_query);
-                $note_stmt->execute([$task_id, $data['note']]);
+                // Check if note exists
+                $check_note_query = "SELECT id FROM {$this->notes_table} WHERE task_id = ?";
+                $check_note_stmt = $this->conn->prepare($check_note_query);
+                $check_note_stmt->execute([$task_id]);
+
+                if ($check_note_stmt->rowCount() > 0) {
+                    // Update existing note
+                    $note_query = "UPDATE {$this->notes_table} SET note = ? WHERE task_id = ?";
+                    $note_stmt = $this->conn->prepare($note_query);
+                    $note_stmt->execute([$data['note'], $task_id]);
+                } else {
+                    // Insert new note
+                    $note_query = "INSERT INTO {$this->notes_table} (task_id, note) VALUES (?, ?)";
+                    $note_stmt = $this->conn->prepare($note_query);
+                    $note_stmt->execute([$task_id, $data['note']]);
+                }
             }
 
             return [
@@ -136,16 +146,15 @@ class TaskController {
         try {
             // Debug logging
             error_log("Fetching tasks for user_id: " . $user_id);
-            error_log("Filters: " . json_encode($filters));
 
             // First get tasks without subtasks to avoid GROUP_CONCAT issues
-            $query = "SELECT t.*, tn.note
+            $query = "SELECT t.*, 
+                     (SELECT note FROM {$this->notes_table} WHERE task_id = t.id LIMIT 1) as note
                      FROM {$this->tasks_table} t 
-                     LEFT JOIN {$this->notes_table} tn ON t.id = tn.task_id 
                      WHERE t.user_id = ?";
             $params = [$user_id];
 
-            // Apply filters
+            // Apply filters if they exist
             if (!empty($filters['list_type'])) {
                 $query .= " AND t.list_type = ?";
                 $params[] = $filters['list_type'];
@@ -158,32 +167,42 @@ class TaskController {
                 $query .= " AND t.is_completed = ?";
                 $params[] = $filters['is_completed'];
             }
-            // Always include is_archived filter
-            $query .= " AND t.is_archived = ?";
-            $params[] = isset($filters['is_archived']) ? $filters['is_archived'] : false;
+            if (isset($filters['is_archived'])) {
+                $query .= " AND t.is_archived = ?";
+                $params[] = $filters['is_archived'];
+            } else {
+                $query .= " AND (t.is_archived = 0 OR t.is_archived IS NULL)";
+            }
 
             $query .= " ORDER BY t.created_at DESC";
-
-            // Debug logging
-            error_log("Final query: " . $query);
-            error_log("Query params: " . json_encode($params));
 
             $stmt = $this->conn->prepare($query);
             $stmt->execute($params);
             $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Debug logging
-            error_log("Found tasks: " . json_encode($tasks));
-
             // Now get subtasks for each task
             foreach ($tasks as &$task) {
+                // Convert boolean fields from strings to actual booleans
+                $task['is_completed'] = (bool)$task['is_completed'];
+                $task['is_archived'] = (bool)$task['is_archived'];
+                $task['is_pinned'] = (bool)($task['is_pinned'] ?? false);
+
+                // Get subtasks for this specific task
                 $subtasks_query = "SELECT id, title, is_completed 
                                  FROM {$this->subtasks_table} 
                                  WHERE task_id = ? 
                                  ORDER BY created_at ASC";
                 $subtasks_stmt = $this->conn->prepare($subtasks_query);
                 $subtasks_stmt->execute([$task['id']]);
-                $task['subtasks'] = $subtasks_stmt->fetchAll(PDO::FETCH_ASSOC);
+                $subtasks = $subtasks_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                // Convert subtask boolean fields
+                foreach ($subtasks as &$subtask) {
+                    $subtask['is_completed'] = (bool)$subtask['is_completed'];
+                }
+
+                // Assign the subtasks to this specific task
+                $task['subtasks'] = $subtasks;
             }
 
             return [

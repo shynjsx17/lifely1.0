@@ -187,14 +187,14 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       <ul className="list-none mt-5">
         <li
           className={`flex items-center px-5 py-4 ${
-            isActive("/landing") ? "bg-white" : "hover:bg-white"
+            isActive("/Home") ? "bg-white" : "hover:bg-white"
           } transition-all duration-300`}
         >
-          <Link to={"/Home"} className="flex items-center space-x-2">
+          <Link to="/Home" className="flex items-center space-x-2">
             <img
               src={require("../icons/icons8-home.svg").default}
               alt="Home Icon"
-              className="w-6 h-6 "
+              className="w-6 h-6"
             />
             {!isCollapsed && <span>Home</span>}
           </Link>
@@ -398,7 +398,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             isActive("/MyDay") ? "bg-white" : "hover:bg-white"
           } transition-all duration-300`}
         >
-          <Link to={"/MyDay"} className="flex items-center space-x-2">
+          <Link to="/MyDay" className="flex items-center space-x-2">
             <img
               src={require("../icons/list.svg").default}
               alt="My Day Icon"
@@ -412,7 +412,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             isActive("/MyDiary") ? "bg-white" : "hover:bg-white"
           } transition-all duration-300`}
         >
-          <Link to={"/MyDiary"} className="flex items-center space-x-2">
+          <Link to="/MyDiary" className="flex items-center space-x-2">
             <img
               src={require("../icons/diary.svg").default}
               alt="My Diary Icon"
@@ -426,7 +426,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
             isActive("/ArchiveComponent") ? "bg-white" : "hover:bg-white"
           } transition-all duration-300`}
         >
-          <Link to={"/ArchiveComponent"} className="flex items-center space-x-2">
+          <Link to="/ArchiveComponent" className="flex items-center space-x-2">
             <img
               src={require("../icons/archive.svg").default}
               alt="My Archive Icon"

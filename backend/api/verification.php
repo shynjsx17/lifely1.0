@@ -83,7 +83,7 @@ try {
         }
 
         $email = filter_var($data->email, FILTER_SANITIZE_EMAIL);
-        $otp = filter_var($data->otp, FILTER_SANITIZE_STRING);
+        $otp = htmlspecialchars($data->otp, ENT_QUOTES, 'UTF-8');
         error_log("Verifying OTP for email: $email, OTP: $otp");
 
         if ($verification->verifyOTP($email, $otp)) {

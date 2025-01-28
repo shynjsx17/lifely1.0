@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from "../Navigation/Sidebar";
 import { useAuth } from '../context/AuthContext';
 
+const WORD_LIMIT = 1000; // Define word limit constant
+
 const MyDiary = () => {
   const { user } = useAuth();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -14,6 +16,16 @@ const MyDiary = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [wordCount, setWordCount] = useState(0);
+  const [titleError, setTitleError] = useState('');
+  const [contentError, setContentError] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchError, setSearchError] = useState('');
+  const [editedEntry, setEditedEntry] = useState({
+    title: '',
+    content: '',
+    mood: 'neutral'
+  });
 
   // Fetch diary entries from database
   const fetchEntries = async () => {
@@ -28,6 +40,7 @@ const MyDiary = () => {
           'Content-Type': 'application/json'
         }
       });
+    
 
       console.log('Response status:', response.status); // Debug log
       const data = await response.json();
@@ -55,7 +68,7 @@ const MyDiary = () => {
   }, [currentPage, viewSavedEntries]);
 
   const countWords = (text) => {
-    const strippedText = text.replace(/<[^>]*>/g, ''); // Remove HTML tags
+    const strippedText = text.replace(/<[^>]*>/g, '');
     return strippedText.trim().split(/\s+/).filter(word => word.length > 0).length;
   };
 
@@ -64,6 +77,20 @@ const MyDiary = () => {
     const words = countWords(content.innerHTML);
     setWordCount(words);
     return words <= WORD_LIMIT;
+  };
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    setSearchError('');
+  };
+
+  const getFilteredEntries = () => {
+    if (!searchQuery) return entries;
+    return entries.filter(entry => 
+      entry.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      entry.content.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   };
 
   const saveContent = async () => {
@@ -131,14 +158,21 @@ const MyDiary = () => {
     setTitleError('');
     setContentError('');
 
+    // Get the current entry being edited
+    const currentEntry = entries.find(entry => entry.id === entryId);
+    if (!currentEntry) {
+      console.error('Entry not found');
+      return;
+    }
+
     // Validate title
-    if (!editedEntry.title || editedEntry.title.trim() === '') {
+    if (!currentEntry.title || currentEntry.title.trim() === '') {
       setTitleError('Please enter a title for your diary entry');
       return;
     }
 
     // Validate content
-    if (!editedEntry.content || editedEntry.content.trim() === '') {
+    if (!currentEntry.content || currentEntry.content.trim() === '') {
       setContentError('Please write something in your diary entry');
       return;
     }
@@ -152,14 +186,22 @@ const MyDiary = () => {
         },
         body: JSON.stringify({
           id: entryId,
-          title: headerText,
-          content: document.getElementById('editable-content').innerHTML,
-          mood: mood
+          title: currentEntry.title,
+          content: currentEntry.content,
+          mood: currentEntry.mood
         })
       });
 
       const data = await response.json();
       if (data.status === 'success') {
+        // Reset edited entry
+        setEditedEntry({
+          title: '',
+          content: '',
+          mood: 'neutral'
+        });
+        
+        // Refresh entries
         fetchEntries();
         setDropdownVisible(null);
       } else {
@@ -168,6 +210,26 @@ const MyDiary = () => {
     } catch (error) {
       console.error('Error updating entry:', error);
     }
+  };
+
+  // Function to start editing an entry
+  const startEditing = (entry) => {
+    setEditedEntry({
+      title: entry.title,
+      content: entry.content,
+      mood: entry.mood
+    });
+    setDropdownVisible(null);
+  };
+
+  // Function to cancel editing
+  const cancelEditing = () => {
+    setEditedEntry({
+      title: '',
+      content: '',
+      mood: 'neutral'
+    });
+    setDropdownVisible(null);
   };
 
   const archiveEntry = async (entryId) => {
@@ -259,7 +321,7 @@ const MyDiary = () => {
               value={headerText}
               onChange={(e) => {
                 setHeaderText(e.target.value);
-                setTitleError(''); // Clear error on change
+                setTitleError('');
               }}
               className={`text-xl text-gray-500 mb-2 w-full border-none focus:outline-none ${
                 titleError ? 'border-red-500' : ''
@@ -275,40 +337,18 @@ const MyDiary = () => {
               <span className="text-sm">{today}</span>
             </div>
 
-            {/* Text Editor Area with Auto-expanding Container */}
+            {/* Text Editor Area */}
             <div className="relative">
               <div
                 id="editable-content"
                 contentEditable
                 className="w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 overflow-y-auto focus:outline-none mb-16"
+                onInput={handleContentChange}
               />
 
-              /* Formatting Tools - Fixed at bottom */}
-                      <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t flex justify-between items-center">
-                      <div className="flex space-x-4">
-                        <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
-                        <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
-                        </button>
-                        <button onClick={() => document.execCommand('italic')} className="p-2 hover:bg-gray-100 rounded">
-                        <img src={require("../icons/Italic.svg").default} alt="Italic" className="w-6 h-6" />
-                        </button>
-                        <button onClick={() => document.execCommand('underline')} className="p-2 hover:bg-gray-100 rounded">
-                        <img src={require("../icons/underline.svg").default} alt="Underline" className="w-6 h-6" />
-                        </button>
-                      </div>
-                      <button
-                        onClick={saveContent}
-                        className="px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
-                      >
-                        Save
-                      </button>
-                      </div>
-                    </div>
-=======
-              {/* Formatting Tools with Word Count - Fixed at bottom */}
+              {/* Formatting Tools */}
               <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t">
                 <div className="flex justify-between items-center">
-                  {/* Formatting buttons */}
                   <div className="flex space-x-4">
                     <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
                       <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
@@ -320,15 +360,11 @@ const MyDiary = () => {
                       <img src={require("../icons/underline.svg").default} alt="Underline" className="w-6 h-6" />
                     </button>
                   </div>
->>>>>>> 5dd6e0c837a6fc50cc2ce6604f88432f9d35ad12
 
-                  {/* Right side with word count and save button */}
                   <div className="flex items-center space-x-4">
-                    {/* Word Count Indicator */}
                     <span className="text-sm text-gray-400">
                       {wordCount}/{WORD_LIMIT} words
                     </span>
-                    
                     <button
                       onClick={saveContent}
                       className={`px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] ${
@@ -341,56 +377,37 @@ const MyDiary = () => {
                   </div>
                 </div>
               </div>
-            </div>
 
-<<<<<<< HEAD
-                        return (
-                        <button
-                          key={moodOption}
-                          onClick={() => setMood(moodOption)}
-                          className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
-                        >
-                          {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
-                        </button>
-                        );
-                      })}
-                      </div>
-                    </div>
-                  </div>
-                )}
-                
-                  {/* View Saved Entries */}
-=======
-            {/* Mood Tracker */}
-            <div className="absolute top-4 right-4">
-              <h2 className="text-gray-500 text-lg mb-2">Mood Tracker:</h2>
-              <div className="flex space-x-2">
-              {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
-                const moodColors = {
-                'sad': 'bg-[#FFB6A6]',
-                'angry': 'bg-[#FFCF55]',
-                'neutral': 'bg-[#FFF731]',
-                'happy': 'bg-[#00FFFF]',
-                'very happy': 'bg-[#29E259]'
-                };
+              {/* Mood Tracker */}
+              <div className="absolute top-4 right-4">
+                <h2 className="text-gray-500 text-lg mb-2">Mood Tracker:</h2>
+                <div className="flex space-x-2">
+                  {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
+                    const moodColors = {
+                      'sad': 'bg-[#FFB6A6]',
+                      'angry': 'bg-[#FFCF55]',
+                      'neutral': 'bg-[#FFF731]',
+                      'happy': 'bg-[#00FFFF]',
+                      'very happy': 'bg-[#29E259]'
+                    };
 
-                return (
-                <button
-                  key={moodOption}
-                  onClick={() => setMood(moodOption)}
-                  className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
-                >
-                  {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
-                </button>
-                );
-              })}
+                    return (
+                      <button
+                        key={moodOption}
+                        onClick={() => setMood(moodOption)}
+                        className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
+                      >
+                        {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
         )}
 
         {/* View Saved Entries */}
->>>>>>> 5dd6e0c837a6fc50cc2ce6604f88432f9d35ad12
         {viewSavedEntries && (
           <div className="w-full max-w-7xl mx-auto">
             {/* Header Section with Search */}
@@ -454,7 +471,7 @@ const MyDiary = () => {
                         {dropdownVisible === entry.id && (
                           <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md border w-32 z-10">
                             <button
-                              onClick={() => editEntry(entry.id)}
+                              onClick={() => startEditing(entry)}
                               className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
                             >
                               Edit
@@ -537,7 +554,7 @@ const MyDiary = () => {
                   }}
                   className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
                 >
-                  Cancel
+                  View Entries
                 </button>
               </div>
             </div>

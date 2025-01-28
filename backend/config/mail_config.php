@@ -8,5 +8,5 @@ return [
     'MAIL_PASSWORD' => 'iayp clqr hztl hdfq',
     'MAIL_ENCRYPTION' => 'tls',
     'MAIL_FROM_ADDRESS' => 'lifelywebdev@gmail.com',
-    'MAIL_FROM_NAME' => 'Lifely'
+    'MAIL_FROM_NAME' => 'Lifely App'
 ]; 

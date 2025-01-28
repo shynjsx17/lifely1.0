@@ -122,3 +122,72 @@
 [28-Jan-2025 17:50:38 Europe/Berlin] Starting OTP verification for email: freyalaluce@gmail.com with code: 548240
 [28-Jan-2025 17:50:38 Europe/Berlin] Found OTP record: {"id":2,"email":"freyalaluce@gmail.com","otp":"548240","expires_at":"2025-01-28 18:02:26","created_at":"2025-01-29 00:47:26","verified":0}
 [28-Jan-2025 17:50:38 Europe/Berlin] OTP verified successfully for email: freyalaluce@gmail.com
+[28-Jan-2025 18:13:45 Europe/Berlin] Verification request received: {"action":"generate","email":"yannahwatanabe794@gmail.com"}
+[28-Jan-2025 18:13:45 Europe/Berlin] Verification request received: {"action":"generate","email":"yannahwatanabe794@gmail.com"}
+[28-Jan-2025 18:13:45 Europe/Berlin] Processing verification request for action: generate
+[28-Jan-2025 18:13:45 Europe/Berlin] Processing verification request for action: generate
+[28-Jan-2025 18:13:45 Europe/Berlin] Generating OTP for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 18:13:45 Europe/Berlin] Generating OTP for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 18:13:45 Europe/Berlin] Generated OTP: 907399, Expires at: 2025-01-28 18:28:45
+[28-Jan-2025 18:13:45 Europe/Berlin] Generated OTP: 421052, Expires at: 2025-01-28 18:28:45
+[28-Jan-2025 18:13:45 Europe/Berlin] Starting OTP creation for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 18:13:45 Europe/Berlin] Starting OTP creation for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 18:13:45 Europe/Berlin] Deleted existing OTP records for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 18:13:45 Europe/Berlin] Deleted existing OTP records for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 18:13:45 Europe/Berlin] Database error in createOrUpdate: SQLSTATE[40001]: Serialization failure: 1213 Deadlock found when trying to get lock; try restarting transaction
+[28-Jan-2025 18:13:45 Europe/Berlin] Error details: {"error":"SQLSTATE[40001]: Serialization failure: 1213 Deadlock found when trying to get lock; try restarting transaction","trace":"#0 C:\\xampp\\htdocs\\lifely1.0\\backend\\models\\Verification.php(36): PDOStatement->execute(Array)\n#1 C:\\xampp\\htdocs\\lifely1.0\\backend\\api\\verification.php(63): Verification->createOrUpdate('yannahwatanabe7...', '907399', '2025-01-28 18:2...')\n#2 {main}","email":"yannahwatanabe794@gmail.com","expires_at":"2025-01-28 18:28:45"}
+[28-Jan-2025 18:13:45 Europe/Berlin] Verification Error: Failed to save OTP: SQLSTATE[40001]: Serialization failure: 1213 Deadlock found when trying to get lock; try restarting transaction
+[28-Jan-2025 18:13:45 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\lifely1.0\backend\api\verification.php(63): Verification->createOrUpdate('yannahwatanabe7...', '907399', '2025-01-28 18:2...')
+#1 {main}
+[28-Jan-2025 18:13:45 Europe/Berlin] Successfully created new OTP record for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 18:13:50 Europe/Berlin] Email sent successfully to: yannahwatanabe794@gmail.com
+[28-Jan-2025 18:14:20 Europe/Berlin] Verification request received: {"action":"verify","email":"yannahwatanabe794@gmail.com","otp":"421052"}
+[28-Jan-2025 18:14:20 Europe/Berlin] Processing verification request for action: verify
+[28-Jan-2025 18:14:20 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xampp\htdocs\lifely1.0\backend\api\verification.php on line 86
+[28-Jan-2025 18:14:20 Europe/Berlin] Verifying OTP for email: yannahwatanabe794@gmail.com, OTP: 421052
+[28-Jan-2025 18:14:20 Europe/Berlin] Starting OTP verification for email: yannahwatanabe794@gmail.com with code: 421052
+[28-Jan-2025 18:14:20 Europe/Berlin] Found OTP record: {"id":3,"email":"yannahwatanabe794@gmail.com","otp":"421052","expires_at":"2025-01-28 18:28:45","created_at":"2025-01-29 01:13:45","verified":0}
+[28-Jan-2025 18:14:20 Europe/Berlin] OTP verified successfully for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 20:02:48 Europe/Berlin] Database Connection Error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[28-Jan-2025 20:02:48 Europe/Berlin] PHP Fatal error:  Uncaught Exception: Database connection failed in C:\xampp\htdocs\lifely1.0\backend\config\db_connect.php:28
+Stack trace:
+#0 C:\xampp\htdocs\lifely1.0\backend\config\db_connect.php(53): Database->connect()
+#1 C:\xampp\htdocs\lifely1.0\backend\api\forgot_password.php(17): require_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\lifely1.0\backend\config\db_connect.php on line 28
+[28-Jan-2025 20:07:10 Europe/Berlin] Password reset email sent successfully to: yannahwatanabe794@gmail.com
+[28-Jan-2025 20:08:52 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xampp\htdocs\lifely1.0\backend\api\reset_password.php on line 36
+[28-Jan-2025 20:08:52 Europe/Berlin] Password Reset Error: Invalid or expired reset token
+[28-Jan-2025 20:11:22 Europe/Berlin] Verifying token for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 20:11:22 Europe/Berlin] No valid token found for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 20:11:22 Europe/Berlin] Password Reset Error: Invalid or expired reset token
+[28-Jan-2025 20:11:36 Europe/Berlin] Verifying token for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 20:11:36 Europe/Berlin] No valid token found for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 20:11:36 Europe/Berlin] Password Reset Error: Invalid or expired reset token
+[28-Jan-2025 20:13:46 Europe/Berlin] Creating new token for email: yannahwatanabe794@gmail.com, expires at (UTC): 2025-01-28 20:13:46
+[28-Jan-2025 20:13:51 Europe/Berlin] Password reset email sent successfully to: yannahwatanabe794@gmail.com
+[28-Jan-2025 20:14:10 Europe/Berlin] Verifying token for email: yannahwatanabe794@gmail.com with token: c07f7bda08b03ec9890981c6362fca617b00e76c154fb2ff8f2e2d61cbc8ea33
+[28-Jan-2025 20:14:10 Europe/Berlin] Valid token found for email: yannahwatanabe794@gmail.com. Token expires at: 2025-01-28 20:13:46
+[28-Jan-2025 20:19:36 Europe/Berlin] Password Reset Error: Token, email and new password are required
+[28-Jan-2025 23:25:42 Europe/Berlin] Verification request received: {"action":"generate","email":"yannahwatanabe794@gmail.com"}
+[28-Jan-2025 23:25:42 Europe/Berlin] Verification request received: {"action":"generate","email":"yannahwatanabe794@gmail.com"}
+[28-Jan-2025 23:25:42 Europe/Berlin] Processing verification request for action: generate
+[28-Jan-2025 23:25:42 Europe/Berlin] Generating OTP for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 23:25:42 Europe/Berlin] Generated OTP: 458812, Expires at: 2025-01-28 23:40:42
+[28-Jan-2025 23:25:42 Europe/Berlin] Starting OTP creation for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 23:25:42 Europe/Berlin] Deleted existing OTP records for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 23:25:42 Europe/Berlin] Successfully created new OTP record for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 23:25:43 Europe/Berlin] Processing verification request for action: generate
+[28-Jan-2025 23:25:43 Europe/Berlin] Generating OTP for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 23:25:43 Europe/Berlin] Generated OTP: 274949, Expires at: 2025-01-28 23:40:43
+[28-Jan-2025 23:25:43 Europe/Berlin] Starting OTP creation for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 23:25:43 Europe/Berlin] Deleted existing OTP records for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 23:25:43 Europe/Berlin] Successfully created new OTP record for email: yannahwatanabe794@gmail.com
+[28-Jan-2025 23:25:47 Europe/Berlin] Email sent successfully to: yannahwatanabe794@gmail.com
+[28-Jan-2025 23:25:47 Europe/Berlin] Email sent successfully to: yannahwatanabe794@gmail.com
+[28-Jan-2025 23:26:21 Europe/Berlin] Verification request received: {"action":"verify","email":"yannahwatanabe794@gmail.com","otp":"274949"}
+[28-Jan-2025 23:26:21 Europe/Berlin] Processing verification request for action: verify
+[28-Jan-2025 23:26:21 Europe/Berlin] Verifying OTP for email: yannahwatanabe794@gmail.com, OTP: 274949
+[28-Jan-2025 23:26:21 Europe/Berlin] Starting OTP verification for email: yannahwatanabe794@gmail.com with code: 274949
+[28-Jan-2025 23:26:21 Europe/Berlin] Found OTP record: {"id":2,"email":"yannahwatanabe794@gmail.com","otp":"274949","expires_at":"2025-01-28 23:40:43","created_at":"2025-01-29 06:25:43","verified":0}
+[28-Jan-2025 23:26:21 Europe/Berlin] OTP verified successfully for email: yannahwatanabe794@gmail.com

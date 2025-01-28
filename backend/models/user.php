@@ -106,88 +106,61 @@ class User {
         return $stmt->rowCount() > 0;
     }
 
-    public function saveResetToken($email, $token, $expires_at) {
+    public function updatePassword() {
         try {
-            $this->conn->beginTransaction();
+            $query = "UPDATE " . $this->table . "
+                    SET password_hash = :password_hash,
+                        updated_at = CURRENT_TIMESTAMP
+                    WHERE email = :email";
 
-            // Delete any existing reset tokens for this email
-            $deleteQuery = "DELETE FROM password_resets WHERE email = ?";
-            $deleteStmt = $this->conn->prepare($deleteQuery);
-            $deleteStmt->execute([$email]);
+            $stmt = $this->conn->prepare($query);
 
-            // Insert new reset token
-            $insertQuery = "INSERT INTO password_resets (email, token, expires_at) 
-                          VALUES (?, ?, ?)";
-            $insertStmt = $this->conn->prepare($insertQuery);
-            $result = $insertStmt->execute([$email, $token, $expires_at]);
+            $stmt->bindParam(':password_hash', $this->password_hash);
+            $stmt->bindParam(':email', $this->email);
 
-            if (!$result) {
-                throw new PDOException("Failed to save reset token");
+            if($stmt->execute()) {
+                return true;
             }
 
-            $this->conn->commit();
-            return true;
-
+            error_log("Failed to update password for email: " . $this->email);
+            return false;
         } catch (PDOException $e) {
-            $this->conn->rollBack();
-            error_log("Error saving reset token: " . $e->getMessage());
+            error_log("Database error in updatePassword: " . $e->getMessage());
             return false;
         }
     }
 
-    public function resetPassword($token, $newPassword) {
-        try {
-            $this->conn->beginTransaction();
-
-            // Get reset token info
-            $query = "SELECT email, expires_at FROM password_resets 
-                     WHERE token = ? AND expires_at > NOW() 
-                     LIMIT 1";
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute([$token]);
-            $reset = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$reset) {
-                throw new Exception("Invalid or expired reset token");
-            }
-
-            // Update password
-            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-            $updateQuery = "UPDATE " . $this->table . " 
-                          SET password = ? 
-                          WHERE email = ?";
-            $updateStmt = $this->conn->prepare($updateQuery);
-            $updateResult = $updateStmt->execute([$hashedPassword, $reset['email']]);
-
-            if (!$updateResult) {
-                throw new PDOException("Failed to update password");
-            }
-
-            // Delete used reset token
-            $deleteQuery = "DELETE FROM password_resets WHERE token = ?";
-            $deleteStmt = $this->conn->prepare($deleteQuery);
-            $deleteStmt->execute([$token]);
-
-            $this->conn->commit();
-            return true;
-
-        } catch (Throwable $e) {
-            $this->conn->rollBack();
-            error_log("Error resetting password: " . $e->getMessage());
-            return false;
-        }
+    // Update user's profile image
+    public function updateProfileImage($userId, $imagePath) {
+        $query = "UPDATE users SET profile_image = :image_path WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        
+        $stmt->bindParam(':image_path', $imagePath);
+        $stmt->bindParam(':id', $userId);
+        
+        return $stmt->execute();
+    }
+    
+    // Update user's name
+    public function updateName($userId, $name) {
+        $query = "UPDATE users SET name = :name WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':id', $userId);
+        
+        return $stmt->execute();
     }
 
-    public function emailExists($email) {
-        try {
-            $query = "SELECT COUNT(*) FROM " . $this->table . " WHERE email = ?";
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute([$email]);
-            return $stmt->fetchColumn() > 0;
-        } catch (PDOException $e) {
-            error_log("Error checking email existence: " . $e->getMessage());
-            return false;
-        }
+    // Verify session token
+    public function verifySessionToken($token) {
+        $query = "SELECT user_id FROM sessions WHERE token = :token AND expires_at > NOW()";
+        $stmt = $this->conn->prepare($query);
+        
+        $stmt->bindParam(':token', $token);
+        $stmt->execute();
+        
+        return $stmt->rowCount() > 0;
     }
 }
 ?>

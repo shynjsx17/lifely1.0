@@ -4,9 +4,6 @@ ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../../php-errors.log');
 error_reporting(E_ALL);
 
-// Prevent PHP from outputting HTML errors
-ini_set('display_errors', 0);
-
 header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -20,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once __DIR__ . '/../config/db_connect.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/ResetToken.php';
+require_once __DIR__ . '/../services/MailService.php';
 
 try {
     $database = new Database();
@@ -27,38 +25,46 @@ try {
     
     $user = new User($db);
     $resetToken = new ResetToken($db);
+    $mailService = new MailService();
 
     // Get posted data
     $data = json_decode(file_get_contents("php://input"));
 
-    if (!isset($data->token) || !isset($data->email) || !isset($data->password)) {
-        throw new Exception("Token, email and new password are required");
+    if (!isset($data->email)) {
+        throw new Exception("Email is required");
     }
 
     $email = filter_var($data->email, FILTER_SANITIZE_EMAIL);
-    $token = htmlspecialchars($data->token, ENT_QUOTES, 'UTF-8');
-    $password = $data->password;
-
-    // Verify token
-    if (!$resetToken->verifyToken($token, $email)) {
-        throw new Exception("Invalid or expired reset token");
-    }
-
-    // Update password
-    $user->email = $email;
-    $user->password_hash = password_hash($password, PASSWORD_DEFAULT);
     
-    if (!$user->updatePassword()) {
-        throw new Exception("Failed to update password");
+    // Check if email exists
+    $user->email = $email;
+    if (!$user->emailExists()) {
+        // For security reasons, still return success even if email doesn't exist
+        http_response_code(200);
+        echo json_encode([
+            "status" => true,
+            "message" => "If your email is registered, you will receive password reset instructions."
+        ]);
+        exit();
     }
 
-    // Mark token as used
-    $resetToken->markTokenAsUsed($token, $email);
+    // Generate reset token
+    $token = $resetToken->createToken($email);
+    
+    // Create reset link
+    $resetLink = "http://localhost:3000/reset-password?token=" . $token . "&email=" . urlencode($email);
+    
+    // Send email with reset link
+    $emailSent = $mailService->sendPasswordResetLink($email, $resetLink);
+    
+    if (!$emailSent) {
+        throw new Exception("Failed to send password reset email");
+    }
 
     http_response_code(200);
     echo json_encode([
         "status" => true,
-        "message" => "Password has been reset successfully"
+        "message" => "Password reset instructions have been sent to your email"
     ]);
 
 } catch (Exception $e) {
@@ -67,6 +73,6 @@ try {
     http_response_code(500);
     echo json_encode([
         "status" => false,
-        "message" => $e->getMessage()
+        "message" => "Failed to process password reset request"
     ]);
 } 
