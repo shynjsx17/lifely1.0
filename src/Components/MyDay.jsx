@@ -29,6 +29,8 @@ const MyDay = () => {
   const listDropdownRef = useRef(null);
   const priorityDropdownRef = useRef(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchError, setSearchError] = useState("");
 
   // Fetch tasks from backend
   const fetchTasks = async () => {
@@ -578,6 +580,42 @@ const MyDay = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    
+    if (value === "") {
+      setSearchQuery("");
+      setSearchError("");
+      return;
+    }
+    
+    if (value.length < 2) {
+      setSearchError("Search must be at least 2 characters");
+    } else if (value.length > 50) {
+      setSearchError("Search cannot exceed 50 characters");
+      return;
+    } else {
+      setSearchError("");
+    }
+    
+    setSearchQuery(value);
+  };
+
+  const getFilteredTasks = () => {
+    let filtered = tasks;
+    
+    if (searchQuery.trim().length >= 2) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(task => 
+        task.title.toLowerCase().includes(query) ||
+        task.list_type.toLowerCase().includes(query) ||
+        task.priority.toLowerCase().includes(query)
+      );
+    }
+    
+    return filtered;
+  };
+
   return (
     <div className="flex h-screen flex-col">
       <Sidebar
@@ -587,11 +625,47 @@ const MyDay = () => {
       <div
         className={`flex-1 transition-all duration-300 ${isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"} p-8 bg-system-background bg-no-repeat bg-fixed flex flex-col`}
       >
-        <div className="text-left mb-10 font-poppins">
-         <h1 className="font-bold text-3xl">Good Day, {user?.username || 'User'}!</h1>
-          <p className="font-bold text-xl text-[#FFB78B]">
-            What's your plan for today?
-          </p>
+        {/* Title and Search Section */}
+        <div className="flex justify-between items-center mb-10">
+          {/* Title Section */}
+          <div className="text-left font-poppins">
+            <h1 className="font-bold text-3xl">Good Day, {user?.username || 'User'}!</h1>
+            <p className="font-bold text-xl text-[#FFB78B]">
+              What's your plan for today?
+            </p>
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative w-72">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              maxLength={50}
+              className={`w-full pl-10 pr-4 py-2 rounded-full border ${
+                searchError ? 'border-red-500' : 'border-gray-300'
+              } focus:outline-none focus:border-gray-400 focus:ring-0`}
+            />
+            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+              <svg
+                className={`w-5 h-5 ${searchError ? 'text-red-500' : 'text-gray-400'}`}
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            {searchError && (
+              <div className="absolute -bottom-6 left-0 text-red-500 text-xs">
+                {searchError}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="flex items-center justify-center bg-white shadow-md rounded-lg p-6 mb-6 mx-40">
@@ -603,7 +677,7 @@ const MyDay = () => {
 
         {/* Task List */}
         <div className="space-y-4 mb-6 flex-grow">
-          {tasks.map((task, index) => (
+          {getFilteredTasks().map((task, index) => (
             <div
               key={index}
               className="flex items-center justify-between bg-white shadow-md rounded-lg p-4 mx-40 cursor-pointer hover:shadow-lg transition-shadow"

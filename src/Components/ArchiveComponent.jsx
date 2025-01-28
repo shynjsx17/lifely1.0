@@ -9,6 +9,8 @@ const ArchiveComponent = () => {
   const [activeTab, setActiveTab] = useState('tasks');
   const [archivedTasks, setArchivedTasks] = useState([]);
   const [archivedDiaries, setArchivedDiaries] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchError, setSearchError] = useState("");
 
   // Fetch archived tasks
   const fetchArchivedTasks = async () => {
@@ -402,6 +404,49 @@ const ArchiveComponent = () => {
     });
   };
 
+  // Add the search handler function
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    
+    if (value === "") {
+      setSearchQuery("");
+      setSearchError("");
+      return;
+    }
+    
+    if (value.length < 2) {
+      setSearchError("Search must be at least 2 characters");
+    } else if (value.length > 50) {
+      setSearchError("Search cannot exceed 50 characters");
+      return;
+    } else {
+      setSearchError("");
+    }
+    
+    setSearchQuery(value);
+  };
+
+  // Add the filtering function
+  const getFilteredItems = () => {
+    if (searchQuery.trim().length < 2) {
+      return activeTab === 'tasks' ? archivedTasks : archivedDiaries;
+    }
+
+    const query = searchQuery.toLowerCase();
+    
+    if (activeTab === 'tasks') {
+      return archivedTasks.filter(task => 
+        task.title.toLowerCase().includes(query) ||
+        task.list_type.toLowerCase().includes(query) ||
+        task.priority.toLowerCase().includes(query)
+      );
+    } else {
+      return archivedDiaries.filter(diary => 
+        diary.title.toLowerCase().includes(query)
+      );
+    }
+  };
+
   return (
     <div className="flex h-screen">
       <Sidebar 
@@ -415,28 +460,63 @@ const ArchiveComponent = () => {
           <h1 className="font-bold text-3xl">My Archive</h1>
         </div>
 
-        {/* Tab Buttons */}
-        <div className="flex space-x-4 mb-6">
-          <button
-            onClick={() => setActiveTab('tasks')}
-            className={`px-6 py-2 rounded-lg ${
-              activeTab === 'tasks' 
-                ? 'bg-white text-gray-800 shadow-md' 
-                : 'bg-gray-100 text-gray-600'
-            }`}
-          >
-            My Day
-          </button>
-          <button
-            onClick={() => setActiveTab('diaries')}
-            className={`px-6 py-2 rounded-lg ${
-              activeTab === 'diaries' 
-                ? 'bg-white text-gray-800 shadow-md' 
-                : 'bg-gray-100 text-gray-600'
-            }`}
-          >
-            My Diary
-          </button>
+        {/* Tab Buttons and Search Section */}
+        <div className="flex justify-between items-center mb-6">
+          {/* Tab Buttons */}
+          <div className="flex space-x-4">
+            <button
+              onClick={() => setActiveTab('tasks')}
+              className={`px-6 py-2 rounded-lg ${
+                activeTab === 'tasks' 
+                  ? 'bg-white text-gray-800 shadow-md' 
+                  : 'bg-gray-100 text-gray-600'
+              }`}
+            >
+              My Day
+            </button>
+            <button
+              onClick={() => setActiveTab('diaries')}
+              className={`px-6 py-2 rounded-lg ${
+                activeTab === 'diaries' 
+                  ? 'bg-white text-gray-800 shadow-md' 
+                  : 'bg-gray-100 text-gray-600'
+              }`}
+            >
+              My Diary
+            </button>
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative w-72">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              maxLength={50}
+              className={`w-full pl-10 pr-4 py-2 rounded-full border ${
+                searchError ? 'border-red-500' : 'border-gray-300'
+              } focus:outline-none focus:border-gray-400 focus:ring-0`}
+            />
+            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+              <svg
+                className={`w-5 h-5 ${searchError ? 'text-red-500' : 'text-gray-400'}`}
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            {searchError && (
+              <div className="absolute -bottom-6 left-0 text-red-500 text-xs">
+                {searchError}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Action Buttons */}
@@ -455,13 +535,13 @@ const ArchiveComponent = () => {
           >
             Delete All
           </button>
-      </div>
+        </div>
 
         {/* Content Area */}
         <div className="bg-white rounded-lg shadow-md p-6">
           {activeTab === 'tasks' ? (
             <div className="space-y-4">
-              {archivedTasks.map((task) => (
+              {getFilteredItems().map((task) => (
                 <div key={task.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center space-x-4">
                   <input
@@ -500,7 +580,7 @@ const ArchiveComponent = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              {archivedDiaries.map((entry) => (
+              {getFilteredItems().map((entry) => (
                 <div key={entry.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div>
                     <p className="text-sm text-gray-500">
