@@ -28,6 +28,7 @@ const MyDiary = () => {
   const [contentError, setContentError] = useState('');
   const TITLE_CHAR_LIMIT = 50; // You can adjust this number as needed
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [formatState, setFormatState] = useState(false);
 
   // Fetch diary entries from database
   const fetchEntries = async () => {
@@ -67,6 +68,23 @@ const MyDiary = () => {
       fetchEntries();
     }
   }, [currentPage, viewSavedEntries]);
+
+  useEffect(() => {
+    const updateToolbarState = () => {
+      // Force a re-render to update button states
+      setFormatState(prev => !prev);
+    };
+
+    const editor = document.getElementById('editable-content');
+    if (editor) {
+      editor.addEventListener('keyup', updateToolbarState);
+      editor.addEventListener('mouseup', updateToolbarState);
+      return () => {
+        editor.removeEventListener('keyup', updateToolbarState);
+        editor.removeEventListener('mouseup', updateToolbarState);
+      };
+    }
+  }, []);
 
   const countWords = (text) => {
     const strippedText = text.replace(/<[^>]*>/g, ''); // Remove HTML tags
@@ -434,29 +452,71 @@ const MyDiary = () => {
                   <div className="flex space-x-2 md:space-x-4 flex-wrap">
                     {/* Text Style Tools */}
                     <div className="flex space-x-2 border-r pr-2">
-                      <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
+                      <button 
+                        onClick={() => document.execCommand('bold')} 
+                        className={`p-2 hover:bg-gray-100 rounded transition-colors duration-200 ${
+                          document.queryCommandState('bold') ? 'bg-gray-200 shadow-inner' : ''
+                        }`}
+                        onMouseDown={(e) => e.preventDefault()} // Prevent focus loss
+                      >
                         <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
                       </button>
-                      <button onClick={() => document.execCommand('italic')} className="p-2 hover:bg-gray-100 rounded">
+                      <button 
+                        onClick={() => document.execCommand('italic')} 
+                        className={`p-2 hover:bg-gray-100 rounded transition-colors duration-200 ${
+                          document.queryCommandState('italic') ? 'bg-gray-200 shadow-inner' : ''
+                        }`}
+                        onMouseDown={(e) => e.preventDefault()}
+                      >
                         <img src={require("../icons/Italic.svg").default} alt="Italic" className="w-6 h-6" />
                       </button>
-                      <button onClick={() => document.execCommand('underline')} className="p-2 hover:bg-gray-100 rounded">
+                      <button 
+                        onClick={() => document.execCommand('underline')} 
+                        className={`p-2 hover:bg-gray-100 rounded transition-colors duration-200 ${
+                          document.queryCommandState('underline') ? 'bg-gray-200 shadow-inner' : ''
+                        }`}
+                        onMouseDown={(e) => e.preventDefault()}
+                      >
                         <img src={require("../icons/underline.svg").default} alt="Underline" className="w-6 h-6" />
                       </button>
-                      <button onClick={() => document.execCommand('strikeThrough')} className="p-2 hover:bg-gray-100 rounded">
+                      <button 
+                        onClick={() => document.execCommand('strikeThrough')} 
+                        className={`p-2 hover:bg-gray-100 rounded transition-colors duration-200 ${
+                          document.queryCommandState('strikeThrough') ? 'bg-gray-200 shadow-inner' : ''
+                        }`}
+                        onMouseDown={(e) => e.preventDefault()}
+                      >
                         <img src={require("../icons/strikethrough.svg").default} alt="Strikethrough" className="w-6 h-6" />
                       </button>
                     </div>
 
                     {/* Alignment Tools */}
                     <div className="flex space-x-2 border-r pr-2">
-                      <button onClick={() => document.execCommand('justifyLeft')} className="p-2 hover:bg-gray-100 rounded">
+                      <button 
+                        onClick={() => document.execCommand('justifyLeft')} 
+                        className={`p-2 hover:bg-gray-100 rounded transition-colors duration-200 ${
+                          document.queryCommandState('justifyLeft') ? 'bg-gray-200 shadow-inner' : ''
+                        }`}
+                        onMouseDown={(e) => e.preventDefault()}
+                      >
                         <img src={require("../icons/align-left.svg").default} alt="Align Left" className="w-6 h-6" />
                       </button>
-                      <button onClick={() => document.execCommand('justifyCenter')} className="p-2 hover:bg-gray-100 rounded">
+                      <button 
+                        onClick={() => document.execCommand('justifyCenter')} 
+                        className={`p-2 hover:bg-gray-100 rounded transition-colors duration-200 ${
+                          document.queryCommandState('justifyCenter') ? 'bg-gray-200 shadow-inner' : ''
+                        }`}
+                        onMouseDown={(e) => e.preventDefault()}
+                      >
                         <img src={require("../icons/align-center.svg").default} alt="Align Center" className="w-6 h-6" />
                       </button>
-                      <button onClick={() => document.execCommand('justifyRight')} className="p-2 hover:bg-gray-100 rounded">
+                      <button 
+                        onClick={() => document.execCommand('justifyRight')} 
+                        className={`p-2 hover:bg-gray-100 rounded transition-colors duration-200 ${
+                          document.queryCommandState('justifyRight') ? 'bg-gray-200 shadow-inner' : ''
+                        }`}
+                        onMouseDown={(e) => e.preventDefault()}
+                      >
                         <img src={require("../icons/align-right.svg").default} alt="Align Right" className="w-6 h-6" />
                       </button>
                     </div>
