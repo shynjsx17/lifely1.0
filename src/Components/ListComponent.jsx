@@ -5,6 +5,7 @@ import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import Sidebar from '../Navigation/Sidebar';
 import { useAuth } from '../context/AuthContext';
 import Calendar from 'react-calendar';
+import dayjs from 'dayjs';
 
 const ListComponent = () => {
     const [tasks, setTasks] = useState([]);
@@ -231,9 +232,7 @@ const ListComponent = () => {
 
     const handleUpdateReminder = async (taskId, date) => {
         try {
-            console.log('Updating reminder with date:', date); // Debug log
-            const formattedDate = new Date(date).toISOString().slice(0, 19).replace('T', ' ');
-            
+            const formattedDate = dayjs(date).format('YYYY-MM-DD');
             const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
                 method: 'PUT',
                 headers: {
@@ -245,21 +244,13 @@ const ListComponent = () => {
                 })
             });
 
-            const data = await response.json();
-            console.log('Reminder update response:', data); // Debug log
-            
-            if (data.success) {
-                // Update the task in the local state immediately
-                setTasks(prevTasks => 
-                    prevTasks.map(task => 
-                        task.id === taskId 
-                            ? { ...task, reminder_date: formattedDate }
-                            : task
-                    )
-                );
-                if (selectedTask?.id === taskId) {
-                    setSelectedTask(prev => ({ ...prev, reminder_date: formattedDate }));
-                }
+            if (response.ok) {
+                await fetchTasks();
+                // Update the selected task with the new reminder date
+                setSelectedTask(prev => ({
+                    ...prev,
+                    reminder_date: formattedDate
+                }));
                 setShowDatePicker(false);
             }
         } catch (error) {
@@ -468,7 +459,7 @@ const ListComponent = () => {
                                         {showDatePicker && (
                                             <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg p-4">
                                                 <Calendar
-                                                    onChange={(date) => handleUpdateReminder(selectedTask.id, date.toISOString().split('T')[0])}
+                                                    onChange={(date) => handleUpdateReminder(selectedTask.id, dayjs(date).format('YYYY-MM-DD'))}
                                                     value={selectedTask.reminder_date ? new Date(selectedTask.reminder_date) : new Date()}
                                                     minDate={new Date()}
                                                 />
