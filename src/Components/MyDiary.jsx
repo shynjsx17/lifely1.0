@@ -25,6 +25,7 @@ const MyDiary = () => {
   const [editContentError, setEditContentError] = useState('');
   const [titleError, setTitleError] = useState('');
   const [contentError, setContentError] = useState('');
+  const TITLE_CHAR_LIMIT = 50; // You can adjust this number as needed
 
   // Fetch diary entries from database
   const fetchEntries = async () => {
@@ -70,11 +71,18 @@ const MyDiary = () => {
     return strippedText.trim().split(/\s+/).filter(word => word.length > 0).length;
   };
 
-  const handleContentChange = () => {
-    const content = document.getElementById('editable-content');
-    const words = countWords(content.innerHTML);
+  const handleContentChange = (e) => {
+    const content = e.target.innerHTML;
+    const words = countWords(content);
     setWordCount(words);
-    return words <= WORD_LIMIT;
+
+    if (words > WORD_LIMIT) {
+      setContentError(`Content cannot exceed ${WORD_LIMIT} words`);
+      return false;
+    }
+    
+    setContentError('');
+    return true;
   };
 
   const saveContent = async () => {
@@ -89,13 +97,15 @@ const MyDiary = () => {
     }
 
     // Validate content
-    const content = document.getElementById('editable-content').innerHTML;
+    const contentElement = document.getElementById('editable-content');
+    const content = contentElement.innerHTML;
     if (!content || content.trim() === '') {
       setContentError('Please write something in your diary entry');
       return;
     }
 
-    if (!handleContentChange()) {
+    // Check word count
+    if (!handleContentChange({ target: contentElement })) {
       return;
     }
 
@@ -118,7 +128,7 @@ const MyDiary = () => {
       const data = await response.json();
       if (data.status === 'success') {
         // Clear the content
-        document.getElementById('editable-content').innerHTML = '';
+        contentElement.innerHTML = '';
         setHeaderText("Why I'm Writing...");
         setMood('neutral');
         
@@ -327,9 +337,16 @@ const MyDiary = () => {
               type="text"
               value={headerText}
               onChange={(e) => {
-                setHeaderText(e.target.value);
-                setTitleError(''); // Clear error on change
+                const newValue = e.target.value;
+                if (newValue.length <= TITLE_CHAR_LIMIT) {
+                  setHeaderText(newValue);
+                  setTitleError('');
+                } else {
+                  setTitleError(`Title cannot exceed ${TITLE_CHAR_LIMIT} characters`);
+                }
               }}
+              placeholder="Why I'm Writing..."
+              maxLength={TITLE_CHAR_LIMIT}
               className={`text-xl text-gray-500 mb-2 w-full border-none focus:outline-none ${
                 titleError ? 'border-red-500' : ''
               }`}
@@ -337,6 +354,9 @@ const MyDiary = () => {
             {titleError && (
               <div className="text-red-500 text-sm mb-2">{titleError}</div>
             )}
+            <div className="text-sm text-gray-400 mb-2">
+              {headerText === "Why I'm Writing..." ? 0 : headerText.length}/{TITLE_CHAR_LIMIT} characters
+            </div>
 
             {/* Date Display */}
             <div className="flex items-center mt-4 mb-4">
@@ -349,12 +369,7 @@ const MyDiary = () => {
               <div
                 id="editable-content"
                 contentEditable
-                onInput={(e) => {
-                  handleContentChange();
-                  // Automatically adjust height
-                  e.target.style.height = 'auto';
-                  e.target.style.height = `${Math.max(400, e.target.scrollHeight)}px`;
-                }}
+                onInput={handleContentChange}
                 className={`w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 
                            overflow-y-auto focus:outline-none mb-16 transition-all duration-200
                            whitespace-pre-wrap break-words ${
@@ -365,7 +380,6 @@ const MyDiary = () => {
                   height: 'auto',
                   maxHeight: '70vh' // Maximum height before scrolling
                 }}
-               onInput={() => setContentError('')} // Clear error on change
               />
               {contentError && (
                 <div className="text-red-500 text-sm mt-2">{contentError}</div>

@@ -922,10 +922,10 @@ const MyDay = () => {
               className={`flex-grow border-none focus:ring-0 text-black placeholder-gray-400 ${
                 taskError ? 'border-red-500' : ''
               }`}
-              maxLength={100}
+              maxLength={50}
             />
             <div className="text-sm text-gray-500">
-              {newTask.length}/100
+              {newTask.length}/50
             </div>
             <button
               className={`ml-4 p-2 text-black font-semibold rounded-lg ${

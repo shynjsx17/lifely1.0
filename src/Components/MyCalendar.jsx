@@ -582,7 +582,7 @@ const MyCalendar = () => {
       {/* Task Edit Modal */}
       {showTaskListPopup && selectedTaskId && (
         <div className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg w-[30rem] shadow-lg">
+          <div className="bg-white rounded-lg w-[650px] max-h-[90vh] overflow-y-auto">
             {/* Header with close button */}
             <div className="flex justify-between items-center bg-[#F0EFF9] px-4 py-2 rounded-t-lg">
               <div className="flex items-center">
@@ -621,20 +621,91 @@ const MyCalendar = () => {
                   </button>
                   
                   {showDatePicker && (
-                    <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg p-4">
-                      <div className="grid grid-cols-7 gap-2">
-                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
-                          <div key={day} className="text-center text-sm font-medium">
+                    <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg p-4 w-64">
+                      {/* Month Navigation */}
+                      <div className="flex justify-between items-center mb-4">
+                        <div className="flex items-center gap-2">
+                          <button 
+                            onClick={() => {
+                              if (currentMonth === 0) {
+                                setCurrentMonth(11);
+                                setCurrentYear(currentYear - 1);
+                              } else {
+                                setCurrentMonth(currentMonth - 1);
+                              }
+                            }}
+                            className="hover:bg-gray-100 p-1 rounded"
+                          >
+                            «
+                          </button>
+                          <button 
+                            onClick={() => {
+                              if (currentMonth === 0) {
+                                setCurrentMonth(11);
+                                setCurrentYear(currentYear - 1);
+                              } else {
+                                setCurrentMonth(currentMonth - 1);
+                              }
+                            }}
+                            className="hover:bg-gray-100 p-1 rounded"
+                          >
+                            ‹
+                          </button>
+                        </div>
+
+                        <span className="font-semibold">
+                          {dayjs().month(currentMonth).format('MMMM')} {currentYear}
+                        </span>
+
+                        <div className="flex items-center gap-2">
+                          <button 
+                            onClick={() => {
+                              if (currentMonth === 11) {
+                                setCurrentMonth(0);
+                                setCurrentYear(currentYear + 1);
+                              } else {
+                                setCurrentMonth(currentMonth + 1);
+                              }
+                            }}
+                            className="hover:bg-gray-100 p-1 rounded"
+                          >
+                            ›
+                          </button>
+                          <button 
+                            onClick={() => {
+                              if (currentMonth === 11) {
+                                setCurrentMonth(0);
+                                setCurrentYear(currentYear + 1);
+                              } else {
+                                setCurrentMonth(currentMonth + 1);
+                              }
+                            }}
+                            className="hover:bg-gray-100 p-1 rounded"
+                          >
+                            »
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Calendar Grid */}
+                      <div className="grid grid-cols-7 gap-1">
+                        {/* Day Headers */}
+                        {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map(day => (
+                          <div key={day} className="text-center text-xs font-semibold p-1">
                             {day}
                           </div>
                         ))}
+
+                        {/* Calendar Days */}
                         {generateDate(currentMonth, currentYear).map((dateObj, index) => (
                           <button
                             key={index}
-                            onClick={() => handleUpdateDueDate(selectedTaskId, dateObj.date.format('YYYY-MM-DD'))}
-                            className={`p-2 text-center rounded-full hover:bg-gray-100 ${
-                              dateObj.currentMonth ? '' : 'text-gray-400'
-                            } ${dateObj.today ? 'bg-blue-500 text-white' : ''}`}
+                            onClick={() => handleUpdateDueDate(selectedTaskId, dateObj.date)}
+                            className={`
+                              p-2 text-center text-sm rounded hover:bg-gray-100
+                              ${!dateObj.currentMonth ? 'text-gray-400' : 'text-gray-700'}
+                              ${dateObj.today ? 'bg-blue-500 text-white hover:bg-blue-600' : ''}
+                            `}
                           >
                             {dateObj.date.date()}
                           </button>
