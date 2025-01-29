@@ -209,11 +209,15 @@ const ArchiveComponent = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await fetch(`http://localhost/lifely1.0/backend/api/diary.php?id=${entryId}`, {
+        const response = await fetch('http://localhost/lifely1.0/backend/api/diary.php', {
           method: 'DELETE',
           headers: {
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
-          }
+          },
+          body: JSON.stringify({
+            id: entryId
+          })
         });
 
         if (response.ok) {
@@ -374,34 +378,6 @@ const ArchiveComponent = () => {
         );
       }
     }
-  };
-
-  const handleDelete = (taskId) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this task!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: '#FB923C',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Call your delete function here
-        handleDeleteTask(taskId);
-        Swal.fire(
-          'Deleted!',
-          'Your task has been deleted.',
-          'success'
-        );
-      } else {
-        Swal.fire(
-          'Cancelled',
-          'Your task is safe!',
-          'error'
-        );
-      }
-    });
   };
 
   // Add the search handler function
@@ -567,7 +543,7 @@ const ArchiveComponent = () => {
                       </svg>
                     </button>
                     <button
-                      onClick={() => handleDelete(task.id)}
+                      onClick={() => handleDeleteTask(task.id)}
                       className="p-2 text-red-500 hover:bg-red-50 rounded-full"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

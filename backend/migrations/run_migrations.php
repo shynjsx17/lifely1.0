@@ -1,36 +1,46 @@
 <?php
 require_once __DIR__ . '/MigrationManager.php';
-require_once __DIR__ . '/001_initial_schema.php';
-require_once __DIR__ . '/002_tasks_schema.php';
-require_once __DIR__ . '/003_subtasks_schema.php';
-require_once __DIR__ . '/004_diary_schema.php';
-require_once __DIR__ . '/005_add_archived_to_tasks.php';
 
-try {
-    $migrationManager = new MigrationManager();
-    
-    // List of migrations in order
-    $migrations = [
-        ['name' => 'InitialSchema', 'class' => new InitialSchema($migrationManager->getConnection())],
-        ['name' => 'TasksSchema', 'class' => new TasksSchema($migrationManager->getConnection())],
-        ['name' => 'SubtasksSchema', 'class' => new SubtasksSchema($migrationManager->getConnection())],
-        ['name' => 'DiarySchema', 'class' => new DiarySchema($migrationManager->getConnection())],
-        ['name' => 'AddArchivedToTasks', 'class' => new AddArchivedToTasks($migrationManager->getConnection())]
-    ];
+// Initialize the migration manager
+$migrationManager = new MigrationManager();
+$db = $migrationManager->getConnection();
 
-    // Run migrations
-    foreach ($migrations as $migration) {
-        if (!$migrationManager->hasMigrationRun($migration['name'])) {
-            echo "Running migration: {$migration['name']}\n";
-            $migration['class']->up();
+echo "Starting migrations...\n";
+
+// List of migrations in order
+$migrations = [
+    ['name' => '001_initial_schema.php', 'class' => 'InitialSchema'],
+    ['name' => '002_tasks_schema.php', 'class' => 'TasksSchema'],
+    ['name' => '003_subtasks_schema.php', 'class' => 'SubtasksSchema'],
+    ['name' => '004_diary_schema.php', 'class' => 'DiarySchema'],
+    ['name' => '005_verification_schema.php', 'class' => 'VerificationSchema'],
+    ['name' => '006_sessions_schema.php', 'class' => 'SessionsSchema']
+];
+
+// Run migrations
+foreach ($migrations as $migration) {
+    if (!$migrationManager->hasMigrationRun($migration['name'])) {
+        echo "Running migration: {$migration['name']}\n";
+        
+        try {
+            require_once $migration['name'];
+            $migrationClass = new $migration['class']($db);
+            
+            // Run the migration
+            $migrationClass->up();
+            
+            // Record successful migration
             $migrationManager->recordMigration($migration['name']);
-            echo "Migration completed: {$migration['name']}\n";
-        } else {
-            echo "Migration {$migration['name']} has already been executed.\n";
+            
+            echo "Successfully executed migration: {$migration['name']}\n";
+        } catch (Exception $e) {
+            echo "Error executing migration {$migration['name']}: " . $e->getMessage() . "\n";
+            exit(1);
         }
+    } else {
+        echo "Migration already executed: {$migration['name']}\n";
     }
+}
 
-    echo "All migrations completed successfully!\n";
-} catch (Exception $e) {
-    die("Migration failed: " . $e->getMessage() . "\n");
-} 
+echo "All migrations completed successfully!\n";
+?> 

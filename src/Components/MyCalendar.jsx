@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import dayjs from 'dayjs';
 import Sidebar from '../Navigation/Sidebar';
 import backgroundImage from '../Images/BG.png';
-import { FaBars, FaSearch, FaCog, FaQuestionCircle, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaBars, FaSearch, FaCog, FaQuestionCircle, FaCalendarAlt, FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext';
 
 const generateDate = (month = dayjs().month(), year = dayjs().year()) => {
   const firstDateOfMonth = dayjs().year(year).month(month).startOf('month');
@@ -12,7 +13,7 @@ const generateDate = (month = dayjs().month(), year = dayjs().year()) => {
 
   // Create prefix dates
   for (let i = 0; i < firstDateOfMonth.day(); i++) {
-    const date = firstDateOfMonth.day(i);
+    const date = firstDateOfMonth.subtract(firstDateOfMonth.day() - i, 'day');
     arrayOfDate.push({
       currentMonth: false,
       date,
@@ -20,26 +21,21 @@ const generateDate = (month = dayjs().month(), year = dayjs().year()) => {
   }
 
   // Generate current dates
-  for (let i = firstDateOfMonth.date(); i <= lastDateOfMonth.date(); i++) {
+  for (let i = 1; i <= lastDateOfMonth.date(); i++) {
     arrayOfDate.push({
       currentMonth: true,
-      date: firstDateOfMonth.date(i),
-      today:
-        firstDateOfMonth.date(i).toDate().toDateString() ===
-        dayjs().toDate().toDateString(),
+      date: dayjs().year(year).month(month).date(i),
+      today: dayjs().year(year).month(month).date(i).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD'),
     });
   }
 
   // Fill remaining dates
   const remaining = 42 - arrayOfDate.length;
-  for (
-    let i = lastDateOfMonth.date() + 1;
-    i <= lastDateOfMonth.date() + remaining;
-    i++
-  ) {
+  for (let i = 1; i <= remaining; i++) {
+    const date = lastDateOfMonth.add(i, 'day');
     arrayOfDate.push({
       currentMonth: false,
-      date: lastDateOfMonth.date(i),
+      date,
     });
   }
 
@@ -62,11 +58,104 @@ const months = [
 ];
 
 const MyCalendar = () => {
+  const { user } = useAuth();
   const [currentMonth, setCurrentMonth] = useState(dayjs().month());
   const [currentYear, setCurrentYear] = useState(dayjs().year());
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const dates = generateDate(currentMonth, currentYear);
+  const [tasks, setTasks] = useState([]);
+  const [showTaskListPopup, setShowTaskListPopup] = useState(false);
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const [taskNote, setTaskNote] = useState("");
+  const [subtasks, setSubtasks] = useState([]);
+  const [newSubtask, setNewSubtask] = useState("");
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showListDropdown, setShowListDropdown] = useState(false);
+  const [showPriorityDropdown, setShowPriorityDropdown] = useState(false);
+  const [dropdownIndex, setDropdownIndex] = useState(null);
+  const [editingTaskIndex, setEditingTaskIndex] = useState(null);
+  const [editingTaskText, setEditingTaskText] = useState("");
+  const listDropdownRef = useRef(null);
+  const priorityDropdownRef = useRef(null);
+  const [showTaskSelectionPopup, setShowTaskSelectionPopup] = useState(false);
+  const [selectedDateTasks, setSelectedDateTasks] = useState([]);
+
+  // Fetch tasks from backend
+  const fetchTasks = async () => {
+    try {
+      const token = sessionStorage.getItem('session_token');
+      if (!token) {
+        console.error('No authentication token found');
+        return;
+      }
+
+      const response = await fetch('http://localhost/lifely1.0/backend/api/tasks.php', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        // Filter tasks with reminder_date
+        const tasksWithDates = (data.tasks || []).filter(task => task.reminder_date);
+        setTasks(tasksWithDates);
+      }
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+      setTasks([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  // Add useEffect to fetch subtasks when a task is selected
+  useEffect(() => {
+    if (selectedTaskId) {
+      const fetchSubtasks = async () => {
+        try {
+          const token = sessionStorage.getItem('session_token');
+          if (!token) {
+            console.error('No authentication token found');
+            return;
+          }
+
+          const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtasks&task_id=${selectedTaskId}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          if (data.success) {
+            setSubtasks(data.subtasks);
+          } else {
+            console.error('Failed to fetch subtasks:', data.message);
+            setSubtasks([]);
+          }
+        } catch (error) {
+          console.error('Error fetching subtasks:', error);
+          setSubtasks([]);
+        }
+      };
+
+      fetchSubtasks();
+    } else {
+      setSubtasks([]);
+    }
+  }, [selectedTaskId]);
 
   const goToPreviousMonth = () => {
     const newMonth = currentMonth === 0 ? 11 : currentMonth - 1;
@@ -89,8 +178,223 @@ const MyCalendar = () => {
     setSelectedDate(today);
   };
 
-  const handleDateClick = (date) => {
-    setSelectedDate(date.date);
+  const handleDateClick = (dateObj) => {
+    const clickedDate = dateObj.date;
+    setSelectedDate(clickedDate);
+    const tasksForDate = getTasksForDate(clickedDate.toDate());
+    
+    if (tasksForDate.length > 1) {
+      // If multiple tasks, show selection popup
+      setSelectedDateTasks(tasksForDate);
+      setShowTaskSelectionPopup(true);
+    } else if (tasksForDate.length === 1) {
+      // If single task, open it directly
+      handleEditTask(tasksForDate[0].id, tasksForDate[0].title);
+    }
+  };
+
+  // Task management functions
+  const handleEditTask = async (taskId, text) => {
+    try {
+      setSelectedTaskId(taskId);
+      setEditingTaskText(text);
+      // Set the note for the selected task
+      const selectedTask = tasks.find(t => t.id === taskId);
+      setTaskNote(selectedTask?.note || '');
+
+      // Fetch subtasks for the selected task
+      const token = sessionStorage.getItem('session_token');
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtasks&task_id=${taskId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setSubtasks(data.subtasks || []);
+        }
+      }
+
+      setShowTaskListPopup(true);
+    } catch (error) {
+      console.error('Error fetching subtasks:', error);
+      setSubtasks([]);
+    }
+  };
+
+  const handleUpdateTaskList = async (taskId, newListType) => {
+    try {
+      handleCloseTaskPopup();
+      setShowListDropdown(false);
+      setDropdownIndex(null);
+      
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+        },
+        body: JSON.stringify({
+          list_type: newListType.toLowerCase()
+        })
+      });
+
+      if (response.ok) {
+        await fetchTasks();
+      }
+    } catch (error) {
+      console.error('Error updating task list:', error);
+    }
+  };
+
+  const handleUpdatePriority = async (taskId, newPriority) => {
+    try {
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+        },
+        body: JSON.stringify({
+          priority: newPriority.toLowerCase()
+        })
+      });
+
+      if (response.ok) {
+        fetchTasks();
+      }
+    } catch (error) {
+      console.error('Error updating priority:', error);
+    }
+  };
+
+  const handleUpdateDueDate = async (taskId, date) => {
+    try {
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+        },
+        body: JSON.stringify({
+          reminder_date: date
+        })
+      });
+
+      if (response.ok) {
+        fetchTasks();
+        setShowDatePicker(false);
+      }
+    } catch (error) {
+      console.error('Error updating due date:', error);
+    }
+  };
+
+  const handleSaveNote = async (taskId) => {
+    try {
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+        },
+        body: JSON.stringify({
+          note: taskNote
+        })
+      });
+
+      if (response.ok) {
+        fetchTasks();
+      }
+    } catch (error) {
+      console.error('Error saving note:', error);
+    }
+  };
+
+  const handleAddSubtask = async () => {
+    if (!newSubtask.trim() || !selectedTaskId) {
+      return;
+    }
+
+    try {
+      const token = sessionStorage.getItem('session_token');
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtask=true&task_id=${selectedTaskId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: newSubtask.trim(),
+          task_id: selectedTaskId
+        })
+      });
+
+      const data = await response.json();
+      console.log('Add subtask response:', data); // Debug log
+      if (data.success) {
+        // Update the local subtasks state with the new subtask
+        setSubtasks(prevSubtasks => [...prevSubtasks, {
+          id: data.subtask_id,
+          title: newSubtask.trim(),
+          is_completed: false
+        }]);
+        setNewSubtask('');
+      }
+    } catch (error) {
+      console.error('Error adding subtask:', error);
+    }
+  };
+
+  const handleToggleSubtask = async (subtaskId) => {
+    try {
+      const token = sessionStorage.getItem('session_token');
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtask&id=${subtaskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        // Update the local state immediately for better UX
+        setSubtasks(prevSubtasks => 
+          prevSubtasks.map(subtask => 
+            subtask.id === subtaskId 
+              ? { ...subtask, is_completed: !subtask.is_completed }
+              : subtask
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Error toggling subtask:', error);
+    }
+  };
+
+  const handleCloseTaskPopup = () => {
+    setShowTaskListPopup(false);
+    setSelectedTaskId(null);
+    setTaskNote('');
+    setSubtasks([]);
+    setNewSubtask('');
+    setShowDatePicker(false);
+    setShowListDropdown(false);
+    setShowPriorityDropdown(false);
+    setDropdownIndex(null);
+    setEditingTaskIndex(null);
+    setEditingTaskText('');
+  };
+
+  // Get tasks for selected date
+  const getTasksForDate = (date) => {
+    return tasks.filter(task => {
+      const taskDate = dayjs(task.reminder_date);
+      return taskDate.format('YYYY-MM-DD') === dayjs(date).format('YYYY-MM-DD');
+    });
   };
 
   return (
@@ -180,9 +484,7 @@ const MyCalendar = () => {
           className="flex-1 pt-[64px] bg-cover bg-center flex" 
           style={{ backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none' }}
         >
-         
-
-          {/* Right Section: Calendar */}
+          {/* Calendar Grid */}
           <div className="flex-1 p-6">
             <div className="grid grid-cols-7 gap-2 mt-4">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
@@ -190,19 +492,312 @@ const MyCalendar = () => {
                   {day}
                 </div>
               ))}
-              {dates.map((dateObj, index) => (
+              {dates.map((dateObj, index) => {
+                const tasksForDate = getTasksForDate(dateObj.date.toDate());
+                return (
                 <div
                   key={index}
-                  className={`p-12 text-center ${dateObj.currentMonth ? 'text-black' : 'text-gray-400'} ${dateObj.today ? 'bg-sky-500 text-white' : ''} ${selectedDate.isSame(dateObj.date, 'day') ? 'bg-emerald-600 text-white' : ''} border-r-2 border-b-2 hover:bg-gray-200 cursor-pointer`}
+                    className={`relative p-2 min-h-[100px] text-center border ${
+                      dateObj.currentMonth ? 'text-black' : 'text-gray-400'
+                    } ${dateObj.today ? 'bg-sky-500 text-white' : ''} ${
+                      selectedDate.format('YYYY-MM-DD') === dateObj.date.format('YYYY-MM-DD') ? 'bg-emerald-600 text-white' : ''
+                    } hover:bg-gray-200 cursor-pointer`}
                   onClick={() => handleDateClick(dateObj)}
                 >
                   <span className="font-semibold">{dateObj.date.date()}</span>
+                    {tasksForDate.length > 0 && (
+                      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 flex gap-1">
+                        {tasksForDate.map((task, i) => (
+                          <div
+                            key={i}
+                            className={`w-2 h-2 rounded-full ${
+                              task.priority === 'high' ? 'bg-red-500' :
+                              task.priority === 'medium' ? 'bg-yellow-500' :
+                              'bg-green-500'
+                            }`}
+                            title={task.title}
+                          />
+                        ))}
+                      </div>
+                    )}
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Task Selection Popup */}
+      {showTaskSelectionPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg w-[30rem] shadow-lg">
+            <div className="flex justify-between items-center bg-[#F0EFF9] px-4 py-2 rounded-t-lg">
+              <span className="text-sm text-gray-600">
+                Tasks for {selectedDate.format('MMMM D, YYYY')}
+              </span>
+              <button 
+                onClick={() => setShowTaskSelectionPopup(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <FaTimes />
+              </button>
+            </div>
+            <div className="p-4">
+              <div className="space-y-2 max-h-[60vh] overflow-y-auto">
+                {selectedDateTasks.map((task) => (
+                  <div
+                    key={task.id}
+                    onClick={() => {
+                      setShowTaskSelectionPopup(false);
+                      handleEditTask(task.id, task.title);
+                    }}
+                    className="flex items-center p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100"
+                  >
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-500">
+                        {task.list_type.charAt(0).toUpperCase() + task.list_type.slice(1)}
+                      </p>
+                      <h3 className="font-medium">{task.title}</h3>
+                      <span
+                        className={`inline-block px-2 py-1 text-xs rounded-full mt-2 ${
+                          task.priority === 'high'
+                            ? "bg-red-500 text-white"
+                            : task.priority === 'medium'
+                            ? "bg-yellow-500 text-white"
+                            : "bg-green-500 text-white"
+                        }`}
+                      >
+                        {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Task Edit Modal */}
+      {showTaskListPopup && selectedTaskId && (
+        <div className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg w-[30rem] shadow-lg">
+            {/* Header with close button */}
+            <div className="flex justify-between items-center bg-[#F0EFF9] px-4 py-2 rounded-t-lg">
+              <div className="flex items-center">
+                <span className="text-sm text-gray-600">
+                  My lists &gt; {tasks.find(t => t.id === selectedTaskId)?.list_type.charAt(0).toUpperCase() + tasks.find(t => t.id === selectedTaskId)?.list_type.slice(1)}
+                </span>
+              </div>
+              <button 
+                onClick={handleCloseTaskPopup}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <FaTimes />
+              </button>
+            </div>
+
+            {/* Task Content */}
+            <div className="p-6">
+              <h2 className="text-xl font-semibold mb-4">
+                {tasks.find(t => t.id === selectedTaskId)?.title}
+              </h2>
+
+              {/* Buttons Row */}
+              <div className="flex space-x-2 mb-6">
+                {/* Remind Me Button */}
+                <div className="relative">
+                  <button 
+                    onClick={() => setShowDatePicker(!showDatePicker)}
+                    className="flex items-center px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Remind Me
+                    {tasks.find(t => t.id === selectedTaskId)?.reminder_date && 
+                      `: ${new Date(tasks.find(t => t.id === selectedTaskId)?.reminder_date).toLocaleDateString()}`}
+                  </button>
+                  
+                  {showDatePicker && (
+                    <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg p-4">
+                      <div className="grid grid-cols-7 gap-2">
+                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
+                          <div key={day} className="text-center text-sm font-medium">
+                            {day}
+                          </div>
+                        ))}
+                        {generateDate(currentMonth, currentYear).map((dateObj, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleUpdateDueDate(selectedTaskId, dateObj.date.format('YYYY-MM-DD'))}
+                            className={`p-2 text-center rounded-full hover:bg-gray-100 ${
+                              dateObj.currentMonth ? '' : 'text-gray-400'
+                            } ${dateObj.today ? 'bg-blue-500 text-white' : ''}`}
+                          >
+                            {dateObj.date.date()}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                {/* List Type Dropdown */}
+                <div className="relative" ref={listDropdownRef}>
+                  <button 
+                    onClick={() => setShowListDropdown(!showListDropdown)}
+                    className="flex items-center px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200"
+                  >
+                    <img src={require("../icons/edit.svg").default} className="w-4 h-4 mr-2" alt="Personal"/>
+                    {tasks.find(t => t.id === selectedTaskId)?.list_type.charAt(0).toUpperCase() + 
+                     tasks.find(t => t.id === selectedTaskId)?.list_type.slice(1)}
+                  </button>
+                  
+                  {showListDropdown && (
+                    <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg w-48 py-2 z-50">
+                      {["Personal", "Work", "School"].map((list) => (
+                        <button
+                          key={list}
+                          onClick={() => {
+                            handleUpdateTaskList(selectedTaskId, list);
+                            setShowListDropdown(false);
+                          }}
+                          className="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center"
+                        >
+                          {list}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Priority Dropdown */}
+                <div className="relative" ref={priorityDropdownRef}>
+                  <button 
+                    onClick={() => setShowPriorityDropdown(!showPriorityDropdown)}
+                    className={`flex items-center px-4 py-2 rounded-full text-white ${
+                      tasks.find(t => t.id === selectedTaskId)?.priority === 'high'
+                        ? "bg-red-500"
+                        : tasks.find(t => t.id === selectedTaskId)?.priority === 'medium'
+                        ? "bg-yellow-500"
+                        : "bg-green-500"
+                    }`}
+                  >
+                    {tasks.find(t => t.id === selectedTaskId)?.priority.charAt(0).toUpperCase() + 
+                     tasks.find(t => t.id === selectedTaskId)?.priority.slice(1)} Priority
+                  </button>
+                  
+                  {showPriorityDropdown && (
+                    <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg w-48 py-2 z-50">
+                      <button
+                        onClick={() => {
+                          handleUpdatePriority(selectedTaskId, 'high');
+                          setShowPriorityDropdown(false);
+                        }}
+                        className="w-full px-4 py-2 text-gray-700 hover:bg-gray-50 flex items-center"
+                      >
+                        <div className="w-2 h-2 rounded-full bg-red-500 mr-2"></div>
+                        High Priority
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleUpdatePriority(selectedTaskId, 'medium');
+                          setShowPriorityDropdown(false);
+                        }}
+                        className="w-full px-4 py-2 text-gray-700 hover:bg-gray-50 flex items-center"
+                      >
+                        <div className="w-2 h-2 rounded-full bg-yellow-500 mr-2"></div>
+                        Medium Priority
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleUpdatePriority(selectedTaskId, 'low');
+                          setShowPriorityDropdown(false);
+                        }}
+                        className="w-full px-4 py-2 text-gray-700 hover:bg-gray-50 flex items-center"
+                      >
+                        <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                        Low Priority
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Notes Section */}
+              <div className="mb-6">
+                <h3 className="text-sm font-semibold text-gray-600 mb-2">NOTES</h3>
+                <textarea
+                  value={taskNote}
+                  onChange={(e) => setTaskNote(e.target.value)}
+                  onBlur={() => handleSaveNote(selectedTaskId)}
+                  placeholder="Insert your notes here"
+                  className="w-full h-32 p-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              {/* Subtasks Section */}
+              <div className="mb-4">
+                <h3 className="text-sm font-semibold text-gray-600 mb-2">SUBTASKS</h3>
+                <div className="space-y-2">
+                  {/* Existing Subtasks */}
+                  <div className="max-h-48 overflow-y-auto">
+                    {subtasks.map((subtask) => (
+                      <div key={subtask.id} className="flex items-center p-2 hover:bg-gray-50 rounded-lg group">
+                        <input
+                          type="checkbox"
+                          checked={subtask.is_completed}
+                          onChange={() => handleToggleSubtask(subtask.id)}
+                          className="w-4 h-4 mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                        />
+                        <span className={`flex-1 transition-all duration-200 ${
+                          subtask.is_completed 
+                            ? "line-through text-gray-400" 
+                            : "text-gray-700"
+                        }`}>
+                          {subtask.title}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Add New Subtask */}
+                  <div className="flex items-center mt-4 border-t pt-4">
+                    <div className="flex-1 relative">
+                      <input
+                        type="text"
+                        value={newSubtask}
+                        onChange={(e) => setNewSubtask(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' && newSubtask.trim()) {
+                            handleAddSubtask();
+                          }
+                        }}
+                        placeholder="Add a new subtask"
+                        className="w-full p-2 pr-10 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                      <button
+                        onClick={() => {
+                          if (newSubtask.trim()) {
+                            handleAddSubtask();
+                          }
+                        }}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-gray-100"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

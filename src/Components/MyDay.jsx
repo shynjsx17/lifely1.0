@@ -4,6 +4,45 @@ import { FaSun, FaEllipsisV, FaTimes } from 'react-icons/fa';
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useAuth } from '../context/AuthContext';
+import dayjs from 'dayjs';
+
+// Add generateDate function
+const generateDate = (month = dayjs().month(), year = dayjs().year()) => {
+  const firstDateOfMonth = dayjs().year(year).month(month).startOf('month');
+  const lastDateOfMonth = dayjs().year(year).month(month).endOf('month');
+
+  const arrayOfDate = [];
+
+  // Create prefix dates
+  for (let i = 0; i < firstDateOfMonth.day(); i++) {
+    const date = firstDateOfMonth.subtract(firstDateOfMonth.day() - i, 'day');
+    arrayOfDate.push({
+      currentMonth: false,
+      date,
+    });
+  }
+
+  // Generate current dates
+  for (let i = 1; i <= lastDateOfMonth.date(); i++) {
+    arrayOfDate.push({
+      currentMonth: true,
+      date: dayjs().year(year).month(month).date(i),
+      today: dayjs().year(year).month(month).date(i).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD'),
+    });
+  }
+
+  // Fill remaining dates
+  const remaining = 42 - arrayOfDate.length;
+  for (let i = 1; i <= remaining; i++) {
+    const date = lastDateOfMonth.add(i, 'day');
+    arrayOfDate.push({
+      currentMonth: false,
+      date,
+    });
+  }
+
+  return arrayOfDate;
+};
 
 const MyDay = () => {
   const { user } = useAuth();
@@ -31,6 +70,9 @@ const MyDay = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState("");
+  // Add missing state variables for calendar
+  const [currentMonth, setCurrentMonth] = useState(dayjs().month());
+  const [currentYear, setCurrentYear] = useState(dayjs().year());
 
   // Fetch tasks from backend
   const fetchTasks = async () => {
@@ -53,10 +95,11 @@ const MyDay = () => {
       }
 
       const data = await response.json();
+      console.log('Response data:', data); // Debug log
       
-      if (data.success && Array.isArray(data.tasks)) {
+      if (data.success) {
         // Filter and sort tasks
-        const nonArchivedTasks = data.tasks
+        const nonArchivedTasks = (data.tasks || [])
           .filter(task => !task.is_archived)
           .sort((a, b) => {
             // Sort by priority first
@@ -74,8 +117,9 @@ const MyDay = () => {
           });
 
         setTasks(nonArchivedTasks);
+        console.log('Setting tasks:', nonArchivedTasks); // Debug log
       } else {
-        console.error('Invalid response format:', data);
+        console.error('Failed to fetch tasks:', data.message);
         setTasks([]);
       }
     } catch (error) {
@@ -145,9 +189,34 @@ const MyDay = () => {
   };
 
   const handleEditTask = async (taskId, text) => {
-    setSelectedTaskId(taskId);
-    setEditingTaskText(text);
-    setShowTaskListPopup(true);
+    try {
+      setSelectedTaskId(taskId);
+      setEditingTaskText(text);
+      // Set the note for the selected task
+      const selectedTask = tasks.find(t => t.id === taskId);
+      setTaskNote(selectedTask?.note || '');
+
+      // Fetch subtasks for the selected task
+      const token = sessionStorage.getItem('session_token');
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtasks&task_id=${taskId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setSubtasks(data.subtasks || []);
+        }
+      }
+
+      setShowTaskListPopup(true);
+    } catch (error) {
+      console.error('Error fetching subtasks:', error);
+      setSubtasks([]);
+    }
   };
 
   const handleSaveTask = async (taskId) => {
@@ -201,7 +270,7 @@ const MyDay = () => {
       if (data.success) {
         await fetchTasks();
       } else {
-        console.error('Failed to toggle task:', data.message);
+        console.error('Failed to toggle task completion:', data.message);
       }
     } catch (error) {
       console.error('Error toggling task completion:', error);
@@ -304,6 +373,11 @@ const MyDay = () => {
 
   const handleUpdateTaskList = async (taskId, newListType) => {
     try {
+      // First close the task view popup and reset all states
+      handleCloseTaskPopup();
+      setShowListDropdown(false);
+      setDropdownIndex(null);
+      
       const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
         method: 'PUT',
         headers: {
@@ -316,7 +390,7 @@ const MyDay = () => {
       });
 
       if (response.ok) {
-        fetchTasks();
+        await fetchTasks();
       }
     } catch (error) {
       console.error('Error updating task list:', error);
@@ -367,6 +441,7 @@ const MyDay = () => {
 
   const handleUpdateDueDate = async (taskId, date) => {
     try {
+      const formattedDate = dayjs(date).format('YYYY-MM-DD');
       const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
         method: 'PUT',
         headers: {
@@ -374,12 +449,12 @@ const MyDay = () => {
           'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
         },
         body: JSON.stringify({
-          reminder_date: date
+          reminder_date: formattedDate
         })
       });
 
       if (response.ok) {
-        fetchTasks();
+        await fetchTasks();
         setShowDatePicker(false);
       }
     } catch (error) {
@@ -411,33 +486,28 @@ const MyDay = () => {
 
     try {
       const token = sessionStorage.getItem('session_token');
-      if (!token) {
-        console.error('No authentication token found');
-        return;
-      }
-
-      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtasks&task_id=${selectedTaskId}`, {
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtask=true&task_id=${selectedTaskId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          title: newSubtask.trim()
+          title: newSubtask.trim(),
+          task_id: selectedTaskId
         })
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json();
+      console.log('Add subtask response:', data); // Debug log
       if (data.success) {
-        // Fetch updated task list to get the new subtask
-        await fetchTasks();
+        // Update the local subtasks state with the new subtask
+        setSubtasks(prevSubtasks => [...prevSubtasks, {
+          id: data.subtask_id,
+          title: newSubtask.trim(),
+          is_completed: false
+        }]);
         setNewSubtask('');
-      } else {
-        console.error('Failed to add subtask:', data.message);
       }
     } catch (error) {
       console.error('Error adding subtask:', error);
@@ -447,11 +517,6 @@ const MyDay = () => {
   const handleToggleSubtask = async (subtaskId) => {
     try {
       const token = sessionStorage.getItem('session_token');
-      if (!token) {
-        console.error('No authentication token found');
-        return;
-      }
-
       const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?subtask&id=${subtaskId}`, {
         method: 'PUT',
         headers: {
@@ -460,16 +525,15 @@ const MyDay = () => {
         }
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      if (data.success) {
-        // Fetch updated task list to get the updated subtask status
-        await fetchTasks();
-      } else {
-        console.error('Failed to toggle subtask:', data.message);
+      if (response.ok) {
+        // Update the local state immediately for better UX
+        setSubtasks(prevSubtasks => 
+          prevSubtasks.map(subtask => 
+            subtask.id === subtaskId 
+              ? { ...subtask, is_completed: !subtask.is_completed }
+              : subtask
+          )
+        );
       }
     } catch (error) {
       console.error('Error toggling subtask:', error);
@@ -616,6 +680,21 @@ const MyDay = () => {
     return filtered;
   };
 
+  // Reset all states related to task view
+  const handleCloseTaskPopup = () => {
+    setShowTaskListPopup(false);
+    setSelectedTaskId(null);
+    setTaskNote('');
+    setSubtasks([]);
+    setNewSubtask('');
+    setShowDatePicker(false);
+    setShowListDropdown(false);
+    setShowPriorityDropdown(false);
+    setDropdownIndex(null);
+    setEditingTaskIndex(null);
+    setEditingTaskText('');
+  };
+
   return (
     <div className="flex h-screen flex-col">
       <Sidebar
@@ -735,6 +814,15 @@ const MyDay = () => {
                     >
                       {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority
                     </span>
+                  </div>
+
+                  {/* Date Information */}
+                  <div className="text-sm text-gray-500">
+                    {task.reminder_date && (
+                      <span className="mr-2">
+                        Due: {dayjs(task.reminder_date).format('MMM D, YYYY')}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -887,7 +975,7 @@ const MyDay = () => {
                   </span>
                 </div>
                 <button 
-                  onClick={() => setShowTaskListPopup(false)}
+                  onClick={handleCloseTaskPopup}
                   className="text-gray-500 hover:text-gray-700"
                 >
                   <FaTimes />
@@ -918,16 +1006,24 @@ const MyDay = () => {
                     
                     {showDatePicker && (
                       <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg p-4">
-                        <Calendar
-                          onChange={(date) => {
-                            handleUpdateDueDate(selectedTaskId, date.toISOString().split('T')[0]);
-                          }}
-                          value={tasks.find(t => t.id === selectedTaskId)?.reminder_date ? 
-                            new Date(tasks.find(t => t.id === selectedTaskId)?.reminder_date) : 
-                            new Date()}
-                          minDate={new Date()}
-                          className="rounded-lg border border-gray-200"
-                        />
+                        <div className="grid grid-cols-7 gap-2">
+                          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
+                            <div key={day} className="text-center text-sm font-medium">
+                              {day}
+                            </div>
+                          ))}
+                          {generateDate(currentMonth, currentYear).map((dateObj, index) => (
+                            <button
+                              key={index}
+                              onClick={() => handleUpdateDueDate(selectedTaskId, dateObj.date)}
+                              className={`p-2 text-center rounded-full hover:bg-gray-100 ${
+                                dateObj.currentMonth ? '' : 'text-gray-400'
+                              } ${dateObj.today ? 'bg-blue-500 text-white' : ''}`}
+                            >
+                              {dateObj.date.date()}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
@@ -1030,54 +1126,53 @@ const MyDay = () => {
                 {/* Subtasks Section */}
                 <div>
                   <h3 className="text-sm font-semibold text-gray-600 mb-2">SUBTASKS</h3>
-                  <div className="space-y-2">
-                    <div className="max-h-48 overflow-y-auto">
-                      {tasks.find(t => t.id === selectedTaskId)?.subtasks?.map((subtask) => (
-                        <div key={subtask.id} className="flex items-center p-2 hover:bg-gray-50 rounded-lg group">
-                          <input
-                            type="checkbox"
-                            checked={subtask.is_completed}
-                            onChange={() => handleToggleSubtask(subtask.id)}
-                            className="w-4 h-4 mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                          />
-                          <span className={`flex-1 transition-all duration-200 ${
-                            subtask.is_completed 
-                              ? "line-through text-gray-400" 
-                              : "text-gray-700"
-                          }`}>
-                            {subtask.title}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="flex items-center mt-4 border-t pt-4">
-                      <div className="flex-1 relative">
+                  <div className="max-h-48 overflow-y-auto">
+                    {subtasks.map((subtask) => (
+                      <div key={subtask.id} className="flex items-center p-2 hover:bg-gray-50 rounded-lg group">
                         <input
-                          type="text"
-                          value={newSubtask}
-                          onChange={(e) => setNewSubtask(e.target.value)}
-                          onKeyPress={(e) => {
-                            if (e.key === 'Enter' && newSubtask.trim()) {
-                              handleAddSubtask();
-                            }
-                          }}
-                          placeholder="Add a new subtask"
-                          className="w-full p-2 pr-10 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          type="checkbox"
+                          checked={subtask.is_completed}
+                          onChange={() => handleToggleSubtask(subtask.id)}
+                          className="w-4 h-4 mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                         />
-                        <button
-                          onClick={() => {
-                            if (newSubtask.trim()) {
-                              handleAddSubtask();
-                            }
-                          }}
-                          className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-gray-100"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                          </svg>
-                        </button>
+                        <span className={`flex-1 transition-all duration-200 ${
+                          subtask.is_completed 
+                            ? "line-through text-gray-400" 
+                            : "text-gray-700"
+                        }`}>
+                          {subtask.title}
+                        </span>
                       </div>
+                    ))}
+                  </div>
+                  
+                  {/* Add New Subtask */}
+                  <div className="flex items-center mt-4 border-t pt-4">
+                    <div className="flex-1 relative">
+                      <input
+                        type="text"
+                        value={newSubtask}
+                        onChange={(e) => setNewSubtask(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' && newSubtask.trim()) {
+                            handleAddSubtask();
+                          }
+                        }}
+                        placeholder="Add a new subtask"
+                        className="w-full p-2 pr-10 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                      <button
+                        onClick={() => {
+                          if (newSubtask.trim()) {
+                            handleAddSubtask();
+                          }
+                        }}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-gray-100"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                        </svg>
+                      </button>
                     </div>
                   </div>
                 </div>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from "../Navigation/Sidebar";
 import { useAuth } from '../context/AuthContext';
 
+const WORD_LIMIT = 1000; // Define word limit constant
+
 const MyDiary = () => {
   const { user } = useAuth();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -14,17 +16,16 @@ const MyDiary = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [viewingEntry, setViewingEntry] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedEntry, setEditedEntry] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchError, setSearchError] = useState("");
-  const WORD_LIMIT = 500;
   const [wordCount, setWordCount] = useState(0);
-  const [editWordCount, setEditWordCount] = useState(0);
-  const [editContentError, setEditContentError] = useState('');
   const [titleError, setTitleError] = useState('');
   const [contentError, setContentError] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchError, setSearchError] = useState('');
+  const [editedEntry, setEditedEntry] = useState({
+    title: '',
+    content: '',
+    mood: 'neutral'
+  });
 
   // Fetch diary entries from database
   const fetchEntries = async () => {
@@ -39,6 +40,7 @@ const MyDiary = () => {
           'Content-Type': 'application/json'
         }
       });
+    
 
       console.log('Response status:', response.status); // Debug log
       const data = await response.json();
@@ -66,7 +68,7 @@ const MyDiary = () => {
   }, [currentPage, viewSavedEntries]);
 
   const countWords = (text) => {
-    const strippedText = text.replace(/<[^>]*>/g, ''); // Remove HTML tags
+    const strippedText = text.replace(/<[^>]*>/g, '');
     return strippedText.trim().split(/\s+/).filter(word => word.length > 0).length;
   };
 
@@ -75,6 +77,20 @@ const MyDiary = () => {
     const words = countWords(content.innerHTML);
     setWordCount(words);
     return words <= WORD_LIMIT;
+  };
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    setSearchError('');
+  };
+
+  const getFilteredEntries = () => {
+    if (!searchQuery) return entries;
+    return entries.filter(entry => 
+      entry.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      entry.content.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   };
 
   const saveContent = async () => {
@@ -142,14 +158,21 @@ const MyDiary = () => {
     setTitleError('');
     setContentError('');
 
+    // Get the current entry being edited
+    const currentEntry = entries.find(entry => entry.id === entryId);
+    if (!currentEntry) {
+      console.error('Entry not found');
+      return;
+    }
+
     // Validate title
-    if (!editedEntry.title || editedEntry.title.trim() === '') {
+    if (!currentEntry.title || currentEntry.title.trim() === '') {
       setTitleError('Please enter a title for your diary entry');
       return;
     }
 
     // Validate content
-    if (!editedEntry.content || editedEntry.content.trim() === '') {
+    if (!currentEntry.content || currentEntry.content.trim() === '') {
       setContentError('Please write something in your diary entry');
       return;
     }
@@ -163,22 +186,50 @@ const MyDiary = () => {
         },
         body: JSON.stringify({
           id: entryId,
-          title: editedEntry.title,
-          content: editedEntry.content,
-          mood: editedEntry.mood
+          title: currentEntry.title,
+          content: currentEntry.content,
+          mood: currentEntry.mood
         })
       });
 
       const data = await response.json();
       if (data.status === 'success') {
+        // Reset edited entry
+        setEditedEntry({
+          title: '',
+          content: '',
+          mood: 'neutral'
+        });
+        
+        // Refresh entries
         fetchEntries();
-        setShowSuccessModal(true);
+        setDropdownVisible(null);
       } else {
         console.error('Error updating entry:', data.message);
       }
     } catch (error) {
       console.error('Error updating entry:', error);
     }
+  };
+
+  // Function to start editing an entry
+  const startEditing = (entry) => {
+    setEditedEntry({
+      title: entry.title,
+      content: entry.content,
+      mood: entry.mood
+    });
+    setDropdownVisible(null);
+  };
+
+  // Function to cancel editing
+  const cancelEditing = () => {
+    setEditedEntry({
+      title: '',
+      content: '',
+      mood: 'neutral'
+    });
+    setDropdownVisible(null);
   };
 
   const archiveEntry = async (entryId) => {
@@ -231,64 +282,6 @@ const MyDiary = () => {
 
   const today = new Date().toLocaleDateString();
 
-  const openEntryView = (entry, e) => {
-    e.stopPropagation();
-    setViewingEntry(entry);
-    setDropdownVisible(null);
-  };
-
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    
-    if (value === "") {
-      setSearchQuery("");
-      setSearchError("");
-      return;
-    }
-    
-    if (value.length < 2) {
-      setSearchError("Search must be at least 2 characters");
-    } else if (value.length > 50) {
-      setSearchError("Search cannot exceed 50 characters");
-      return;
-    } else {
-      setSearchError("");
-    }
-    
-    setSearchQuery(value);
-  };
-
-  const getFilteredEntries = () => {
-    if (searchQuery.trim().length < 2) {
-      return entries;
-    }
-
-    const query = searchQuery.toLowerCase();
-    return entries.filter(entry => 
-      entry.title.toLowerCase().includes(query) ||
-      entry.content.toLowerCase().includes(query) ||
-      entry.mood.toLowerCase().includes(query)
-    );
-  };
-
-  const handleEditContentChange = (e) => {
-    const content = e.target.innerHTML;
-    const words = countWords(content);
-    setEditWordCount(words);
-
-    if (words > WORD_LIMIT) {
-      setEditContentError(`Content cannot exceed ${WORD_LIMIT} words`);
-      return false;
-    }
-
-    setEditContentError('');
-    setEditedEntry(prev => ({
-      ...prev,
-      content: content
-    }));
-    return true;
-  };
-
   return (
     <div className="flex min-h-screen bg-system-background">
       <Sidebar 
@@ -298,7 +291,7 @@ const MyDiary = () => {
       <div className={`flex-1 transition-all duration-300 ${
         isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
       } p-8 bg-system-background font-poppins`}>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Good Day, {user?.username || 'User'}!</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Good Day, {user?.userName || 'User'}!</h1>
         <h1 className="text-xl font-bold tracking-tight mb-4" style={{ color: '#FFB78B' }}>
           Something troubling you? Write it down.
         </h1>
@@ -328,7 +321,7 @@ const MyDiary = () => {
               value={headerText}
               onChange={(e) => {
                 setHeaderText(e.target.value);
-                setTitleError(''); // Clear error on change
+                setTitleError('');
               }}
               className={`text-xl text-gray-500 mb-2 w-full border-none focus:outline-none ${
                 titleError ? 'border-red-500' : ''
@@ -344,37 +337,18 @@ const MyDiary = () => {
               <span className="text-sm">{today}</span>
             </div>
 
-            {/* Text Editor Area with Auto-expanding Container */}
+            {/* Text Editor Area */}
             <div className="relative">
               <div
                 id="editable-content"
                 contentEditable
-                onInput={(e) => {
-                  handleContentChange();
-                  setContentError(''); // Clear error on change
-                  // Automatically adjust height
-                  e.target.style.height = 'auto';
-                  e.target.style.height = `${Math.max(400, e.target.scrollHeight)}px`;
-                }}
-                className={`w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 
-                           overflow-y-auto focus:outline-none mb-16 transition-all duration-200
-                           whitespace-pre-wrap break-words ${
-                             contentError ? 'border-red-500' : ''
-                           }`}
-                style={{
-                  resize: 'none',
-                  height: 'auto',
-                  maxHeight: '70vh' // Maximum height before scrolling
-                }}
+                className="w-full min-h-[400px] p-4 border rounded bg-white bg-opacity-90 overflow-y-auto focus:outline-none mb-16"
+                onInput={handleContentChange}
               />
-              {contentError && (
-                <div className="text-red-500 text-sm mt-2">{contentError}</div>
-              )}
 
-              {/* Formatting Tools with Word Count - Fixed at bottom */}
+              {/* Formatting Tools */}
               <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t">
                 <div className="flex justify-between items-center">
-                  {/* Formatting buttons */}
                   <div className="flex space-x-4">
                     <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
                       <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
@@ -387,13 +361,10 @@ const MyDiary = () => {
                     </button>
                   </div>
 
-                  {/* Right side with word count and save button */}
                   <div className="flex items-center space-x-4">
-                    {/* Word Count Indicator */}
                     <span className="text-sm text-gray-400">
                       {wordCount}/{WORD_LIMIT} words
                     </span>
-                    
                     <button
                       onClick={saveContent}
                       className={`px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] ${
@@ -406,31 +377,31 @@ const MyDiary = () => {
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Mood Tracker */}
-            <div className="absolute top-4 right-4">
-              <h2 className="text-gray-500 text-lg mb-2">Mood Tracker:</h2>
-              <div className="flex space-x-2">
-              {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
-                const moodColors = {
-                'sad': 'bg-[#FFB6A6]',
-                'angry': 'bg-[#FFCF55]',
-                'neutral': 'bg-[#FFF731]',
-                'happy': 'bg-[#00FFFF]',
-                'very happy': 'bg-[#29E259]'
-                };
+              {/* Mood Tracker */}
+              <div className="absolute top-4 right-4">
+                <h2 className="text-gray-500 text-lg mb-2">Mood Tracker:</h2>
+                <div className="flex space-x-2">
+                  {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
+                    const moodColors = {
+                      'sad': 'bg-[#FFB6A6]',
+                      'angry': 'bg-[#FFCF55]',
+                      'neutral': 'bg-[#FFF731]',
+                      'happy': 'bg-[#00FFFF]',
+                      'very happy': 'bg-[#29E259]'
+                    };
 
-                return (
-                <button
-                  key={moodOption}
-                  onClick={() => setMood(moodOption)}
-                  className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
-                >
-                  {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
-                </button>
-                );
-              })}
+                    return (
+                      <button
+                        key={moodOption}
+                        onClick={() => setMood(moodOption)}
+                        className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
+                      >
+                        {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -492,7 +463,7 @@ const MyDiary = () => {
                     <div key={entry.id} className="bg-white p-6 rounded-xl shadow-lg relative">
                       <div className="absolute top-4 right-4">
                         <button
-                          onClick={(e) => setDropdownVisible(dropdownVisible === entry.id ? null : entry.id)}
+                          onClick={() => setDropdownVisible(dropdownVisible === entry.id ? null : entry.id)}
                           className="text-xl hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center"
                         >
                           &#x22EE;
@@ -500,22 +471,13 @@ const MyDiary = () => {
                         {dropdownVisible === entry.id && (
                           <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md border w-32 z-10">
                             <button
-                              onClick={(e) => openEntryView(entry, e)}
+                              onClick={() => startEditing(entry)}
                               className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
                             >
-                              View
+                              Edit
                             </button>
                             <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setEditedEntry({...entry});
-                                setIsEditing(true);
-                              }}
-                          
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                archiveEntry(entry.id);
-                              }}
+                              onClick={() => archiveEntry(entry.id)}
                               className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
                             >
                               Archive
@@ -523,21 +485,17 @@ const MyDiary = () => {
                           </div>
                         )}
                       </div>
-                      
-                      {/* Make the card clickable to view entry */}
-                      <div onClick={(e) => openEntryView(entry, e)} className="cursor-pointer">
-                        <h3 className="text-xl font-semibold mb-2">{entry.title}</h3>
-                        <div className="text-sm text-gray-500 mb-2">
-                          {new Date(entry.date).toLocaleDateString()}
-                        </div>
-                        <div className="text-sm mb-2">
-                          Mood: <span className="capitalize">{entry.mood}</span>
-                        </div>
-                        <div 
-                          className="prose max-w-none line-clamp-3"
-                          dangerouslySetInnerHTML={{ __html: entry.content }}
-                        />
+                      <h3 className="text-xl font-semibold mb-2">{entry.title}</h3>
+                      <div className="text-sm text-gray-500 mb-2">
+                        {new Date(entry.date).toLocaleDateString()}
                       </div>
+                      <div className="text-sm mb-2">
+                        Mood: <span className="capitalize">{entry.mood}</span>
+                      </div>
+                      <div 
+                        className="prose max-w-none"
+                        dangerouslySetInnerHTML={{ __html: entry.content }}
+                      />
                     </div>
                   ))}
                 </div>
@@ -596,198 +554,8 @@ const MyDiary = () => {
                   }}
                   className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
                 >
-                  Cancel
+                  View Entries
                 </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {viewingEntry && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg w-full max-w-[1300px] mx-auto relative max-h-[90vh] flex flex-col">
-              <div className="p-8 overflow-y-auto">
-                {isEditing ? (
-                  // Edit Mode
-                  <>
-                    <input
-                      type="text"
-                      value={editedEntry.title}
-                      onChange={(e) => {
-                        setEditedEntry({...editedEntry, title: e.target.value});
-                        setTitleError(''); // Clear error on change
-                      }}
-                      className={`text-3xl font-semibold mb-4 w-full border-none focus:outline-none ${
-                        titleError ? 'border-red-500' : ''
-                      }`}
-                    />
-                    {titleError && (
-                      <div className="text-red-500 text-sm mb-2">{titleError}</div>
-                    )}
-                    
-                    <div className="flex items-center mb-4">
-                      <img src={require("../icons/calendar.svg").default} alt="Calendar" className="w-5 h-5 mr-2" />
-                      <span className="text-gray-600">
-                        {new Date(editedEntry.date).toLocaleDateString()}
-                      </span>
-                    </div>
-
-                    <div className="mb-6">
-                      <div className="flex space-x-2">
-                        {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => (
-                          <button
-                            key={moodOption}
-                            onClick={() => setEditedEntry({...editedEntry, mood: moodOption})}
-                            className={`px-4 py-1 rounded-full text-sm ${
-                              editedEntry.mood === moodOption ? 'text-black' : 'text-gray-600'
-                            } ${
-                              {
-                                'sad': 'bg-[#FFB6A6]',
-                                'angry': 'bg-[#FFCF55]',
-                                'neutral': 'bg-[#FFF731]',
-                                'happy': 'bg-[#00FFFF]',
-                                'very happy': 'bg-[#29E259]'
-                              }[moodOption]
-                            }`}
-                          >
-                            {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="relative">
-                      <div
-                        contentEditable
-                        className="min-h-[400px] w-full p-4 border rounded-lg focus:outline-none focus:border-[#FFB78B] mb-16"
-                        dangerouslySetInnerHTML={{ __html: editedEntry.content }}
-                        onInput={(e) => {
-                          if (handleEditContentChange(e)) {
-                            const selection = window.getSelection();
-                            const range = selection.getRangeAt(0);
-                            const position = range.startOffset;
-                            
-                            // Preserve cursor position after state update
-                            requestAnimationFrame(() => {
-                              const newRange = document.createRange();
-                              const contentDiv = e.target;
-                              if (contentDiv.childNodes.length > 0) {
-                                newRange.setStart(contentDiv.childNodes[0], position);
-                                newRange.setEnd(contentDiv.childNodes[0], position);
-                                selection.removeAllRanges();
-                                selection.addRange(newRange);
-                              }
-                            });
-                          }
-                        }}
-                      />
-
-                      <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t">
-                        <div className="flex justify-end items-center">
-                          <div className="flex items-center space-x-4 mr-4">
-                            {editContentError && (
-                              <span className="text-red-500 text-sm mr-4">
-                                {editContentError}
-                              </span>
-                            )}
-                            <span className="text-sm text-gray-400">
-                              {editWordCount}/{WORD_LIMIT} words
-                            </span>
-                          </div>
-
-                          <div className="flex space-x-3">
-                            <button
-                              onClick={async () => {
-                                if (handleEditContentChange({ target: document.querySelector('[contenteditable]') })) {
-                                  await editEntry(editedEntry.id);
-                                  setIsEditing(false);
-                                  setViewingEntry({...editedEntry});
-                                }
-                              }}
-                              className={`px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] ${
-                                editWordCount > WORD_LIMIT ? 'opacity-50 cursor-not-allowed' : ''
-                              }`}
-                              disabled={editWordCount > WORD_LIMIT}
-                            >
-                              Save Changes
-                            </button>
-                            <button
-                              onClick={() => {
-                                setIsEditing(false);
-                                setEditedEntry(null);
-                              }}
-                              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  // View Mode
-                  <div className="flex flex-col h-full">
-                    <div className="mb-6">
-                      <h2 className="text-2xl font-bold mb-4">{viewingEntry.title}</h2>
-                      
-                      <div className="flex items-center mb-4">
-                        <img src={require("../icons/calendar.svg").default} alt="Calendar" className="w-4 h-4 mr-2" />
-                        <span className="text-gray-600 text-sm">
-                          {new Date(viewingEntry.date).toLocaleDateString()}
-                        </span>
-                      </div>
-
-                      <div>
-                        <span className={`inline-block px-4 py-1 rounded-full text-sm ${
-                          {
-                            'sad': 'bg-[#FFB6A6]',
-                            'angry': 'bg-[#FFCF55]',
-                            'neutral': 'bg-[#FFF731]',
-                            'happy': 'bg-[#00FFFF]',
-                            'very happy': 'bg-[#29E259]'
-                          }[viewingEntry.mood]
-                        }`}>
-                          {viewingEntry.mood.charAt(0).toUpperCase() + viewingEntry.mood.slice(1)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex-grow mb-6 overflow-y-auto">
-                      <div 
-                        className="prose max-w-none"
-                        style={{ 
-                          whiteSpace: 'pre-wrap',
-                          wordBreak: 'break-word',
-                          lineHeight: '1.6'
-                        }}
-                        dangerouslySetInnerHTML={{ __html: viewingEntry.content }}
-                      />
-                    </div>
-
-                    <div className="flex justify-end space-x-2 pt-4 border-t">
-                      <button
-                        onClick={() => {
-                          setEditedEntry({...viewingEntry});
-                          setIsEditing(true);
-                        }}
-                        className="px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] text-sm"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => {
-                          setViewingEntry(null);
-                          setIsEditing(false);
-                          setEditedEntry(null);
-                        }}
-                        className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 text-sm"
-                      >
-                        Close
-                      </button>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
