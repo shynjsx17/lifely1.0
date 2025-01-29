@@ -401,28 +401,28 @@ const ListComponent = () => {
     }
 
     return (
-        <div className="flex h-screen">
+        <div className="flex min-h-screen">
             <Sidebar
                 isCollapsed={isSidebarCollapsed}
                 setIsCollapsed={setIsSidebarCollapsed}
             />
             <div className={`flex-1 transition-all duration-300 ${
                 isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
-            } p-8 bg-system-background bg-no-repeat bg-fixed`}>
-                <div className="text-left mb-10 font-poppins">
-                    <h1 className="font-bold text-3xl">My Lists</h1>
-                    <p className="font-bold text-xl text-[#FFB78B]">
+            } p-4 md:p-8 bg-system-background overflow-y-auto`}>
+                <div className="text-left mb-6 md:mb-10 font-poppins">
+                    <h1 className="font-bold text-2xl md:text-3xl">My Lists</h1>
+                    <p className="font-bold text-lg md:text-xl text-[#FFB78B]">
                         {listType.charAt(0).toUpperCase() + listType.slice(1)} Tasks
                     </p>
                 </div>
 
-                <div className="flex space-x-6">
+                <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
                     {/* Left side - Task List */}
-                    <div className="w-1/2 bg-white rounded-lg p-6 shadow-md">
+                    <div className="w-full lg:w-1/2 bg-white rounded-lg p-4 md:p-6 shadow-md">
                         <div className="flex items-center mb-4">
-                            <h2 className="text-xl font-semibold">My lists &gt; {listType}</h2>
+                            <h2 className="text-lg md:text-xl font-semibold">My lists &gt; {listType}</h2>
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 md:space-y-3">
                             {tasks.map((task) => (
                                 <div
                                     key={task.id}
@@ -432,7 +432,7 @@ const ListComponent = () => {
                                     onClick={() => handleTaskClick(task)}
                                 >
                                     <div className="flex items-center justify-between">
-                                        <div className="flex items-center flex-1">
+                                        <div className="flex items-center flex-1 min-w-0">
                                             <input
                                                 type="checkbox"
                                                 checked={task.is_completed}
@@ -440,36 +440,31 @@ const ListComponent = () => {
                                                 className="mr-3"
                                                 onClick={(e) => e.stopPropagation()}
                                             />
-                                            {editingTaskId === task.id ? (
-                                                <input
-                                                    type="text"
-                                                    value={editingTaskText}
-                                                    onChange={(e) => setEditingTaskText(e.target.value)}
-                                                    onBlur={() => handleUpdateTaskTitle(task.id, editingTaskText)}
-                                                    onKeyDown={(e) => handleKeyPress(e, task.id)}
-                                                    className="flex-1 bg-white px-2 py-1 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                    onClick={(e) => e.stopPropagation()}
-                                                    autoFocus
-                                                />
-                                            ) : (
-                                                <span 
-                                                    className={task.is_completed ? 'line-through' : ''}
-                                                    onDoubleClick={(e) => {
-                                                        e.stopPropagation();
-                                                        setEditingTaskId(task.id);
-                                                        setEditingTaskText(task.title);
-                                                    }}
-                                                >
-                                                    {task.title}
-                                                </span>
-                                            )}
+                                            <div className="flex-1 min-w-0">
+                                                {editingTaskId === task.id ? (
+                                                    <input
+                                                        type="text"
+                                                        value={editingTaskText}
+                                                        onChange={(e) => setEditingTaskText(e.target.value)}
+                                                        onBlur={() => handleUpdateTaskTitle(task.id, editingTaskText)}
+                                                        onKeyDown={(e) => handleKeyPress(e, task.id)}
+                                                        className="w-full bg-white px-2 py-1 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                        onClick={(e) => e.stopPropagation()}
+                                                        autoFocus
+                                                    />
+                                                ) : (
+                                                    <span className={`block truncate ${task.is_completed ? 'line-through' : ''}`}>
+                                                        {task.title}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </div>
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 handleArchiveTask(task.id);
                                             }}
-                                            className="p-2 text-gray-500 hover:bg-gray-200 rounded-full"
+                                            className="p-2 text-gray-500 hover:bg-gray-200 rounded-full ml-2"
                                             title="Archive Task"
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -494,11 +489,12 @@ const ListComponent = () => {
                                         handleAddTask();
                                     }
                                 }}
-                                className="flex-1 p-2 border rounded-lg mr-2"
+                                className="flex-1 p-2 border rounded-lg mr-2 text-sm md:text-base"
                             />
                             <button
                                 onClick={handleAddTask}
-                                className="px-4 py-2 bg-[#FFB78B] text-white rounded-lg"
+                                className="px-3 md:px-4 py-2 bg-[#FFB78B] text-white rounded-lg text-sm md:text-base"
+                                disabled={!newTask.trim()}
                             >
                                 Add
                             </button>
@@ -507,7 +503,7 @@ const ListComponent = () => {
 
                     {/* Right side - Task Details */}
                     {selectedTask && (
-                        <div className="w-1/2 bg-white rounded-lg p-6 shadow-md">
+                        <div className="w-full lg:w-1/2 bg-white rounded-lg p-4 md:p-6 shadow-md mt-4 lg:mt-0">
                             <div className="mb-4">
                                 <h2 className="text-xl font-semibold">{selectedTask.title}</h2>
                                 <div className="flex flex-wrap items-center gap-2 mt-2">
