@@ -8,6 +8,7 @@ const PUBLIC_ROUTES = ['/', '/landing', '/login', '/register', '/forgot-password
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(sessionStorage.getItem('session_token'));
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
@@ -88,6 +89,7 @@ export const AuthProvider = ({ children }) => {
       if (data.status === 'success') {
         // Store the session token
         sessionStorage.setItem('session_token', data.data.token);
+        setToken(data.data.token);
         setUser(data.data.user);
         navigate('/myday');
         return { success: true };
@@ -129,13 +131,11 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      // First clear all storage immediately
       sessionStorage.clear();
       localStorage.clear();
-      // Clear user state
       setUser(null);
+      setToken(null);
 
-      // Then call the backend to invalidate the session
       await fetch('http://localhost/lifely1.0/backend/api/logout.php', {
         method: 'POST',
         headers: {
@@ -146,26 +146,17 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      // Double check storage is cleared
       sessionStorage.removeItem('session_token');
       sessionStorage.clear();
       localStorage.clear();
-      
-      // Clear any remaining state
       setUser(null);
+      setToken(null);
       
-      // Replace the current history state and all entries with login
       window.history.replaceState(null, '', '/login');
-      
-      // Clear the history stack
       while (window.history.length > 1) {
         window.history.pushState(null, '', '/login');
       }
-      
-      // Force navigation to login
       navigate('/login', { replace: true });
-      
-      // Force a complete page reload to clear any remaining state
       window.location.href = '/login';
     }
   };
@@ -186,12 +177,16 @@ export const AuthProvider = ({ children }) => {
     };
   }, [navigate, user, location]);
 
+  const updateUser = (updatedUserData) => {
+    setUser(updatedUserData);
+  };
+
   if (loading) {
     return <div>Loading...</div>; // Or your loading component
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, token, login, signup, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
