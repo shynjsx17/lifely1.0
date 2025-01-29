@@ -351,6 +351,7 @@ const MyDiary = () => {
                 contentEditable
                 onInput={(e) => {
                   handleContentChange();
+                  setContentError(''); // Clear error on change
                   // Automatically adjust height
                   e.target.style.height = 'auto';
                   e.target.style.height = `${Math.max(400, e.target.scrollHeight)}px`;
@@ -365,7 +366,6 @@ const MyDiary = () => {
                   height: 'auto',
                   maxHeight: '70vh' // Maximum height before scrolling
                 }}
-               onInput={() => setContentError('')} // Clear error on change
               />
               {contentError && (
                 <div className="text-red-500 text-sm mt-2">{contentError}</div>
@@ -683,44 +683,43 @@ const MyDiary = () => {
                       />
 
                       <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t">
-                        <div className="flex justify-between items-center">
-                          {editContentError && (
-                            <span className="text-red-500 text-sm">
-                              {editContentError}
-                            </span>
-                          )}
-                          
-                          <div className="flex items-center space-x-4">
+                        <div className="flex justify-end items-center">
+                          <div className="flex items-center space-x-4 mr-4">
+                            {editContentError && (
+                              <span className="text-red-500 text-sm mr-4">
+                                {editContentError}
+                              </span>
+                            )}
                             <span className="text-sm text-gray-400">
                               {editWordCount}/{WORD_LIMIT} words
                             </span>
+                          </div>
 
-                            <div className="flex space-x-3">
-                              <button
-                                onClick={async () => {
-                                  if (handleEditContentChange({ target: document.querySelector('[contenteditable]') })) {
-                                    await editEntry(editedEntry.id);
-                                    setIsEditing(false);
-                                    setViewingEntry({...editedEntry});
-                                  }
-                                }}
-                                className={`px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] ${
-                                  editWordCount > WORD_LIMIT ? 'opacity-50 cursor-not-allowed' : ''
-                                }`}
-                                disabled={editWordCount > WORD_LIMIT}
-                              >
-                                Save Changes
-                              </button>
-                              <button
-                                onClick={() => {
+                          <div className="flex space-x-3">
+                            <button
+                              onClick={async () => {
+                                if (handleEditContentChange({ target: document.querySelector('[contenteditable]') })) {
+                                  await editEntry(editedEntry.id);
                                   setIsEditing(false);
-                                  setEditedEntry(null);
-                                }}
-                                className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
-                              >
-                                Cancel
-                              </button>
-                            </div>
+                                  setViewingEntry({...editedEntry});
+                                }
+                              }}
+                              className={`px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] ${
+                                editWordCount > WORD_LIMIT ? 'opacity-50 cursor-not-allowed' : ''
+                              }`}
+                              disabled={editWordCount > WORD_LIMIT}
+                            >
+                              Save Changes
+                            </button>
+                            <button
+                              onClick={() => {
+                                setIsEditing(false);
+                                setEditedEntry(null);
+                              }}
+                              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                            >
+                              Cancel
+                            </button>
                           </div>
                         </div>
                       </div>

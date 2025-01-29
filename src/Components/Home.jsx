@@ -195,26 +195,26 @@ const Home = () => {
       <div
         className={`flex-1 transition-all duration-300 ${
           isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
-        } p-8 bg-system-background bg-no-repeat bg-fixed`}
+        } p-4 sm:p-6 md:p-8 bg-system-background bg-no-repeat bg-fixed overflow-x-hidden`}
       >
         {/* Title and Search Section */}
-        <div className="flex justify-between items-center mb-10">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-10 space-y-4 sm:space-y-0">
           {/* Title Section */}
           <div className="text-left font-poppins">
-            <h1 className="font-bold text-3xl">Good Day, {user?.username || 'User'}!</h1>
-            <p className="font-bold text-xl text-[#FFB78B]">
+            <h1 className="font-bold text-2xl sm:text-3xl">Good Day, {user?.username || 'User'}!</h1>
+            <p className="font-bold text-lg sm:text-xl text-[#FFB78B]">
               What's your plan for today?
             </p>
           </div>
 
           {/* Search Bar */}
-          <div className="relative w-72">
+          <div className="relative w-full sm:w-72">
             <input
               type="text"
               placeholder="Search"
               value={searchQuery}
               onChange={handleSearchChange}
-              maxLength={50} // Hard limit on input length
+              maxLength={50}
               className={`w-full pl-10 pr-4 py-2 rounded-full border ${
                 searchError ? 'border-red-500' : 'border-gray-300'
               } focus:outline-none focus:border-gray-400 focus:ring-0`}
@@ -241,24 +241,32 @@ const Home = () => {
         </div>
 
         {/* Task Section */}
-        <div className="w-full bg-white shadow-md rounded-lg p-6">
-          <h3 className="text-xl font-semibold mb-4">Your Task for Today:</h3>
-          <div className="flex justify-between items-center mb-6 border-b pb-2">
-            <div className="flex space-x-8 text-[#808080] text-sm font-medium">
+        <div className="w-full bg-white shadow-md rounded-lg p-4 sm:p-6">
+          <h3 className="text-lg sm:text-xl font-semibold mb-4">Your Task for Today:</h3>
+          
+          {/* Task Filter Tabs */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b pb-2">
+            <div className="flex flex-wrap gap-4 sm:gap-8 text-[#808080] text-sm font-medium w-full sm:w-auto">
               <span
-                className={`cursor-pointer pb-2 hover:border-b-4 hover:border-[#808080] ${filter === "upcoming" ? "border-b-4 border-[#808080]" : ""}`}
+                className={`cursor-pointer pb-2 hover:border-b-4 hover:border-[#808080] ${
+                  filter === "upcoming" ? "border-b-4 border-[#808080]" : ""
+                }`}
                 onClick={() => setFilter("upcoming")}
               >
                 Upcoming ({taskCounts.upcoming})
               </span>
               <span
-                className={`cursor-pointer pb-2 hover:border-b-4 hover:border-[#808080] ${filter === "overdue" ? "border-b-4 border-[#808080]" : ""}`}
+                className={`cursor-pointer pb-2 hover:border-b-4 hover:border-[#808080] ${
+                  filter === "overdue" ? "border-b-4 border-[#808080]" : ""
+                }`}
                 onClick={() => setFilter("overdue")}
               >
                 Overdue ({taskCounts.overdue})
               </span>
               <span
-                className={`cursor-pointer pb-2 hover:border-b-4 hover:border-[#808080] ${filter === "completed" ? "border-b-4 border-[#808080]" : ""}`}
+                className={`cursor-pointer pb-2 hover:border-b-4 hover:border-[#808080] ${
+                  filter === "completed" ? "border-b-4 border-[#808080]" : ""
+                }`}
                 onClick={() => setFilter("completed")}
               >
                 Completed ({taskCounts.completed})
@@ -267,7 +275,7 @@ const Home = () => {
           </div>
 
           {/* Task List Header */}
-          <div className="grid grid-cols-12 gap-4 px-4 mb-2 text-sm font-medium text-gray-500">
+          <div className="hidden sm:grid grid-cols-12 gap-4 px-4 mb-2 text-sm font-medium text-gray-500">
             <div className="col-span-4">Task</div>
             <div className="col-span-2 text-center">Reminder Date</div>
             <div className="col-span-3 text-center">Priority Tags</div>
@@ -284,21 +292,37 @@ const Home = () => {
               </div>
             ) : (
               filteredTasks.map((task) => (
-                <div key={task.id} className="grid grid-cols-12 gap-4 items-center p-3 hover:bg-gray-50 rounded-lg">
-                  <div className="col-span-4 flex items-center space-x-3">
+                <div key={task.id} 
+                  className="flex flex-col sm:grid sm:grid-cols-12 gap-2 sm:gap-4 items-start sm:items-center p-3 hover:bg-gray-50 rounded-lg"
+                >
+                  {/* Task Title and Checkbox */}
+                  <div className="flex items-center space-x-3 col-span-4 w-full sm:w-auto">
                     <input
                       type="checkbox"
                       checked={task.is_completed}
                       onChange={() => handleToggleTask(task.id, task.is_completed)}
                       className="w-5 h-5 rounded border-gray-300 text-blue-500 focus:ring-blue-500 cursor-pointer"
                     />
-                    <label
-                      className={`text-gray-700 cursor-pointer ${task.is_completed ? "line-through text-gray-400" : ""}`}
-                    >
+                    <label className={`text-gray-700 cursor-pointer ${task.is_completed ? "line-through text-gray-400" : ""}`}>
                       {task.title}
                     </label>
                   </div>
-                  <div className="col-span-2 text-center">
+
+                  {/* Mobile Labels */}
+                  <div className="sm:hidden text-xs text-gray-500 ml-8 space-y-1">
+                    <div>Reminder: {task.reminder_date ? 
+                      new Date(task.reminder_date).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                      }) : 
+                      "No reminder"
+                    }</div>
+                    <div>List: {task.list_type.charAt(0).toUpperCase() + task.list_type.slice(1)}</div>
+                  </div>
+
+                  {/* Desktop View Items */}
+                  <div className="hidden sm:block col-span-2 text-center">
                     <span className={`text-sm ${
                       filter === "overdue" ? "text-red-500 font-medium" : "text-gray-600"
                     }`}>
@@ -312,12 +336,12 @@ const Home = () => {
                       }
                     </span>
                   </div>
-                  <div className="col-span-3 text-center">
+                  <div className="col-span-3 text-center mt-2 sm:mt-0">
                     <span className={`px-4 py-1 rounded-full text-xs ${getPriorityColor(task.priority)}`}>
                       {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority
                     </span>
                   </div>
-                  <div className="col-span-3 text-center text-gray-600">
+                  <div className="hidden sm:block col-span-3 text-center text-gray-600">
                     {task.list_type.charAt(0).toUpperCase() + task.list_type.slice(1)}
                   </div>
                 </div>
