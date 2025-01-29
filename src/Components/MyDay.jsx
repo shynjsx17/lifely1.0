@@ -761,20 +761,22 @@ const MyDay = () => {
         setIsCollapsed={setIsSidebarCollapsed}
       />
       <div
-        className={`flex-1 transition-all duration-300 ${isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"} p-8 bg-system-background bg-no-repeat bg-fixed flex flex-col`}
+        className={`flex-1 transition-all duration-300 ${
+          isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
+        } p-4 md:p-8 bg-system-background bg-no-repeat bg-fixed flex flex-col`}
       >
         {/* Title and Search Section */}
-        <div className="flex justify-between items-center mb-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-10 space-y-4 md:space-y-0">
           {/* Title Section */}
-          <div className="text-left font-poppins">
-            <h1 className="font-bold text-3xl">Good Day, {user?.username || 'User'}!</h1>
-            <p className="font-bold text-xl text-[#FFB78B]">
+          <div className="text-left font-poppins w-full md:w-auto">
+            <h1 className="font-bold text-2xl md:text-3xl">Good Day, {user?.username || 'User'}!</h1>
+            <p className="font-bold text-lg md:text-xl text-[#FFB78B]">
               What's your plan for today?
             </p>
           </div>
 
           {/* Search Bar */}
-          <div className="relative w-72">
+          <div className="relative w-full md:w-72">
             <input
               type="text"
               placeholder="Search"
@@ -806,19 +808,20 @@ const MyDay = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-center bg-white shadow-md rounded-lg p-6 mb-6 mx-40">
-            <FaSun className="text-3xl mr-4" />
-            <span className="text-3xl font-semibold text-gray-800">
-                {formattedDate}
-            </span>
+        {/* Date Display */}
+        <div className="flex items-center justify-center bg-white shadow-md rounded-lg p-4 md:p-6 mb-4 md:mb-6 mx-2 md:mx-40">
+          <FaSun className="text-2xl md:text-3xl mr-3 md:mr-4" />
+          <span className="text-xl md:text-3xl font-semibold text-gray-800">
+            {formattedDate}
+          </span>
         </div>
 
         {/* Task List */}
-        <div className="space-y-4 mb-6 flex-grow">
+        <div className="space-y-3 md:space-y-4 mb-4 md:mb-6 flex-grow overflow-y-auto">
           {getFilteredTasks().map((task, index) => (
             <div
               key={index}
-              className="flex items-center justify-between bg-white shadow-md rounded-lg p-4 mx-40 cursor-pointer hover:shadow-lg transition-shadow"
+              className="flex items-center justify-between bg-white shadow-md rounded-lg p-3 md:p-4 mx-2 md:mx-40 cursor-pointer hover:shadow-lg transition-shadow"
             >
               <div className="flex items-start flex-1">
                 {/* Checkbox */}
@@ -945,11 +948,11 @@ const MyDay = () => {
           ))}
         </div>
 
-        {/* Add Task Section at the bottom */}
-        <div className="flex flex-col mx-40 mt-auto">
-          <div className="flex items-center bg-white shadow-md rounded-lg p-3 gap-4">
+        {/* Add Task Section */}
+        <div className="flex flex-col mx-2 md:mx-40 mt-auto">
+          <div className="flex items-center bg-white shadow-md rounded-lg p-2 md:p-3 gap-2 md:gap-4">
             <button
-              className="ml-4 bg-none text-[#808080] font-semibold rounded-lg"
+              className="ml-2 md:ml-4 bg-none text-[#808080] font-semibold rounded-lg"
               onClick={() => setShowPopup(true)}
             >
               +
@@ -959,16 +962,16 @@ const MyDay = () => {
               placeholder="Add Task"
               value={newTask}
               onChange={handleTaskInputChange}
-              className={`flex-grow border-none focus:ring-0 text-black placeholder-gray-400 ${
+              className={`flex-grow border-none focus:ring-0 text-black placeholder-gray-400 text-sm md:text-base ${
                 taskError ? 'border-red-500' : ''
               }`}
               maxLength={50}
             />
-            <div className="text-sm text-gray-500">
+            <div className="text-xs md:text-sm text-gray-500">
               {newTask.length}/50
             </div>
             <button
-              className={`ml-4 p-2 text-black font-semibold rounded-lg ${
+              className={`ml-2 md:ml-4 p-2 text-black font-semibold rounded-lg text-sm md:text-base ${
                 newTask.trim() && !taskError
                   ? 'bg-[#FFB78B] hover:bg-[#FFA570]'
                   : 'bg-gray-200 cursor-not-allowed'
@@ -980,18 +983,18 @@ const MyDay = () => {
             </button>
           </div>
           {taskError && (
-            <div className="text-red-500 text-sm mt-1 ml-4">
+            <div className="text-red-500 text-xs md:text-sm mt-1 ml-4">
               {taskError}
             </div>
           )}
         </div>
 
-        {/* Popup for List and Tags */}
+        {/* Popups - adjust for mobile */}
         {showPopup && (
-          <div className="font-poppins fixed inset-0 bg-none flex items-center justify-center">
+          <div className="font-poppins fixed inset-0 bg-none flex items-center justify-center p-4">
             <div
               ref={popupRef}
-              className="bg-[#F0EFF9] rounded-lg p-6 w-[20%] shadow-lg mt-5 mr-[28%]"
+              className="bg-[#F0EFF9] rounded-lg p-4 md:p-6 w-full md:w-[20%] shadow-lg md:mt-5 md:mr-[28%]"
             >
               {/* Lists Section */}
               <h2 className="text-lg font-semibold text-gray-800 mb-4">Lists</h2>
@@ -1045,8 +1048,8 @@ const MyDay = () => {
         )}
 
         {showTaskListPopup && selectedTaskId && (
-          <div className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-             <div className="bg-white rounded-lg w-[650px] max-h-[90vh] overflow-y-auto">
+          <div className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+            <div className="bg-white rounded-lg w-full md:w-[650px] max-h-[90vh] overflow-y-auto">
               {/* Header with close button */}
               <div className="flex justify-between items-center bg-[#F0EFF9] px-4 py-2 rounded-t-lg">
                 <div className="flex items-center">

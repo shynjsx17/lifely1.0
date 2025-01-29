@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from "../Navigation/Sidebar";
 import { useAuth } from '../context/AuthContext';
+import EmojiPicker from 'emoji-picker-react';
 
 const MyDiary = () => {
   const { user } = useAuth();
@@ -26,6 +27,7 @@ const MyDiary = () => {
   const [titleError, setTitleError] = useState('');
   const [contentError, setContentError] = useState('');
   const TITLE_CHAR_LIMIT = 50; // You can adjust this number as needed
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   // Fetch diary entries from database
   const fetchEntries = async () => {
@@ -291,12 +293,53 @@ const MyDiary = () => {
       return false;
     }
 
+    // Update content without trying to preserve cursor position
     setEditContentError('');
     setEditedEntry(prev => ({
       ...prev,
       content: content
     }));
     return true;
+  };
+
+  const onEmojiClick = (emojiObject) => {
+    const editor = document.getElementById('editable-content');
+    if (!editor) return;
+
+    try {
+      // Get current selection
+      const selection = window.getSelection();
+      let range;
+
+      // If there's no selection, create one at the end
+      if (selection.rangeCount === 0) {
+        range = document.createRange();
+        range.selectNodeContents(editor);
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      } else {
+        range = selection.getRangeAt(0);
+      }
+
+      // Create and insert the emoji
+      const emojiText = document.createTextNode(emojiObject.emoji);
+      range.insertNode(emojiText);
+      
+      // Move cursor after emoji
+      range.setStartAfter(emojiText);
+      range.setEndAfter(emojiText);
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      // Update content
+      editor.focus();
+      const event = new Event('input', { bubbles: true });
+      editor.dispatchEvent(event);
+      handleContentChange({ target: editor });
+    } catch (error) {
+      console.error('Error inserting emoji:', error);
+    }
   };
 
   return (
@@ -307,9 +350,9 @@ const MyDiary = () => {
       />
       <div className={`flex-1 transition-all duration-300 ${
         isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
-      } p-8 bg-system-background font-poppins`}>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Good Day, {user?.username || 'User'}!</h1>
-        <h1 className="text-xl font-bold tracking-tight mb-4" style={{ color: '#FFB78B' }}>
+      } p-4 md:p-8 bg-system-background font-poppins`}>
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">Good Day, {user?.username || 'User'}!</h1>
+        <h1 className="text-lg md:text-xl font-bold tracking-tight mb-4" style={{ color: '#FFB78B' }}>
           Something troubling you? Write it down.
         </h1>
 
@@ -321,10 +364,10 @@ const MyDiary = () => {
         )}
 
         {/* View Entries Button */}
-        <div className="flex mb-4 space-x-4">
+        <div className="flex mb-4 space-x-4 flex-wrap gap-2">
           <button
             onClick={() => setViewSavedEntries(!viewSavedEntries)}
-            className="px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
+            className="w-full sm:w-auto px-4 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770]"
           >
             {viewSavedEntries ? 'Write New Entry' : 'View Saved Entries'}
           </button>
@@ -332,7 +375,7 @@ const MyDiary = () => {
 
         {/* Writing Area */}
         {!viewSavedEntries && (
-          <div className="w-full max-w-7xl mx-auto bg-white p-6 rounded-xl shadow-lg relative">
+          <div className="w-full max-w-7xl mx-auto bg-white p-4 md:p-6 rounded-xl shadow-lg relative">
             <input
               type="text"
               value={headerText}
@@ -360,7 +403,7 @@ const MyDiary = () => {
 
             {/* Date Display */}
             <div className="flex items-center mt-4 mb-4">
-              <img src={require("../icons/calendar.svg").default} alt="Calendar Icon" className="w-6 h-6 mr-2" />
+              <img src={require("../icons/calendar.svg").default} alt="Calendar Icon" className="w-4 h-4 mr-2" />
               <span className="text-sm">{today}</span>
             </div>
 
@@ -386,31 +429,68 @@ const MyDiary = () => {
               )}
 
               {/* Formatting Tools with Word Count - Fixed at bottom */}
-              <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t">
-                <div className="flex justify-between items-center">
-                  {/* Formatting buttons */}
-                  <div className="flex space-x-4">
-                    <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
-                      <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
-                    </button>
-                    <button onClick={() => document.execCommand('italic')} className="p-2 hover:bg-gray-100 rounded">
-                      <img src={require("../icons/Italic.svg").default} alt="Italic" className="w-6 h-6" />
-                    </button>
-                    <button onClick={() => document.execCommand('underline')} className="p-2 hover:bg-gray-100 rounded">
-                      <img src={require("../icons/underline.svg").default} alt="Underline" className="w-6 h-6" />
-                    </button>
+              <div className="absolute bottom-0 left-0 right-0 bg-white p-2 md:p-4 border-t">
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
+                  <div className="flex space-x-2 md:space-x-4 flex-wrap">
+                    {/* Text Style Tools */}
+                    <div className="flex space-x-2 border-r pr-2">
+                      <button onClick={() => document.execCommand('bold')} className="p-2 hover:bg-gray-100 rounded">
+                        <img src={require("../icons/bold.svg").default} alt="Bold" className="w-6 h-6" />
+                      </button>
+                      <button onClick={() => document.execCommand('italic')} className="p-2 hover:bg-gray-100 rounded">
+                        <img src={require("../icons/Italic.svg").default} alt="Italic" className="w-6 h-6" />
+                      </button>
+                      <button onClick={() => document.execCommand('underline')} className="p-2 hover:bg-gray-100 rounded">
+                        <img src={require("../icons/underline.svg").default} alt="Underline" className="w-6 h-6" />
+                      </button>
+                      <button onClick={() => document.execCommand('strikeThrough')} className="p-2 hover:bg-gray-100 rounded">
+                        <img src={require("../icons/strikethrough.svg").default} alt="Strikethrough" className="w-6 h-6" />
+                      </button>
+                    </div>
+
+                    {/* Alignment Tools */}
+                    <div className="flex space-x-2 border-r pr-2">
+                      <button onClick={() => document.execCommand('justifyLeft')} className="p-2 hover:bg-gray-100 rounded">
+                        <img src={require("../icons/align-left.svg").default} alt="Align Left" className="w-6 h-6" />
+                      </button>
+                      <button onClick={() => document.execCommand('justifyCenter')} className="p-2 hover:bg-gray-100 rounded">
+                        <img src={require("../icons/align-center.svg").default} alt="Align Center" className="w-6 h-6" />
+                      </button>
+                      <button onClick={() => document.execCommand('justifyRight')} className="p-2 hover:bg-gray-100 rounded">
+                        <img src={require("../icons/align-right.svg").default} alt="Align Right" className="w-6 h-6" />
+                      </button>
+                    </div>
+
+                    {/* Emoji Picker */}
+                    <div className="relative">
+                      <button 
+                        onClick={() => setShowEmojiPicker(!showEmojiPicker)} 
+                        className="p-2 hover:bg-gray-100 rounded"
+                      >
+                        <img src={require("../icons/emoji.svg").default} alt="Emoji" className="w-6 h-6" />
+                      </button>
+                      {showEmojiPicker && (
+                        <div className="absolute bottom-full right-0 mb-2 z-50">
+                          <div className="shadow-lg rounded-lg">
+                            <EmojiPicker
+                              onEmojiClick={onEmojiClick}
+                              width={300}
+                              height={400}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Right side with word count and save button */}
-                  <div className="flex items-center space-x-4">
-                    {/* Word Count Indicator */}
-                    <span className="text-sm text-gray-400">
+                  <div className="flex items-center space-x-2 md:space-x-4">
+                    <span className="text-xs md:text-sm text-gray-400">
                       {wordCount}/{WORD_LIMIT} words
                     </span>
                     
                     <button
                       onClick={saveContent}
-                      className={`px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] ${
+                      className={`px-4 md:px-6 py-2 bg-[#FFB78B] text-white rounded-md hover:bg-[#ffa770] ${
                         wordCount > WORD_LIMIT ? 'opacity-50 cursor-not-allowed' : ''
                       }`}
                       disabled={wordCount > WORD_LIMIT}
@@ -423,28 +503,28 @@ const MyDiary = () => {
             </div>
 
             {/* Mood Tracker */}
-            <div className="absolute top-4 right-4">
-              <h2 className="text-gray-500 text-lg mb-2">Mood Tracker:</h2>
-              <div className="flex space-x-2">
-              {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
-                const moodColors = {
-                'sad': 'bg-[#FFB6A6]',
-                'angry': 'bg-[#FFCF55]',
-                'neutral': 'bg-[#FFF731]',
-                'happy': 'bg-[#00FFFF]',
-                'very happy': 'bg-[#29E259]'
-                };
+            <div className="relative md:absolute md:top-4 md:right-4 mt-4 md:mt-0">
+              <h2 className="text-gray-500 text-base md:text-lg mb-2">Mood Tracker:</h2>
+              <div className="flex flex-wrap gap-2">
+                {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
+                  const moodColors = {
+                  'sad': 'bg-[#FFB6A6]',
+                  'angry': 'bg-[#FFCF55]',
+                  'neutral': 'bg-[#FFF731]',
+                  'happy': 'bg-[#00FFFF]',
+                  'very happy': 'bg-[#29E259]'
+                  };
 
-                return (
-                <button
-                  key={moodOption}
-                  onClick={() => setMood(moodOption)}
-                  className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
-                >
-                  {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
-                </button>
-                );
-              })}
+                                                                                                                                                                 return (
+                  <button
+                    key={moodOption}
+                    onClick={() => setMood(moodOption)}
+                    className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
+                  >
+                    {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
+                  </button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -454,7 +534,7 @@ const MyDiary = () => {
         {viewSavedEntries && (
           <div className="w-full max-w-7xl mx-auto">
             {/* Header Section with Search */}
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
               {/* Left side - Greeting and Button */}
               <div className="flex flex-col">
                 <div className="mb-4">
@@ -465,7 +545,7 @@ const MyDiary = () => {
               </div>
 
               {/* Right side - Search Bar */}
-              <div className="relative w-72">
+              <div className="w-full md:w-72">
                 <div className="relative">
                   <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                     <svg
@@ -501,9 +581,9 @@ const MyDiary = () => {
               <p className="text-center text-xl">No entries saved yet.</p>
             ) : (
               <>
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {getFilteredEntries().map((entry) => (
-                    <div key={entry.id} className="bg-white p-6 rounded-xl shadow-lg relative">
+                    <div key={entry.id} className="bg-white p-4 md:p-6 rounded-xl shadow-lg relative">
                       <div className="absolute top-4 right-4">
                         <button
                           onClick={(e) => setDropdownVisible(dropdownVisible === entry.id ? null : entry.id)}
@@ -584,8 +664,8 @@ const MyDiary = () => {
         )}
 
         {showSuccessModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-8 max-w-sm w-full mx-4 text-center">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-4 md:p-8 max-w-sm w-full mx-4 text-center">
               <div className="mb-4">
                 <img src={require("../icons/diary.svg").default} alt="Diary" className="w-16 h-16 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold mb-2">ENTRY SAVED!</h2>
@@ -618,9 +698,9 @@ const MyDiary = () => {
         )}
 
         {viewingEntry && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4">
             <div className="bg-white rounded-lg w-full max-w-[1300px] mx-auto relative max-h-[90vh] flex flex-col">
-              <div className="p-8 overflow-y-auto">
+              <div className="p-4 md:p-8 overflow-y-auto">
                 {isEditing ? (
                   // Edit Mode
                   <>
@@ -675,25 +755,7 @@ const MyDiary = () => {
                         contentEditable
                         className="min-h-[400px] w-full p-4 border rounded-lg focus:outline-none focus:border-[#FFB78B] mb-16"
                         dangerouslySetInnerHTML={{ __html: editedEntry.content }}
-                        onInput={(e) => {
-                          if (handleEditContentChange(e)) {
-                            const selection = window.getSelection();
-                            const range = selection.getRangeAt(0);
-                            const position = range.startOffset;
-                            
-                            // Preserve cursor position after state update
-                            requestAnimationFrame(() => {
-                              const newRange = document.createRange();
-                              const contentDiv = e.target;
-                              if (contentDiv.childNodes.length > 0) {
-                                newRange.setStart(contentDiv.childNodes[0], position);
-                                newRange.setEnd(contentDiv.childNodes[0], position);
-                                selection.removeAllRanges();
-                                selection.addRange(newRange);
-                              }
-                            });
-                          }
-                        }}
+                        onInput={handleEditContentChange}
                       />
 
                       <div className="absolute bottom-0 left-0 right-0 bg-white p-4 border-t">
