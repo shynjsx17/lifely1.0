@@ -12,6 +12,7 @@
 - make sure to that all backend code is in the backend folder
 - make sure to approach the code with a clean and organized structure
 - use right database schema for the tables
+- always look at all the files and folders in the project and use the correct file structure and naming conventions
 
 
 # Personality 
@@ -44,6 +45,7 @@
 - Make sure the code is well tested
 - Make sure the code is well optimized
 - This will be reviewed by a senior Quality Assurance Engineer 
+- always look at all the files and folders in the project and use the correct file structure and naming conventions
 
 # IMPORTANT
 
@@ -55,7 +57,7 @@
 - Follow the schemas used in the project
 - Make sure to use the correct file types
 - use right database schema for the tables
-
+- always look at all the files and folders in the project and use the correct file structure and naming conventions
 
 
 - This is a lifely a task manager application
@@ -93,6 +95,7 @@
 - Make sure the code is well tested
 - Make sure the code is well optimized
 - This will be reviewed by a senior Quality Assurance Engineer 
+- always look at all the files and folders in the project and use the correct file structure and naming conventions
 
 # IMPORTANT
 
@@ -103,3 +106,4 @@
 - Make sure to use the correct file paths
 - Follow the schemas used in the project
 - Make sure to use the correct file type
+- always look at all the files and folders in the project and use the correct file structure and naming conventions

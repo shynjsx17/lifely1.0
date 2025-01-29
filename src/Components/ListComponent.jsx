@@ -20,6 +20,8 @@ const ListComponent = () => {
     const [currentNote, setCurrentNote] = useState("");
     const [showPriorityDropdown, setShowPriorityDropdown] = useState(false);
     const [showListDropdown, setShowListDropdown] = useState(false);
+    const [editingTaskId, setEditingTaskId] = useState(null);
+    const [editingTaskText, setEditingTaskText] = useState("");
 
     useEffect(() => {
         fetchTasks();
@@ -348,6 +350,52 @@ const ListComponent = () => {
         }
     };
 
+    const handleUpdateTaskTitle = async (taskId, newTitle) => {
+        if (!newTitle.trim()) return;
+        
+        try {
+            const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+                },
+                body: JSON.stringify({
+                    title: newTitle
+                })
+            });
+
+            if (response.ok) {
+                // Update tasks list
+                setTasks(prevTasks => 
+                    prevTasks.map(task => 
+                        task.id === taskId 
+                            ? { ...task, title: newTitle }
+                            : task
+                    )
+                );
+                // Update selected task if it's the one being edited
+                if (selectedTask?.id === taskId) {
+                    setSelectedTask(prev => ({ ...prev, title: newTitle }));
+                }
+                setEditingTaskId(null);
+                setEditingTaskText("");
+            }
+        } catch (error) {
+            console.error('Error updating task title:', error);
+        }
+    };
+
+    const handleKeyPress = (e, taskId) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleUpdateTaskTitle(taskId, editingTaskText);
+        } else if (e.key === 'Escape') {
+            setEditingTaskId(null);
+            setEditingTaskText("");
+        }
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -384,7 +432,7 @@ const ListComponent = () => {
                                     onClick={() => handleTaskClick(task)}
                                 >
                                     <div className="flex items-center justify-between">
-                                        <div className="flex items-center">
+                                        <div className="flex items-center flex-1">
                                             <input
                                                 type="checkbox"
                                                 checked={task.is_completed}
@@ -392,9 +440,29 @@ const ListComponent = () => {
                                                 className="mr-3"
                                                 onClick={(e) => e.stopPropagation()}
                                             />
-                                            <span className={task.is_completed ? 'line-through' : ''}>
-                                                {task.title}
-                                            </span>
+                                            {editingTaskId === task.id ? (
+                                                <input
+                                                    type="text"
+                                                    value={editingTaskText}
+                                                    onChange={(e) => setEditingTaskText(e.target.value)}
+                                                    onBlur={() => handleUpdateTaskTitle(task.id, editingTaskText)}
+                                                    onKeyDown={(e) => handleKeyPress(e, task.id)}
+                                                    className="flex-1 bg-white px-2 py-1 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    autoFocus
+                                                />
+                                            ) : (
+                                                <span 
+                                                    className={task.is_completed ? 'line-through' : ''}
+                                                    onDoubleClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setEditingTaskId(task.id);
+                                                        setEditingTaskText(task.title);
+                                                    }}
+                                                >
+                                                    {task.title}
+                                                </span>
+                                            )}
                                         </div>
                                         <button
                                             onClick={(e) => {

@@ -589,9 +589,13 @@ const MyDay = () => {
     }
   }, [selectedTaskId]);
 
-  const handleKeyPress = (e, index) => {
-    if (e.key === "Enter") {
-      handleSaveTask(index);
+  const handleKeyPress = (e, taskId) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleUpdateTaskTitle(taskId, editingTaskText);
+    } else if (e.key === 'Escape') {
+      setSelectedTaskId(null);
+      setEditingTaskText("");
     }
   };
 
@@ -717,6 +721,39 @@ const MyDay = () => {
     setNewTask(value);
   };
 
+  const handleUpdateTaskTitle = async (taskId, newTitle) => {
+    if (!newTitle.trim()) return;
+    
+    try {
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+        },
+        body: JSON.stringify({
+          title: newTitle
+        })
+      });
+
+      if (response.ok) {
+        // Update tasks list
+        setTasks(prevTasks => 
+          prevTasks.map(task => 
+            task.id === taskId 
+              ? { ...task, title: newTitle }
+              : task
+          )
+        );
+        setSelectedTaskId(null);
+        setEditingTaskText("");
+        await fetchTasks();
+      }
+    } catch (error) {
+      console.error('Error updating task title:', error);
+    }
+  };
+
   return (
     <div className="flex h-screen flex-col">
       <Sidebar
@@ -802,14 +839,14 @@ const MyDay = () => {
                   </p>
                   
                   {/* Task Title */}
-                  {editingTaskIndex === index ? (
+                  {task.id === selectedTaskId ? (
                     <input
                       type="text"
                       value={editingTaskText}
                       onChange={(e) => setEditingTaskText(e.target.value)}
-                      onBlur={() => handleSaveTask(task.id)}
+                      onBlur={() => handleUpdateTaskTitle(task.id, editingTaskText)}
                       onKeyDown={(e) => handleKeyPress(e, task.id)}
-                      className="w-full text-lg font-semibold bg-transparent border-none focus:ring-0 p-0"
+                      className="w-full text-lg font-semibold bg-transparent border-none focus:ring-2 focus:ring-blue-500 rounded px-1"
                       autoFocus
                     />
                   ) : (
@@ -817,7 +854,10 @@ const MyDay = () => {
                       className={`text-lg font-semibold ${
                         task.is_completed ? "line-through text-gray-400" : "text-gray-800"
                       }`}
-                      onClick={() => handleEditTask(task.id, task.title)}
+                      onDoubleClick={() => {
+                        setSelectedTaskId(task.id);
+                        setEditingTaskText(task.title);
+                      }}
                     >
                       {task.title}
                     </h3>
