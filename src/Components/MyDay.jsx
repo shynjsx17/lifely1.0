@@ -73,6 +73,7 @@ const MyDay = () => {
   // Add missing state variables for calendar
   const [currentMonth, setCurrentMonth] = useState(dayjs().month());
   const [currentYear, setCurrentYear] = useState(dayjs().year());
+  const [taskError, setTaskError] = useState("");
 
   // Fetch tasks from backend
   const fetchTasks = async () => {
@@ -139,7 +140,14 @@ const MyDay = () => {
 
   // Add task with better error handling
   const handleAddTask = async () => {
+    // Validate task length
     if (!newTask.trim()) {
+      setTaskError("Task cannot be empty");
+      return;
+    }
+    
+    if (newTask.length > 50) {
+      setTaskError("Task cannot exceed 50 characters");
       return;
     }
 
@@ -156,7 +164,7 @@ const MyDay = () => {
         priority: selectedTag.toLowerCase().replace(' priority', ''),
         description: '',
         is_archived: false,
-        reminder_date: null // Add reminder date if needed
+        reminder_date: null
       };
 
       const response = await fetch('http://localhost/lifely1.0/backend/api/tasks.php', {
@@ -175,16 +183,17 @@ const MyDay = () => {
       const data = await response.json();
       
       if (data.success) {
-        await fetchTasks(); // Refresh task list
+        await fetchTasks();
         setNewTask("");
+        setTaskError("");
         setShowPopup(false);
       } else {
         console.error('Failed to add task:', data.message);
-        // You might want to show an error message to the user here
+        setTaskError("Failed to add task. Please try again.");
       }
     } catch (error) {
       console.error('Error adding task:', error);
-      // You might want to show an error message to the user here
+      setTaskError("An error occurred. Please try again.");
     }
   };
 
@@ -695,6 +704,19 @@ const MyDay = () => {
     setEditingTaskText('');
   };
 
+  // Update the input change handler
+  const handleTaskInputChange = (e) => {
+    const value = e.target.value;
+    
+    if (value.length > 50) {
+      setTaskError("Task cannot exceed 50 characters");
+    } else {
+      setTaskError("");
+    }
+    
+    setNewTask(value);
+  };
+
   return (
     <div className="flex h-screen flex-col">
       <Sidebar
@@ -884,26 +906,44 @@ const MyDay = () => {
         </div>
 
         {/* Add Task Section at the bottom */}
-        <div className="flex items-center bg-white shadow-md rounded-lg p-3 gap-4 mx-40 mt-auto">
-          <button
-            className="ml-4 bg-none text-[#808080] font-semibold rounded-lg"
-            onClick={() => setShowPopup(true)}
-          >
-            +
-          </button>
-          <input
-            type="text"
-            placeholder="Add Task"
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
-            className="flex-grow border-none focus:ring-0 text-black placeholder-gray-400"
-          />
-          <button
-            className="ml-4 bg-[#FFB78B] p-2 text-black font-semibold rounded-lg"
-            onClick={handleAddTask}
-          >
-            Add
-          </button>
+        <div className="flex flex-col mx-40 mt-auto">
+          <div className="flex items-center bg-white shadow-md rounded-lg p-3 gap-4">
+            <button
+              className="ml-4 bg-none text-[#808080] font-semibold rounded-lg"
+              onClick={() => setShowPopup(true)}
+            >
+              +
+            </button>
+            <input
+              type="text"
+              placeholder="Add Task"
+              value={newTask}
+              onChange={handleTaskInputChange}
+              className={`flex-grow border-none focus:ring-0 text-black placeholder-gray-400 ${
+                taskError ? 'border-red-500' : ''
+              }`}
+              maxLength={100}
+            />
+            <div className="text-sm text-gray-500">
+              {newTask.length}/100
+            </div>
+            <button
+              className={`ml-4 p-2 text-black font-semibold rounded-lg ${
+                newTask.trim() && !taskError
+                  ? 'bg-[#FFB78B] hover:bg-[#FFA570]'
+                  : 'bg-gray-200 cursor-not-allowed'
+              }`}
+              onClick={handleAddTask}
+              disabled={!newTask.trim() || Boolean(taskError)}
+            >
+              Add
+            </button>
+          </div>
+          {taskError && (
+            <div className="text-red-500 text-sm mt-1 ml-4">
+              {taskError}
+            </div>
+          )}
         </div>
 
         {/* Popup for List and Tags */}
@@ -966,7 +1006,7 @@ const MyDay = () => {
 
         {showTaskListPopup && selectedTaskId && (
           <div className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white rounded-lg w-[30rem] shadow-lg">
+             <div className="bg-white rounded-lg w-[650px] max-h-[90vh] overflow-y-auto">
               {/* Header with close button */}
               <div className="flex justify-between items-center bg-[#F0EFF9] px-4 py-2 rounded-t-lg">
                 <div className="flex items-center">
@@ -1005,20 +1045,91 @@ const MyDay = () => {
                     </button>
                     
                     {showDatePicker && (
-                      <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg p-4">
-                        <div className="grid grid-cols-7 gap-2">
-                          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
-                            <div key={day} className="text-center text-sm font-medium">
+                      <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-lg p-4 w-64">
+                        {/* Month Navigation */}
+                        <div className="flex justify-between items-center mb-4">
+                          <div className="flex items-center gap-2">
+                            <button 
+                              onClick={() => {
+                                if (currentMonth === 0) {
+                                  setCurrentMonth(11);
+                                  setCurrentYear(currentYear - 1);
+                                } else {
+                                  setCurrentMonth(currentMonth - 1);
+                                }
+                              }}
+                              className="hover:bg-gray-100 p-1 rounded"
+                            >
+                              «
+                            </button>
+                            <button 
+                              onClick={() => {
+                                if (currentMonth === 0) {
+                                  setCurrentMonth(11);
+                                  setCurrentYear(currentYear - 1);
+                                } else {
+                                  setCurrentMonth(currentMonth - 1);
+                                }
+                              }}
+                              className="hover:bg-gray-100 p-1 rounded"
+                            >
+                              ‹
+                            </button>
+                          </div>
+
+                          <span className="font-semibold">
+                            {dayjs().month(currentMonth).format('MMMM')} {currentYear}
+                          </span>
+
+                          <div className="flex items-center gap-2">
+                            <button 
+                              onClick={() => {
+                                if (currentMonth === 11) {
+                                  setCurrentMonth(0);
+                                  setCurrentYear(currentYear + 1);
+                                } else {
+                                  setCurrentMonth(currentMonth + 1);
+                                }
+                              }}
+                              className="hover:bg-gray-100 p-1 rounded"
+                            >
+                              ›
+                            </button>
+                            <button 
+                              onClick={() => {
+                                if (currentMonth === 11) {
+                                  setCurrentMonth(0);
+                                  setCurrentYear(currentYear + 1);
+                                } else {
+                                  setCurrentMonth(currentMonth + 1);
+                                }
+                              }}
+                              className="hover:bg-gray-100 p-1 rounded"
+                            >
+                              »
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Calendar Grid */}
+                        <div className="grid grid-cols-7 gap-1">
+                          {/* Day Headers */}
+                          {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map(day => (
+                            <div key={day} className="text-center text-xs font-semibold p-1">
                               {day}
                             </div>
                           ))}
+
+                          {/* Calendar Days */}
                           {generateDate(currentMonth, currentYear).map((dateObj, index) => (
                             <button
                               key={index}
                               onClick={() => handleUpdateDueDate(selectedTaskId, dateObj.date)}
-                              className={`p-2 text-center rounded-full hover:bg-gray-100 ${
-                                dateObj.currentMonth ? '' : 'text-gray-400'
-                              } ${dateObj.today ? 'bg-blue-500 text-white' : ''}`}
+                              className={`
+                                p-2 text-center text-sm rounded hover:bg-gray-100
+                                ${!dateObj.currentMonth ? 'text-gray-400' : 'text-gray-700'}
+                                ${dateObj.today ? 'bg-blue-500 text-white hover:bg-blue-600' : ''}
+                              `}
                             >
                               {dateObj.date.date()}
                             </button>
