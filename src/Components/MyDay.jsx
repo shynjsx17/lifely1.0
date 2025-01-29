@@ -842,29 +842,9 @@ const MyDay = () => {
                   </p>
                   
                   {/* Task Title */}
-                  {task.id === selectedTaskId ? (
-                    <input
-                      type="text"
-                      value={editingTaskText}
-                      onChange={(e) => setEditingTaskText(e.target.value)}
-                      onBlur={() => handleUpdateTaskTitle(task.id, editingTaskText)}
-                      onKeyDown={(e) => handleKeyPress(e, task.id)}
-                      className="w-full text-lg font-semibold bg-transparent border-none focus:ring-2 focus:ring-blue-500 rounded px-1"
-                      autoFocus
-                    />
-                  ) : (
-                    <h3
-                      className={`text-lg font-semibold ${
-                        task.is_completed ? "line-through text-gray-400" : "text-gray-800"
-                      }`}
-                      onDoubleClick={() => {
-                        setSelectedTaskId(task.id);
-                        setEditingTaskText(task.title);
-                      }}
-                    >
-                      {task.title}
-                    </h3>
-                  )}
+                  <h3 className={`text-lg font-semibold ${task.is_completed ? "line-through text-gray-400" : "text-gray-800"}`}>
+                    {task.title}
+                  </h3>
 
                   {/* Priority Tag */}
                   <div className="mt-2">
@@ -1067,9 +1047,20 @@ const MyDay = () => {
 
               {/* Task Title */}
               <div className="p-6">
-                <h2 className="text-xl font-semibold mb-4">
-                  {tasks.find(t => t.id === selectedTaskId)?.title}
-                </h2>
+                <div className="mb-6">
+                  <input
+                    type="text"
+                    value={editingTaskText || tasks.find(t => t.id === selectedTaskId)?.title || ''}
+                    onChange={(e) => setEditingTaskText(e.target.value)}
+                    onBlur={() => {
+                      if (editingTaskText.trim() && editingTaskText !== tasks.find(t => t.id === selectedTaskId)?.title) {
+                        handleUpdateTaskTitle(selectedTaskId, editingTaskText);
+                      }
+                    }}
+                    className="w-full text-xl font-semibold px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Task title"
+                  />
+                </div>
 
                 {/* Buttons Row */}
                 <div className="flex space-x-2 mb-6">

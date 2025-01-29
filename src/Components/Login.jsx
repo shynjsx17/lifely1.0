@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import bgImage from "../Images/BG.png";
 import { useAuth } from "../context/AuthContext";
@@ -12,16 +12,60 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [cooldownEnd, setCooldownEnd] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let timer;
+    if (cooldownEnd) {
+      timer = setInterval(() => {
+        const now = new Date().getTime();
+        if (now >= cooldownEnd) {
+          setCooldownEnd(null);
+          setLoginAttempts(0);
+        }
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [cooldownEnd]);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
+  const startCooldown = async () => {
+    const cooldownTime = 2 * 60 * 1000; // 2 minutes in milliseconds
+    const endTime = new Date().getTime() + cooldownTime;
+    setCooldownEnd(endTime);
+
+    await Swal.fire({
+      icon: "warning",
+      title: "Too Many Failed Attempts",
+      text: "Please wait 2 minutes before trying again",
+      confirmButtonColor: "#FB923C",
+      timer: 3000,
+      showConfirmButton: false,
+    });
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (cooldownEnd) {
+      const remainingTime = Math.ceil((cooldownEnd - new Date().getTime()) / 1000);
+      await Swal.fire({
+        icon: "warning",
+        title: "Please Wait",
+        text: `Try again in ${remainingTime} seconds`,
+        confirmButtonColor: "#FB923C",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+      return;
+    }
 
     // Basic validations
     if (!validateEmail(email)) {
@@ -36,7 +80,7 @@ const Login = () => {
 
     try {
       await login({ email, password });
-
+      setLoginAttempts(0);
       await Swal.fire({
         icon: "success",
         title: "Login Successful!",
@@ -45,10 +89,24 @@ const Login = () => {
         timer: 1500,
         showConfirmButton: false,
       });
-
     } catch (error) {
       console.error("Login error:", error);
       setError(error.message || "Invalid email or password.");
+      const newAttempts = loginAttempts + 1;
+      setLoginAttempts(newAttempts);
+      
+      if (newAttempts >= 4) {
+        await startCooldown();
+      } else {
+        await Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: `Invalid credentials. ${4 - newAttempts} attempts remaining before cooldown.`,
+          confirmButtonColor: "#FB923C",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
     }
   };
 

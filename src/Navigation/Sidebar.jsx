@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
-  const { user, token, updateUser } = useAuth();
+  const { user, token, updateUser, logout } = useAuth();
   console.log('Auth Context:', { user, token }); // Debug log
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
@@ -180,27 +180,44 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
     setUsername(user?.username || 'User');
   }, [user?.username]);
 
-  const handleLogout = () => {
-    Swal.fire({
+  const handleLogout = async () => {
+    const result = await Swal.fire({
       title: "Are you sure you want to logout?",
       showCancelButton: true,
       confirmButtonText: "Yes",
       cancelButtonText: "Cancel",
       confirmButtonColor: "#FB923C",
       cancelButtonColor: "#d33",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.removeItem('token');
-        Swal.fire({
+    });
+
+    if (result.isConfirmed) {
+      try {
+        // Call the AuthContext logout function
+        await logout();
+        
+        // Double check storage is cleared
+        sessionStorage.clear();
+        localStorage.clear();
+
+        await Swal.fire({
           title: "Logged Out!",
           text: "You have been successfully logged out.",
           icon: "success",
-          confirmButtonColor: '#FB923C'
-        }).then(() => {
-          navigate('/login');
+          confirmButtonColor: '#FB923C',
+          timer: 1500,
+          showConfirmButton: false
         });
+
+        // Force navigation and reload
+        window.location.replace('/login');
+      } catch (error) {
+        console.error('Logout error:', error);
+        // Even if there's an error, ensure we clear everything
+        sessionStorage.clear();
+        localStorage.clear();
+        window.location.replace('/login');
       }
-    });
+    }
   };
 
   const handleResetPassword = async () => {

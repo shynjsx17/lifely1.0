@@ -131,35 +131,91 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
+      const token = sessionStorage.getItem('session_token');
+      
+      // Clear all storage first
       sessionStorage.clear();
       localStorage.clear();
       setUser(null);
       setToken(null);
 
-      await fetch('http://localhost/lifely1.0/backend/api/logout.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      // Call logout API with the token
+      if (token) {
+        await fetch('http://localhost/lifely1.0/backend/api/logout.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+      }
 
+      // Clear browser history state
+      window.history.pushState(null, '', '/login');
+      window.history.replaceState(null, '', '/login');
+
+      // Add cache-busting headers
+      const meta = document.createElement('meta');
+      meta.httpEquiv = 'Cache-Control';
+      meta.content = 'no-cache, no-store, must-revalidate';
+      document.head.appendChild(meta);
+
+      const pragma = document.createElement('meta');
+      pragma.httpEquiv = 'Pragma';
+      pragma.content = 'no-cache';
+      document.head.appendChild(meta);
+
+      const expires = document.createElement('meta');
+      expires.httpEquiv = 'Expires';
+      expires.content = '0';
+      document.head.appendChild(meta);
+
+      // Clear all storage again to be absolutely sure
+      sessionStorage.clear();
+      localStorage.clear();
+      setUser(null);
+      setToken(null);
+
+      // Force a complete page reload
+      window.location.replace('/login');
     } catch (error) {
       console.error('Logout error:', error);
-    } finally {
-      sessionStorage.removeItem('session_token');
+      // Even if there's an error, ensure everything is cleared
       sessionStorage.clear();
       localStorage.clear();
       setUser(null);
       setToken(null);
-      
-      window.history.replaceState(null, '', '/login');
-      while (window.history.length > 1) {
-        window.history.pushState(null, '', '/login');
-      }
-      navigate('/login', { replace: true });
-      window.location.href = '/login';
+      window.location.replace('/login');
     }
   };
+
+  // Add cache control effect
+  useEffect(() => {
+    // Prevent caching for authenticated routes
+    if (user && !PUBLIC_ROUTES.includes(location.pathname)) {
+      // Add no-cache headers
+      const meta = document.createElement('meta');
+      meta.httpEquiv = 'Cache-Control';
+      meta.content = 'no-cache, no-store, must-revalidate';
+      document.head.appendChild(meta);
+
+      const pragma = document.createElement('meta');
+      pragma.httpEquiv = 'Pragma';
+      pragma.content = 'no-cache';
+      document.head.appendChild(pragma);
+
+      const expires = document.createElement('meta');
+      expires.httpEquiv = 'Expires';
+      expires.content = '0';
+      document.head.appendChild(expires);
+
+      return () => {
+        document.head.removeChild(meta);
+        document.head.removeChild(pragma);
+        document.head.removeChild(expires);
+      };
+    }
+  }, [user, location.pathname]);
 
   // Update history protection to check for public routes
   useEffect(() => {

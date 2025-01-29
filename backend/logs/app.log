@@ -2615,3 +2615,903 @@
 [2025-01-29 17:24:59] [INFO] Session validated successfully {"user_id":2,"username":"auq na mabohay"}
 [2025-01-29 17:35:34] [INFO] Received delete account request {"data":"{\"user_id\":2,\"password\":\"niggerz1000\"}"}
 [2025-01-29 17:35:34] [INFO] Account deleted successfully {"user_id":2}
+[2025-01-29 18:54:50] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:54:50] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:54:50] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:54:50] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:54:50] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:54:50] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:54:50] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:54:50] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:22] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:22] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:22] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:22] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:22] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:22] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:22] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:22] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:24] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:24] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:24] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:24] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:24] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:24] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:24] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:24] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:28] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:28] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:28] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:28] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:28] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:28] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:28] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:28] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:29] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:29] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:29] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:29] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:29] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:29] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:29] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:29] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:30] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:30] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:30] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:30] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:30] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:30] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:30] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:30] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:35] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:35] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:35] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:35] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:35] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:35] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:35] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:35] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:37] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:37] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:37] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:37] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:37] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:37] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:37] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:37] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:37] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:37] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:37] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:37] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:38] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:38] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:38] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:38] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:38] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:38] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:38] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:38] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:38] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:38] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:38] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:38] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:39] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:39] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:39] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:39] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:39] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:39] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:39] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:39] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:40] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:40] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:40] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:41] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:41] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:41] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:41] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:41] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:44] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:44] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:44] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:44] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:55:44] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:55:44] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:55:44] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:55:44] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 18:59:18] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 18:59:18] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 18:59:18] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 18:59:18] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:03:16] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:03:16] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Android\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Linux; Android 6.0; Nexus 5 Build\/MRA58N) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Mobile Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?1","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:03:16] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:03:16] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:03:16] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:03:16] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Android\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Linux; Android 6.0; Nexus 5 Build\/MRA58N) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Mobile Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?1","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:03:16] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:03:16] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:06:05] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:06:05] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:06:05] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:06:05] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:07:58] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:07:58] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:07:58] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:07:58] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:07:58] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:07:58] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:07:58] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:07:58] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:24:51] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:24:51] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Android\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Linux; Android 6.0; Nexus 5 Build\/MRA58N) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Mobile Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?1","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:24:51] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:24:51] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:24:51] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:24:51] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Android\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Linux; Android 6.0; Nexus 5 Build\/MRA58N) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Mobile Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?1","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:24:51] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:24:51] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:25:24] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:25:24] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:25:24] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:25:24] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:27:47] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:27:47] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:27:47] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:27:47] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:27:47] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:27:47] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:27:47] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:27:47] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:30:19] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:30:19] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:30:19] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:30:19] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:34:55] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:34:55] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:34:55] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:34:55] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:34:55] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:34:55] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:34:55] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:34:55] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:34:56] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:34:56] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:34:56] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:34:56] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:34:56] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:34:56] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:34:56] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:34:56] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:34:56] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:34:56] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:34:56] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:34:56] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:34:56] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:34:56] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer ac1cb9274333b0eb5f2a06158d497e1899c52c31eccd42cf015bd30a7c89730d","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:34:56] [DEBUG] Processing token {"token":"ac1cb92743..."}
+[2025-01-29 19:34:56] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:37:34] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:37:34] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f045d5a3440d1f57846a2ab017c6ce31c5d46e39f1a1209b9c89a23e7d3a20ee","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:37:34] [DEBUG] Processing token {"token":"f045d5a344..."}
+[2025-01-29 19:37:34] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:37:34] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:37:34] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f045d5a3440d1f57846a2ab017c6ce31c5d46e39f1a1209b9c89a23e7d3a20ee","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:37:34] [DEBUG] Processing token {"token":"f045d5a344..."}
+[2025-01-29 19:37:34] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:38:58] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:38:58] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f045d5a3440d1f57846a2ab017c6ce31c5d46e39f1a1209b9c89a23e7d3a20ee","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:38:58] [DEBUG] Processing token {"token":"f045d5a344..."}
+[2025-01-29 19:38:58] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:38:58] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:38:58] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f045d5a3440d1f57846a2ab017c6ce31c5d46e39f1a1209b9c89a23e7d3a20ee","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:38:58] [DEBUG] Processing token {"token":"f045d5a344..."}
+[2025-01-29 19:38:58] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:39:25] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:39:25] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f045d5a3440d1f57846a2ab017c6ce31c5d46e39f1a1209b9c89a23e7d3a20ee","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:39:25] [DEBUG] Processing token {"token":"f045d5a344..."}
+[2025-01-29 19:39:25] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:39:55] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:39:55] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f045d5a3440d1f57846a2ab017c6ce31c5d46e39f1a1209b9c89a23e7d3a20ee","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:39:55] [DEBUG] Processing token {"token":"f045d5a344..."}
+[2025-01-29 19:39:55] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:39:55] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:39:55] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f045d5a3440d1f57846a2ab017c6ce31c5d46e39f1a1209b9c89a23e7d3a20ee","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:39:55] [DEBUG] Processing token {"token":"f045d5a344..."}
+[2025-01-29 19:39:55] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:39:56] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:39:56] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f045d5a3440d1f57846a2ab017c6ce31c5d46e39f1a1209b9c89a23e7d3a20ee","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:39:56] [DEBUG] Processing token {"token":"f045d5a344..."}
+[2025-01-29 19:39:56] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:39:56] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:39:56] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f045d5a3440d1f57846a2ab017c6ce31c5d46e39f1a1209b9c89a23e7d3a20ee","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:39:56] [DEBUG] Processing token {"token":"f045d5a344..."}
+[2025-01-29 19:39:56] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:40:23] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:40:23] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer a5249a64d086ae4b520dcbbfddddfec5f1100082b0b775c6faeb6bded15a5ea5","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:40:23] [DEBUG] Processing token {"token":"a5249a64d0..."}
+[2025-01-29 19:40:23] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:40:23] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:40:23] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer a5249a64d086ae4b520dcbbfddddfec5f1100082b0b775c6faeb6bded15a5ea5","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:40:23] [DEBUG] Processing token {"token":"a5249a64d0..."}
+[2025-01-29 19:40:23] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:40:26] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:40:26] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer a5249a64d086ae4b520dcbbfddddfec5f1100082b0b775c6faeb6bded15a5ea5","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:40:26] [DEBUG] Processing token {"token":"a5249a64d0..."}
+[2025-01-29 19:40:26] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:40:26] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:40:26] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer a5249a64d086ae4b520dcbbfddddfec5f1100082b0b775c6faeb6bded15a5ea5","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:40:26] [DEBUG] Processing token {"token":"a5249a64d0..."}
+[2025-01-29 19:40:26] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:41:53] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:41:53] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer a5249a64d086ae4b520dcbbfddddfec5f1100082b0b775c6faeb6bded15a5ea5","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:41:53] [DEBUG] Processing token {"token":"a5249a64d0..."}
+[2025-01-29 19:41:53] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:41:53] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:41:53] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer a5249a64d086ae4b520dcbbfddddfec5f1100082b0b775c6faeb6bded15a5ea5","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:41:53] [DEBUG] Processing token {"token":"a5249a64d0..."}
+[2025-01-29 19:41:53] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:42:36] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:42:36] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer a5249a64d086ae4b520dcbbfddddfec5f1100082b0b775c6faeb6bded15a5ea5","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:42:36] [DEBUG] Processing token {"token":"a5249a64d0..."}
+[2025-01-29 19:42:36] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:42:36] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:42:36] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer a5249a64d086ae4b520dcbbfddddfec5f1100082b0b775c6faeb6bded15a5ea5","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:42:36] [DEBUG] Processing token {"token":"a5249a64d0..."}
+[2025-01-29 19:42:36] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:42:53] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:42:53] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 230704f708bf3c39dc89610d239e06b739a7c3a40d515642052f569ff54d56da","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:42:53] [DEBUG] Processing token {"token":"230704f708..."}
+[2025-01-29 19:42:53] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:42:53] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:42:53] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 230704f708bf3c39dc89610d239e06b739a7c3a40d515642052f569ff54d56da","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:42:53] [DEBUG] Processing token {"token":"230704f708..."}
+[2025-01-29 19:42:53] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:42:59] [INFO] Incoming profile request {"method":"POST","action":"update_image"}
+[2025-01-29 19:42:59] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","Content-Length":"417111","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 230704f708bf3c39dc89610d239e06b739a7c3a40d515642052f569ff54d56da","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","Content-Type":"multipart\/form-data; boundary=----WebKitFormBoundaryrCXYHHGglpMpAVgR","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:42:59] [DEBUG] Processing token {"token":"230704f708..."}
+[2025-01-29 19:42:59] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:42:59] [INFO] Profile image update initiated {"user_id":3}
+[2025-01-29 19:42:59] [INFO] Profile image updated successfully {"user_id":3,"file_path":"uploads\/profile_images\/profile_679a76b3ca181.gif"}
+[2025-01-29 19:43:11] [INFO] Incoming profile request {"method":"POST","action":"update_username"}
+[2025-01-29 19:43:11] [DEBUG] Starting token validation {"session":{"user_id":3,"user_email":"ceitybgr@gmail.com","username":"alpha"},"headers":{"Host":"localhost","Connection":"keep-alive","Content-Length":"19","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 230704f708bf3c39dc89610d239e06b739a7c3a40d515642052f569ff54d56da","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","Content-Type":"application\/json","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9","Cookie":"PHPSESSID=0uc4ucf63633i8o2aud6dgcqqv"}}
+[2025-01-29 19:43:11] [DEBUG] Processing token {"token":"230704f708..."}
+[2025-01-29 19:43:11] [INFO] Session validated successfully {"user_id":3,"username":"alpha"}
+[2025-01-29 19:43:11] [INFO] Username update initiated {"user_id":3}
+[2025-01-29 19:43:11] [INFO] Username updated successfully {"user_id":3,"old_username":"alpha","new_username":"Beta"}
+[2025-01-29 19:43:16] [INFO] Received request data {"data":"{\"email\":\"ceitybgr@gmail.com\"}"}
+[2025-01-29 19:43:16] [INFO] Processing reset password request {"email":"ceitybgr@gmail.com"}
+[2025-01-29 19:43:16] [INFO] User found {"user_id":3,"username":"Beta"}
+[2025-01-29 19:43:16] [INFO] Generated new reset token {"user_id":3,"token_length":64,"expires_at":"2025-01-29 20:43:16"}
+[2025-01-29 19:43:16] [INFO] Deleted existing tokens for user 
+[2025-01-29 19:43:16] [INFO] Reset token stored in database 
+[2025-01-29 19:43:16] [INFO] Attempting to send email {"to":"ceitybgr@gmail.com"}
+[2025-01-29 19:43:17] [INFO] PHPMailer Debug: SERVER -> CLIENT: 220 smtp.gmail.com ESMTP d9443c01a7336-21da3d9c983sm104236345ad.7 - gsmtp
+ 
+[2025-01-29 19:43:17] [INFO] PHPMailer Debug: CLIENT -> SERVER: EHLO localhost
+ 
+[2025-01-29 19:43:18] [INFO] PHPMailer Debug: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [223.25.63.132]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+ 
+[2025-01-29 19:43:18] [INFO] PHPMailer Debug: CLIENT -> SERVER: STARTTLS
+ 
+[2025-01-29 19:43:18] [INFO] PHPMailer Debug: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+ 
+[2025-01-29 19:43:18] [INFO] PHPMailer Debug: CLIENT -> SERVER: EHLO localhost
+ 
+[2025-01-29 19:43:18] [INFO] PHPMailer Debug: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [223.25.63.132]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+ 
+[2025-01-29 19:43:18] [INFO] PHPMailer Debug: CLIENT -> SERVER: AUTH LOGIN
+ 
+[2025-01-29 19:43:18] [INFO] PHPMailer Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+ 
+[2025-01-29 19:43:18] [INFO] PHPMailer Debug: CLIENT -> SERVER: [credentials hidden] 
+[2025-01-29 19:43:18] [INFO] PHPMailer Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+ 
+[2025-01-29 19:43:18] [INFO] PHPMailer Debug: CLIENT -> SERVER: [credentials hidden] 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: SERVER -> CLIENT: 235 2.7.0 Accepted
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: MAIL FROM:<lifelywebdev@gmail.com>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: SERVER -> CLIENT: 250 2.1.0 OK d9443c01a7336-21da3d9c983sm104236345ad.7 - gsmtp
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: RCPT TO:<ceitybgr@gmail.com>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: SERVER -> CLIENT: 250 2.1.5 OK d9443c01a7336-21da3d9c983sm104236345ad.7 - gsmtp
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: DATA
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: SERVER -> CLIENT: 354 Go ahead d9443c01a7336-21da3d9c983sm104236345ad.7 - gsmtp
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: Date: Wed, 29 Jan 2025 19:43:16 +0100
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: To: Beta <ceitybgr@gmail.com>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: From: Lifely Support <lifelywebdev@gmail.com>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: Subject: Reset Your Lifely Password
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: Message-ID: <M6wLmQLnc05byig5eDvi8REOvEeqPiYcEzfThQnZIho@localhost>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 6.9.3 (https://github.com/PHPMailer/PHPMailer)
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: MIME-Version: 1.0
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: Content-Type: multipart/alternative;
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:  boundary="b1=_M6wLmQLnc05byig5eDvi8REOvEeqPiYcEzfThQnZIho"
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: --b1=_M6wLmQLnc05byig5eDvi8REOvEeqPiYcEzfThQnZIho
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: Content-Type: text/plain; charset=us-ascii
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: Reset your password by clicking this link: http://localhost:3000/reset-password?token=fb7e7ef49a81a67596594a102ce0ea44762f98be4b281d0cbefb1f60b56ab1ca&email=ceitybgr%40gmail.com
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: --b1=_M6wLmQLnc05byig5eDvi8REOvEeqPiYcEzfThQnZIho
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: Content-Type: text/html; charset=us-ascii
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                 <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <h2 style='color: #FB923C;'>Reset Your Password</h2>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <p>Hello Beta,</p>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <p>We received a request to reset your password for your Lifely account. Click the button below to reset it:</p>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <div style='text-align: center; margin: 30px 0;'>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                         <a href='http://localhost:3000/reset-password?token=fb7e7ef49a81a67596594a102ce0ea44762f98be4b281d0cbefb1f60b56ab1ca&email=ceitybgr%40gmail.com' style='background-color: #FB923C; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px;'>Reset Password</a>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     </div>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <p>This link will expire in 1 hour for security reasons.</p>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <p>If you didn't request this, you can safely ignore this email.</p>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <p>Best regards,<br>The Lifely Team</p>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:                 </div>
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER:             
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: --b1=_M6wLmQLnc05byig5eDvi8REOvEeqPiYcEzfThQnZIho--
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 19:43:19] [INFO] PHPMailer Debug: CLIENT -> SERVER: .
+ 
+[2025-01-29 19:43:20] [INFO] PHPMailer Debug: SERVER -> CLIENT: 250 2.0.0 OK  1738176200 d9443c01a7336-21da3d9c983sm104236345ad.7 - gsmtp
+ 
+[2025-01-29 19:43:20] [INFO] PHPMailer Debug: CLIENT -> SERVER: QUIT
+ 
+[2025-01-29 19:43:20] [INFO] PHPMailer Debug: SERVER -> CLIENT: 221 2.0.0 closing connection d9443c01a7336-21da3d9c983sm104236345ad.7 - gsmtp
+ 
+[2025-01-29 19:43:20] [INFO] Reset password email sent successfully {"email":"ceitybgr@gmail.com"}
+[2025-01-29 19:43:52] [INFO] Received password reset request {"data":"{\"token\":\"fb7e7ef49a81a67596594a102ce0ea44762f98be4b281d0cbefb1f60b56ab1ca\",\"email\":\"ceitybgr@gmail.com\",\"password\":\"taylorswipt1989\"}"}
+[2025-01-29 19:43:52] [INFO] Attempting password reset {"email":"ceitybgr@gmail.com","token_length":64}
+[2025-01-29 19:43:52] [INFO] Token found in database {"token_id":18,"expires_at":"2025-01-29 20:43:16"}
+[2025-01-29 19:43:52] [INFO] Password updated successfully {"user_id":3}
+[2025-01-29 19:43:52] [INFO] Reset token deleted 
+[2025-01-29 19:43:57] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:43:57] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 230704f708bf3c39dc89610d239e06b739a7c3a40d515642052f569ff54d56da","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:43:57] [DEBUG] Processing token {"token":"230704f708..."}
+[2025-01-29 19:43:57] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:43:57] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:43:57] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 230704f708bf3c39dc89610d239e06b739a7c3a40d515642052f569ff54d56da","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:43:57] [DEBUG] Processing token {"token":"230704f708..."}
+[2025-01-29 19:43:58] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:43:58] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:43:58] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 230704f708bf3c39dc89610d239e06b739a7c3a40d515642052f569ff54d56da","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:43:58] [DEBUG] Processing token {"token":"230704f708..."}
+[2025-01-29 19:43:58] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:43:58] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:43:58] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 230704f708bf3c39dc89610d239e06b739a7c3a40d515642052f569ff54d56da","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:43:58] [DEBUG] Processing token {"token":"230704f708..."}
+[2025-01-29 19:43:58] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:44:18] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:44:18] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:44:18] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:44:18] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:44:18] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:44:18] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:44:18] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:44:18] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:44:20] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:44:20] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:44:20] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:44:20] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:44:20] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:44:20] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:44:20] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:44:20] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:44:28] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:44:28] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:44:28] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:44:28] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:44:28] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:44:28] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:44:28] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:44:28] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:44:29] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:44:29] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:44:29] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:44:29] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:44:29] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:44:29] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:44:29] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:44:29] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:44:30] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:44:30] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:44:30] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:44:30] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:44:30] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:44:30] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:44:30] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:44:30] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:48:51] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:48:51] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Android\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Linux; Android 6.0; Nexus 5 Build\/MRA58N) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Mobile Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?1","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:48:51] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:48:51] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:48:51] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:48:51] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Android\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Linux; Android 6.0; Nexus 5 Build\/MRA58N) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Mobile Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?1","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:48:51] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:48:51] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:20] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:20] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:20] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:20] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:20] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:20] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:20] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:20] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:26] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:26] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:26] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:26] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:26] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:26] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:26] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:26] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:48] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:48] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:48] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:48] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:48] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:48] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:48] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:48] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:51] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:51] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:51] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:51] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:51] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:51] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:51] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:51] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:54] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:54] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:54] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:54] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:54] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:54] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:54] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:54] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:56] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:56] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:56] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:56] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:52:56] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:52:56] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:52:56] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:52:56] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:00] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:00] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:00] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:00] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:00] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:00] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:00] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:00] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:17] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:17] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:17] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:17] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:17] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:17] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:17] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:17] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:19] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:19] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:19] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:19] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:19] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:19] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:19] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:19] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:26] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:26] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:26] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:26] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:26] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:26] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:26] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:26] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:35] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:35] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:35] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:35] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:35] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:35] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:35] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:35] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:46] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:46] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:46] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:46] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:46] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:46] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:46] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:46] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:49] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:49] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:49] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:49] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:49] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:49] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:49] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:49] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:58] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:58] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:58] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:58] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:58] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:58] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:58] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:58] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:59] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:59] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:59] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:59] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:53:59] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:53:59] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:53:59] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:53:59] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:55:29] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:55:29] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:55:29] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:55:29] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:55:29] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:55:29] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:55:29] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:55:29] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:56:31] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:56:31] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:56:31] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:56:31] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:56:31] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:56:31] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:56:31] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:56:31] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:56:39] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:56:39] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:56:39] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:56:39] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:56:39] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:56:39] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:56:39] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:56:39] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:15] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:15] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:15] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:15] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:15] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:15] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:15] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:15] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:17] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:17] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:17] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:17] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:17] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:17] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:17] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:17] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:18] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:18] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:18] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:18] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:18] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:18] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:18] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:18] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:25] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:25] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:25] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:25] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:25] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:25] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:25] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:25] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:27] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:27] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:27] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:27] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:27] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:27] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:27] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:27] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:28] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:28] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:28] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:28] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:58:28] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:58:28] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:58:28] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:58:28] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:59:56] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:59:56] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:59:56] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:59:56] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 19:59:56] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 19:59:56] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 19:59:56] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 19:59:56] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:00:00] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:00:00] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:00:00] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 20:00:00] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:00:00] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:00:00] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:00:00] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 20:00:00] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:00:03] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:00:03] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:00:03] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 20:00:03] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:00:03] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:00:03] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:00:03] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 20:00:03] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:00:07] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:00:07] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:00:07] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 20:00:07] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:00:07] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:00:07] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:00:07] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 20:00:07] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:00:14] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:00:14] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:00:14] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 20:00:14] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:00:14] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:00:14] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:00:14] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 20:00:14] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:00:17] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:00:17] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:00:17] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 20:00:17] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:00:17] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:00:17] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer f0de57d4914c97778f8c71f3adb8c3ce87c17c5d705ffcad530adbb8de108274","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:00:17] [DEBUG] Processing token {"token":"f0de57d491..."}
+[2025-01-29 20:00:17] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:03:56] [INFO] Received request data {"data":"{\"email\":\"ceitybgr@gmail.com\"}"}
+[2025-01-29 20:03:56] [INFO] Processing reset password request {"email":"ceitybgr@gmail.com"}
+[2025-01-29 20:03:56] [INFO] User found {"user_id":3,"username":"Beta"}
+[2025-01-29 20:03:56] [INFO] Generated new reset token {"user_id":3,"token_length":64,"expires_at":"2025-01-29 21:03:56"}
+[2025-01-29 20:03:56] [INFO] Deleted existing tokens for user 
+[2025-01-29 20:03:56] [INFO] Reset token stored in database 
+[2025-01-29 20:03:56] [INFO] Attempting to send email {"to":"ceitybgr@gmail.com"}
+[2025-01-29 20:03:58] [INFO] PHPMailer Debug: SERVER -> CLIENT: 220 smtp.gmail.com ESMTP 41be03b00d2f7-ac495d590e0sm10550086a12.51 - gsmtp
+ 
+[2025-01-29 20:03:58] [INFO] PHPMailer Debug: CLIENT -> SERVER: EHLO localhost
+ 
+[2025-01-29 20:03:58] [INFO] PHPMailer Debug: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [223.25.63.132]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+ 
+[2025-01-29 20:03:58] [INFO] PHPMailer Debug: CLIENT -> SERVER: STARTTLS
+ 
+[2025-01-29 20:03:58] [INFO] PHPMailer Debug: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+ 
+[2025-01-29 20:03:58] [INFO] PHPMailer Debug: CLIENT -> SERVER: EHLO localhost
+ 
+[2025-01-29 20:03:58] [INFO] PHPMailer Debug: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [223.25.63.132]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+ 
+[2025-01-29 20:03:58] [INFO] PHPMailer Debug: CLIENT -> SERVER: AUTH LOGIN
+ 
+[2025-01-29 20:03:58] [INFO] PHPMailer Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+ 
+[2025-01-29 20:03:58] [INFO] PHPMailer Debug: CLIENT -> SERVER: [credentials hidden] 
+[2025-01-29 20:03:59] [INFO] PHPMailer Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+ 
+[2025-01-29 20:03:59] [INFO] PHPMailer Debug: CLIENT -> SERVER: [credentials hidden] 
+[2025-01-29 20:03:59] [INFO] PHPMailer Debug: SERVER -> CLIENT: 235 2.7.0 Accepted
+ 
+[2025-01-29 20:03:59] [INFO] PHPMailer Debug: CLIENT -> SERVER: MAIL FROM:<lifelywebdev@gmail.com>
+ 
+[2025-01-29 20:03:59] [INFO] PHPMailer Debug: SERVER -> CLIENT: 250 2.1.0 OK 41be03b00d2f7-ac495d590e0sm10550086a12.51 - gsmtp
+ 
+[2025-01-29 20:03:59] [INFO] PHPMailer Debug: CLIENT -> SERVER: RCPT TO:<ceitybgr@gmail.com>
+ 
+[2025-01-29 20:03:59] [INFO] PHPMailer Debug: SERVER -> CLIENT: 250 2.1.5 OK 41be03b00d2f7-ac495d590e0sm10550086a12.51 - gsmtp
+ 
+[2025-01-29 20:03:59] [INFO] PHPMailer Debug: CLIENT -> SERVER: DATA
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: SERVER -> CLIENT: 354 Go ahead 41be03b00d2f7-ac495d590e0sm10550086a12.51 - gsmtp
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: Date: Wed, 29 Jan 2025 20:03:56 +0100
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: To: Beta <ceitybgr@gmail.com>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: From: Lifely Support <lifelywebdev@gmail.com>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: Subject: Reset Your Lifely Password
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: Message-ID: <UbDy7r4T2NQZ1hdTcahs5ZrYaaylxeU8hldPQs5uOo@localhost>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 6.9.3 (https://github.com/PHPMailer/PHPMailer)
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: MIME-Version: 1.0
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: Content-Type: multipart/alternative;
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:  boundary="b1=_UbDy7r4T2NQZ1hdTcahs5ZrYaaylxeU8hldPQs5uOo"
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: --b1=_UbDy7r4T2NQZ1hdTcahs5ZrYaaylxeU8hldPQs5uOo
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: Content-Type: text/plain; charset=us-ascii
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: Reset your password by clicking this link: http://localhost:3000/reset-password?token=4aa39d600f287dbecde11a6ccfb58760f7af15bc84df2ff63ee325921cf6d6cf&email=ceitybgr%40gmail.com
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: --b1=_UbDy7r4T2NQZ1hdTcahs5ZrYaaylxeU8hldPQs5uOo
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: Content-Type: text/html; charset=us-ascii
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                 <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <h2 style='color: #FB923C;'>Reset Your Password</h2>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <p>Hello Beta,</p>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <p>We received a request to reset your password for your Lifely account. Click the button below to reset it:</p>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <div style='text-align: center; margin: 30px 0;'>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                         <a href='http://localhost:3000/reset-password?token=4aa39d600f287dbecde11a6ccfb58760f7af15bc84df2ff63ee325921cf6d6cf&email=ceitybgr%40gmail.com' style='background-color: #FB923C; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px;'>Reset Password</a>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     </div>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <p>This link will expire in 1 hour for security reasons.</p>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <p>If you didn't request this, you can safely ignore this email.</p>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                     <p>Best regards,<br>The Lifely Team</p>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:                 </div>
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER:             
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: --b1=_UbDy7r4T2NQZ1hdTcahs5ZrYaaylxeU8hldPQs5uOo--
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: 
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: .
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: SERVER -> CLIENT: 250 2.0.0 OK  1738177440 41be03b00d2f7-ac495d590e0sm10550086a12.51 - gsmtp
+ 
+[2025-01-29 20:04:00] [INFO] PHPMailer Debug: CLIENT -> SERVER: QUIT
+ 
+[2025-01-29 20:04:01] [INFO] PHPMailer Debug: SERVER -> CLIENT: 221 2.0.0 closing connection 41be03b00d2f7-ac495d590e0sm10550086a12.51 - gsmtp
+ 
+[2025-01-29 20:04:01] [INFO] Reset password email sent successfully {"email":"ceitybgr@gmail.com"}
+[2025-01-29 20:04:28] [INFO] Received password reset request {"data":"{\"token\":\"4aa39d600f287dbecde11a6ccfb58760f7af15bc84df2ff63ee325921cf6d6cf\",\"email\":\"ceitybgr@gmail.com\",\"password\":\"helpme1000\"}"}
+[2025-01-29 20:04:28] [INFO] Attempting password reset {"email":"ceitybgr@gmail.com","token_length":64}
+[2025-01-29 20:04:28] [INFO] Token found in database {"token_id":19,"expires_at":"2025-01-29 21:03:56"}
+[2025-01-29 20:04:28] [INFO] Password updated successfully {"user_id":3}
+[2025-01-29 20:04:28] [INFO] Reset token deleted 
+[2025-01-29 20:04:37] [INFO] Received forgot password request {"data":"{\"email\":\"ceitybgr@gmail.com\"}"}
+[2025-01-29 20:05:20] [INFO] Received password reset request {"data":"{\"token\":\"b94958ed539d43995745c68552cfc329d2f49c83f808f4c4acff4ec9a62693f7\",\"email\":\"ceitybgr@gmail.com\",\"password\":\"taylorswift13\"}"}
+[2025-01-29 20:05:20] [INFO] Attempting password reset {"email":"ceitybgr@gmail.com","token_length":64}
+[2025-01-29 20:05:20] [INFO] Token found in database {"token_id":20,"expires_at":"2025-01-29 21:04:37"}
+[2025-01-29 20:05:20] [INFO] Password updated successfully {"user_id":3}
+[2025-01-29 20:05:20] [INFO] Reset token deleted 
+[2025-01-29 20:05:29] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:05:29] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 00dd1e04105a3aba50e5c025585fb567ec9d4e267e5827b484a250393a5dbf1a","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:05:29] [DEBUG] Processing token {"token":"00dd1e0410..."}
+[2025-01-29 20:05:29] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:05:29] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:05:29] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 00dd1e04105a3aba50e5c025585fb567ec9d4e267e5827b484a250393a5dbf1a","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:05:29] [DEBUG] Processing token {"token":"00dd1e0410..."}
+[2025-01-29 20:05:29] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:05:34] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:05:34] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 00dd1e04105a3aba50e5c025585fb567ec9d4e267e5827b484a250393a5dbf1a","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:05:34] [DEBUG] Processing token {"token":"00dd1e0410..."}
+[2025-01-29 20:05:34] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:05:34] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:05:34] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 00dd1e04105a3aba50e5c025585fb567ec9d4e267e5827b484a250393a5dbf1a","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:05:34] [DEBUG] Processing token {"token":"00dd1e0410..."}
+[2025-01-29 20:05:34] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:05:41] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:05:41] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 00dd1e04105a3aba50e5c025585fb567ec9d4e267e5827b484a250393a5dbf1a","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:05:41] [DEBUG] Processing token {"token":"00dd1e0410..."}
+[2025-01-29 20:05:41] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:05:41] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:05:41] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 00dd1e04105a3aba50e5c025585fb567ec9d4e267e5827b484a250393a5dbf1a","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:05:41] [DEBUG] Processing token {"token":"00dd1e0410..."}
+[2025-01-29 20:05:41] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:05:54] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:05:54] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 00dd1e04105a3aba50e5c025585fb567ec9d4e267e5827b484a250393a5dbf1a","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:05:54] [DEBUG] Processing token {"token":"00dd1e0410..."}
+[2025-01-29 20:05:54] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:05:54] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:05:54] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 00dd1e04105a3aba50e5c025585fb567ec9d4e267e5827b484a250393a5dbf1a","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:05:54] [DEBUG] Processing token {"token":"00dd1e0410..."}
+[2025-01-29 20:05:54] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:05:57] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:05:57] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 00dd1e04105a3aba50e5c025585fb567ec9d4e267e5827b484a250393a5dbf1a","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:05:57] [DEBUG] Processing token {"token":"00dd1e0410..."}
+[2025-01-29 20:05:57] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
+[2025-01-29 20:05:57] [INFO] Incoming profile request {"method":"GET","action":"get_image"}
+[2025-01-29 20:05:57] [DEBUG] Starting token validation {"session":[],"headers":{"Host":"localhost","Connection":"keep-alive","sec-ch-ua-platform":"\"Windows\"","Authorization":"Bearer 00dd1e04105a3aba50e5c025585fb567ec9d4e267e5827b484a250393a5dbf1a","User-Agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/132.0.0.0 Safari\/537.36","sec-ch-ua":"\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"","sec-ch-ua-mobile":"?0","Accept":"*\/*","Origin":"http:\/\/localhost:3000","Sec-Fetch-Site":"same-site","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"http:\/\/localhost:3000\/","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"en-US,en;q=0.9"}}
+[2025-01-29 20:05:57] [DEBUG] Processing token {"token":"00dd1e0410..."}
+[2025-01-29 20:05:57] [INFO] Session validated successfully {"user_id":3,"username":"Beta"}
