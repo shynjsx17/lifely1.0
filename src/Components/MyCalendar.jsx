@@ -441,78 +441,71 @@ const MyCalendar = () => {
     }
   };
 
+  // Add this CSS class to handle background image responsiveness
+  const responsiveBackgroundStyle = {
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
+    minHeight: '100vh',
+    width: '100%'
+  };
+
   return (
     <div className="flex h-screen flex-col">
       <Sidebar
         isCollapsed={isSidebarCollapsed}
         setIsCollapsed={setIsSidebarCollapsed}
       />
-      <div 
-        className={`flex-1 transition-all duration-300 ${
-          isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
-        }`}
-      >
-        {/* Compressed Navbar */}
-        <div className="flex-none w-full bg-white bg-opacity-70 z-10 shadow-md fixed top-0">
-          <div className="flex items-center p-2">
-            {/* All elements aligned to the left */}
-            <div className="flex items-center space-x-4">
-              {/* Menu and Calendar Icons */}
-              <div className="flex items-center space-x-2">
-                <button className="p-1">
-                  <FaBars className="w-4 h-4 text-gray-600" />
-                </button>            
-                <FaCalendarAlt className="w-4 h-4 text-gray-600" />
-                <h1 className="text-lg font-semibold">My Calendar</h1>
+      <div className={`flex-1 transition-all duration-300 ${
+        isSidebarCollapsed ? "ml-[60px]" : "ml-[240px]"
+      }`}>
+        {/* Main Container with gradient background */}
+        <div className="flex-1 bg-gradient-to-br from-rose-50 via-sky-50 to-emerald-50">
+          {/* Header with gradient */}
+          <div className="flex-none w-full bg-gradient-to-r from-rose-50/90 to-purple-50/90 backdrop-blur-sm px-4 py-3">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              {/* Left Section */}
+              <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-3">
+                  <h1 className="text-xl font-medium text-gray-800">My Calendar</h1>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={goToToday}
+                    className="px-4 py-1.5 text-sm bg-white rounded-lg border border-gray-200"
+                  >
+                    Today
+                  </button>
+                  <div className="flex items-center space-x-2">
+                    <button onClick={goToPreviousMonth} className="p-1.5">
+                      <FaChevronLeft className="w-4 h-4" />
+                    </button>
+                    <span className="text-lg">January 2025</span>
+                    <button onClick={goToNextMonth} className="p-1.5">
+                      <FaChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              {/* Today Button and Navigation */}
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={goToToday}
-                  className="px-3 py-1 text-sm text-black bg-white border border-black rounded-md hover:bg-gray-100"
-                >
-                  Today
-                </button>
-                <button
-                  onClick={goToPreviousMonth}
-                  className="p-1 text-gray-600 hover:bg-gray-200 rounded-full"
-                >
-                  <FaChevronLeft className="w-3 h-3" />
-                </button>
-                <h2 className="text-sm font-medium">
-                  {`${months[currentMonth]} ${currentYear}`}
-                </h2>
-                <button
-                  onClick={goToNextMonth}
-                  className="p-1 text-gray-600 hover:bg-gray-200 rounded-full"
-                >
-                  <FaChevronRight className="w-3 h-3" />
-                </button>
-              </div>
-
-              {/* Search Icon */}
-              <div className="flex items-center space-x-2 border-l border-r px-4">
-                <button className="p-1 hover:bg-gray-200 rounded-full">
-                  <FaSearch className="w-4 h-4 text-gray-600" />
-                </button>
-              </div>
-
-              {/* Month and Year Selectors */}
+              {/* Right Section - Month/Year Selectors */}
               <div className="flex items-center space-x-2">
                 <select 
-                  value={currentMonth} 
-                  onChange={(e) => setCurrentMonth(parseInt(e.target.value))} 
-                  className="text-sm bg-white border border-gray-300 rounded-md p-1"
+                  value={currentMonth}
+                  onChange={(e) => setCurrentMonth(parseInt(e.target.value))}
+                  className="px-3 py-1.5 text-sm bg-white rounded-lg border border-gray-200"
                 >
                   {months.map((month, index) => (
                     <option key={index} value={index}>{month}</option>
                   ))}
                 </select>
                 <select 
-                  value={currentYear} 
-                  onChange={(e) => setCurrentYear(parseInt(e.target.value))} 
-                  className="text-sm bg-white border border-gray-300 rounded-md p-1"
+                  value={currentYear}
+                  onChange={(e) => setCurrentYear(parseInt(e.target.value))}
+                  className="px-3 py-1.5 text-sm bg-white rounded-lg border border-gray-200"
                 >
                   {Array.from({ length: 50 }, (_, i) => currentYear - 20 + i).map((year) => (
                     <option key={year} value={year}>{year}</option>
@@ -521,50 +514,63 @@ const MyCalendar = () => {
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Main Content */}
-        <div 
-          className="flex-1 pt-[64px] bg-cover bg-center flex" 
-          style={{ backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none' }}
-        >
           {/* Calendar Grid */}
-          <div className="flex-1 p-6">
-            <div className="grid grid-cols-7 gap-2 mt-4">
+          <div className="p-6">
+            <div className="grid grid-cols-7 gap-1">
+              {/* Day Headers */}
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                <div key={day} className="text-center font-bold text-sm sm:text-base">
+                <div key={day} className="p-2 text-sm text-gray-500 text-center">
                   {day}
                 </div>
               ))}
+              
+              {/* Calendar Days */}
               {dates.map((dateObj, index) => {
                 const tasksForDate = getTasksForDate(dateObj.date.toDate());
+                const isSelected = selectedDate.format('YYYY-MM-DD') === dateObj.date.format('YYYY-MM-DD');
+                
                 return (
-                <div
-                  key={index}
-                    className={`relative p-2 min-h-[100px] text-center border ${
-                      dateObj.currentMonth ? 'text-black' : 'text-gray-400'
-                    } ${dateObj.today ? 'bg-sky-500 text-white' : ''} ${
-                      selectedDate.format('YYYY-MM-DD') === dateObj.date.format('YYYY-MM-DD') ? 'bg-emerald-600 text-white' : ''
-                    } hover:bg-gray-200 cursor-pointer`}
-                  onClick={() => handleDateClick(dateObj)}
-                >
-                  <span className="font-semibold">{dateObj.date.date()}</span>
+                  <div
+                    key={index}
+                    onClick={() => handleDateClick(dateObj)}
+                    className={`
+                      relative min-h-[120px] p-3 
+                      bg-white rounded-lg
+                      border border-gray-100
+                      transition-all duration-200
+                      ${!dateObj.currentMonth ? 'opacity-60' : ''}
+                      ${isSelected ? 'border-2 border-sky-200' : ''}
+                      ${dateObj.today ? 'bg-rose-50' : ''}
+                    `}
+                  >
+                    <span className={`
+                      text-sm font-medium block mb-1
+                      ${!dateObj.currentMonth ? 'text-gray-400' : 'text-gray-700'}
+                      ${dateObj.today ? 'text-rose-600' : ''}
+                      ${isSelected ? 'text-sky-600' : ''}
+                    `}>
+                      {dateObj.date.date()}
+                    </span>
+                    
+                    {/* Task Indicators */}
                     {tasksForDate.length > 0 && (
-                      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 flex gap-1">
+                      <div className="absolute bottom-2 left-2 right-2">
                         {tasksForDate.map((task, i) => (
                           <div
                             key={i}
-                            className={`w-2 h-2 rounded-full ${
-                              task.priority === 'high' ? 'bg-red-500' :
-                              task.priority === 'medium' ? 'bg-yellow-500' :
-                              'bg-green-500'
-                            }`}
+                            className={`
+                              h-1 w-full mb-1 rounded-full
+                              ${task.priority === 'high' ? 'bg-red-400' :
+                                task.priority === 'medium' ? 'bg-yellow-400' :
+                                'bg-green-400'}
+                            `}
                             title={task.title}
                           />
                         ))}
                       </div>
                     )}
-                </div>
+                  </div>
                 );
               })}
             </div>
