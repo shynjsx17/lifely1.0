@@ -76,6 +76,7 @@ const MyCalendar = () => {
   const [dropdownIndex, setDropdownIndex] = useState(null);
   const [editingTaskIndex, setEditingTaskIndex] = useState(null);
   const [editingTaskText, setEditingTaskText] = useState("");
+  const [editingTaskId, setEditingTaskId] = useState(null);
   const listDropdownRef = useRef(null);
   const priorityDropdownRef = useRef(null);
   const [showTaskSelectionPopup, setShowTaskSelectionPopup] = useState(false);
@@ -397,6 +398,49 @@ const MyCalendar = () => {
     });
   };
 
+  const handleUpdateTaskTitle = async (taskId, newTitle) => {
+    if (!newTitle.trim()) return;
+    
+    try {
+      const response = await fetch(`http://localhost/lifely1.0/backend/api/tasks.php?id=${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('session_token')}`
+        },
+        body: JSON.stringify({
+          title: newTitle
+        })
+      });
+
+      if (response.ok) {
+        // Update tasks list
+        setTasks(prevTasks => 
+          prevTasks.map(task => 
+            task.id === taskId 
+              ? { ...task, title: newTitle }
+              : task
+          )
+        );
+        setEditingTaskId(null);
+        setEditingTaskText("");
+        await fetchTasks();
+      }
+    } catch (error) {
+      console.error('Error updating task title:', error);
+    }
+  };
+
+  const handleKeyPress = (e, taskId) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleUpdateTaskTitle(taskId, editingTaskText);
+    } else if (e.key === 'Escape') {
+      setEditingTaskId(null);
+      setEditingTaskText("");
+    }
+  };
+
   // Add this CSS class to handle background image responsiveness
   const responsiveBackgroundStyle = {
     backgroundImage: `url(${backgroundImage})`,
@@ -607,7 +651,26 @@ const MyCalendar = () => {
             {/* Task Content */}
             <div className="p-6">
               <h2 className="text-xl font-semibold mb-4">
-                {tasks.find(t => t.id === selectedTaskId)?.title}
+                {editingTaskId === selectedTaskId ? (
+                  <input
+                    type="text"
+                    value={editingTaskText}
+                    onChange={(e) => setEditingTaskText(e.target.value)}
+                    onBlur={() => handleUpdateTaskTitle(selectedTaskId, editingTaskText)}
+                    onKeyDown={(e) => handleKeyPress(e, selectedTaskId)}
+                    className="w-full bg-transparent border-none focus:ring-2 focus:ring-blue-500 rounded px-1"
+                    autoFocus
+                  />
+                ) : (
+                  <span 
+                    onDoubleClick={() => {
+                      setEditingTaskId(selectedTaskId);
+                      setEditingTaskText(tasks.find(t => t.id === selectedTaskId)?.title || "");
+                    }}
+                  >
+                    {tasks.find(t => t.id === selectedTaskId)?.title}
+                  </span>
+                )}
               </h2>
 
               {/* Buttons Row */}
