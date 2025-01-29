@@ -347,10 +347,8 @@ const ListComponent = () => {
             if (data.success) {
                 // Remove task from current list if list type changed
                 if (newListType !== listType) {
-                    setTasks(tasks.filter(task => task.id !== taskId));
+                    setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
                     setSelectedTask(null);
-                } else {
-                    fetchTasks();
                 }
                 setShowListDropdown(false);
             }
@@ -493,14 +491,13 @@ const ListComponent = () => {
                                                     <button
                                                         key={type}
                                                         onClick={() => {
-                                                            handleUpdateListType(selectedTask.id, type);
-                                                            handleArchiveTask(selectedTask.id);
+                                                            handleUpdateListType(selectedTask.id, type.toLowerCase());
                                                         }}
                                                         className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-50 ${
-                                                            selectedTask.list_type === type ? 'bg-gray-50' : ''
+                                                            selectedTask.list_type === type.toLowerCase() ? 'bg-gray-50' : ''
                                                         }`}
                                                     >
-                                                        {type.charAt(0).toUpperCase() + type.slice(1)}
+                                                        {type}
                                                     </button>
                                                 ))}
                                             </div>
