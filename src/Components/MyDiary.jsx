@@ -377,19 +377,38 @@ const MyDiary = () => {
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* Mood Tracker */}
-              <div className="absolute top-4 right-4">
-                <h2 className="text-gray-500 text-lg mb-2">Mood Tracker:</h2>
-                <div className="flex space-x-2">
-                  {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
-                    const moodColors = {
-                      'sad': 'bg-[#FFB6A6]',
-                      'angry': 'bg-[#FFCF55]',
-                      'neutral': 'bg-[#FFF731]',
-                      'happy': 'bg-[#00FFFF]',
-                      'very happy': 'bg-[#29E259]'
-                    };
+<<<<<<< HEAD
+                        return ( 
+                        <button
+                          key={moodOption}
+                          onClick={() => setMood(moodOption)}
+                          className={`px-4 py-2 rounded-full ${mood === moodOption ? 'text-white' : 'text-black'} ${moodColors[moodOption]}`}
+                        >
+                          {moodOption.charAt(0).toUpperCase() + moodOption.slice(1)}
+                        </button>
+                        );
+                      })}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                  {/* View Saved Entries */}
+=======
+            {/* Mood Tracker */}
+            <div className="absolute top-4 right-4">
+              <h2 className="text-gray-500 text-lg mb-2">Mood Tracker:</h2>
+              <div className="flex space-x-2">
+              {['sad', 'angry', 'neutral', 'happy', 'very happy'].map((moodOption) => {
+                const moodColors = {
+                'sad': 'bg-[#FFB6A6]',
+                'angry': 'bg-[#FFCF55]',
+                'neutral': 'bg-[#FFF731]',
+                'happy': 'bg-[#00FFFF]',
+                'very happy': 'bg-[#29E259]'
+                };
 
                     return (
                       <button
