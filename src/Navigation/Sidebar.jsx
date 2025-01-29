@@ -1,32 +1,119 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaCalendarAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
-  const { user } = useAuth();
+  const { user, token, updateUser } = useAuth();
+  console.log('Auth Context:', { user, token }); // Debug log
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
   const [showProfileopen, setShowProfileopen] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
-  const [setProfile, setProfilepic] = useState(require("../icons/profile.svg").default);
+  const [profileImage, setProfileImage] = useState(require("../icons/profile.svg").default);
   const [showEditUsername, setShowEditUsername] = useState(false);
   const [editUsername, setEditUsername] = useState(false);
-  const [username, setUsername] = useState(user?.userName || 'User');
+  const [username, setUsername] = useState(user?.username || 'User');
   const [tempUsername, setTempUsername] = useState("");
   const navigate = useNavigate();
   const [showDeleteAccount, setShowDeleteAccount] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   
-  const toggleProfile = (e) => {
+  // Fetch profile image on component mount and when token changes
+  useEffect(() => {
+    const fetchProfileImage = async () => {
+      if (!token) return;
+
+      try {
+        const response = await fetch('http://localhost/lifely1.0/backend/api/ProfileController.php?action=get_image', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        const data = await response.json();
+        
+        if (data.status === 'success' && data.profile_image) {
+          // If the image path is relative, prepend the base URL
+          const imageUrl = data.profile_image.startsWith('http') 
+            ? data.profile_image 
+            : `http://localhost/lifely1.0/backend/${data.profile_image}`;
+          setProfileImage(imageUrl);
+        }
+      } catch (error) {
+        console.error('Failed to fetch profile image:', error);
+      }
+    };
+
+    fetchProfileImage();
+  }, [token]);
+
+  const getAccessToken = () => {
+    // Get token from auth context
+    if (token) {
+        return token;
+    }
+    return null;
+  };
+
+  const toggleProfile = async (e) => {
     if (e.target.files && e.target.files[0]) {
-      const filereader = new FileReader();
-      filereader.onload = (event) => {
-        setProfilepic(event.target.result);
-      };
-      filereader.readAsDataURL(e.target.files[0]);
+        const file = e.target.files[0];
+        const accessToken = token;
+        
+        if (!accessToken) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'You must be logged in to update your profile',
+                icon: 'error',
+                confirmButtonColor: '#FB923C'
+            });
+            return;
+        }
+
+        // Create FormData object
+        const formData = new FormData();
+        formData.append('profile_image', file);
+
+        try {
+            const response = await fetch('http://localhost/lifely1.0/backend/api/ProfileController.php?action=update_image', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                body: formData,
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                // If the image path is relative, prepend the base URL
+                const imageUrl = data.profile_image.startsWith('http') 
+                  ? data.profile_image 
+                  : `http://localhost/lifely1.0/backend/${data.profile_image}`;
+                setProfileImage(imageUrl);
+                
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Profile image updated successfully',
+                    icon: 'success',
+                    confirmButtonColor: '#FB923C'
+                });
+            } else {
+                throw new Error(data.message || 'Failed to update profile image');
+            }
+        } catch (error) {
+            console.error('Profile update error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: error.message || 'Failed to update profile image',
+                icon: 'error',
+                confirmButtonColor: '#FB923C'
+            });
+        }
     }
   };
 
@@ -36,10 +123,62 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
 
   const isActive = (path) => location.pathname === path;
 
-  const EditSave = () => {
-    setUsername(tempUsername);
-    setShowEditUsername(false);
-  }
+  const EditSave = async () => {
+    try {
+        const accessToken = token;
+        
+        if (!accessToken) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'You must be logged in to update your username',
+                icon: 'error',
+                confirmButtonColor: '#FB923C'
+            });
+            return;
+        }
+
+        const response = await fetch('http://localhost/lifely1.0/backend/api/ProfileController.php?action=update_username', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({ username: tempUsername }),
+            credentials: 'include'
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            // Update both local state and auth context
+            setUsername(tempUsername);
+            updateUser({ ...user, username: tempUsername });
+            setShowEditUsername(false);
+            
+            Swal.fire({
+                title: 'Success!',
+                text: 'Username updated successfully',
+                icon: 'success',
+                confirmButtonColor: '#FB923C'
+            });
+        } else {
+            throw new Error(data.message || 'Failed to update username');
+        }
+    } catch (error) {
+        console.error('Username update error:', error);
+        Swal.fire({
+            title: 'Error!',
+            text: error.message || 'Failed to update username',
+            icon: 'error',
+            confirmButtonColor: '#FB923C'
+        });
+    }
+  };
+
+  // Update username state when user prop changes
+  useEffect(() => {
+    setUsername(user?.username || 'User');
+  }, [user?.username]);
 
   const handleLogout = () => {
     Swal.fire({
@@ -66,10 +205,22 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
 
   const handleResetPassword = async () => {
     try {
+      // Show loading state
+      Swal.fire({
+        title: 'Sending...',
+        text: 'Sending reset password email',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       const response = await fetch('http://localhost/lifely1.0/backend/api/reset_password.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           email: user?.email
@@ -77,28 +228,24 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       });
 
       const data = await response.json();
-      
+
       if (data.status === 'success') {
-        Swal.fire({
-          title: 'Success!',
-          text: data.message,
-          icon: 'success',
-          confirmButtonColor: '#FB923C'
-        });
         setShowResetPassword(false);
-      } else {
         Swal.fire({
-          title: 'Error!',
-          text: data.message,
-          icon: 'error',
+          icon: 'success',
+          title: 'Email Sent',
+          text: 'Please check your email for password reset instructions.',
           confirmButtonColor: '#FB923C'
         });
+      } else {
+        throw new Error(data.message || 'Failed to send reset password email');
       }
     } catch (error) {
+      console.error('Reset password error:', error);
       Swal.fire({
-        title: 'Error!',
-        text: 'Something went wrong. Please try again.',
         icon: 'error',
+        title: 'Error',
+        text: error.message || 'Failed to send reset password email. Please try again.',
         confirmButtonColor: '#FB923C'
       });
     }
@@ -106,10 +253,38 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
 
   const handleDeleteAccount = async () => {
     try {
+      // First confirm with the user
+      const confirmResult = await Swal.fire({
+        title: 'Are you sure?',
+        text: "This action cannot be undone. All your data will be permanently deleted.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete my account',
+        cancelButtonText: 'Cancel'
+      });
+
+      if (!confirmResult.isConfirmed) {
+        return;
+      }
+
+      // Show loading state
+      Swal.fire({
+        title: 'Processing...',
+        text: 'Deleting your account',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       const response = await fetch('http://localhost/lifely1.0/backend/api/delete_account.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           user_id: user?.id,
@@ -120,30 +295,32 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       const data = await response.json();
       
       if (data.status === 'success') {
+        // Clear all user data from local storage
         localStorage.removeItem('token');
-        Swal.fire({
-          title: 'Account Deleted',
-          text: 'Your account has been successfully deleted.',
+        localStorage.removeItem('user');
+        
+        await Swal.fire({
           icon: 'success',
+          title: 'Account Deleted',
+          text: 'Your account has been successfully deleted. We\'re sorry to see you go.',
           confirmButtonColor: '#FB923C'
-        }).then(() => {
-          navigate('/');
         });
+        
+        navigate('/');
       } else {
-        Swal.fire({
-          title: 'Error',
-          text: data.message,
-          icon: 'error',
-          confirmButtonColor: '#FB923C'
-        });
+        throw new Error(data.message || 'Failed to delete account');
       }
     } catch (error) {
+      console.error('Delete account error:', error);
       Swal.fire({
-        title: 'Error',
-        text: 'Something went wrong. Please try again.',
         icon: 'error',
+        title: 'Error',
+        text: error.message || 'Failed to delete account. Please try again.',
         confirmButtonColor: '#FB923C'
       });
+    } finally {
+      setDeletePassword('');
+      setShowDeleteAccount(false);
     }
   };
 
@@ -158,14 +335,14 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         {!isCollapsed && (
           <div className="flex items-center">
             <img
-              src={setProfile}
+              src={profileImage}
               alt="Profile"
-              className="w-10 h-10 rounded-full cursor-pointer"
+              className="w-10 h-10 rounded-full cursor-pointer object-cover"
               onClick={() => setShowProfileopen(true)}
             />
             <div className="ml-3">
               <h3 className="text-sm font-semibold">Welcome,</h3>
-              <h2 className="text-sm font-normal">{user?.username || 'User'}</h2>
+              <h2 className="text-sm font-normal">{username}</h2>
             </div>
           </div>
         )}
@@ -212,13 +389,13 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
         {/*Profile pop up */}
         {
           showProfileopen && (
-             <div  className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-                 <div className="bg-system-background rounded-lg w-[30rem] shadow-lg rounded-full">
+             <div className="font-poppins fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+                 <div className="bg-white rounded-lg w-[30rem] shadow-lg">
                  <div className="bg-[#F0EFF9] text-black py-2 rounded-t-lg shadow-md">
                   <div className="flex items-center justify-between px-4">
                     {/* Left Aligned Arrow Icon */}
                     <div className="flex items-center">
-                      <FaArrowLeft size={20} className="mr-2" onClick={() => setShowProfileopen(false)}/> {/* Left Arrow Icon */}
+                      <FaArrowLeft size={20} className="mr-2 cursor-pointer" onClick={() => setShowProfileopen(false)}/>
                     </div>
 
                     {/* Centered Text */}
@@ -229,18 +406,21 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                   {/* Profile Image */}
                   <div className="justify-center items-center flex">
                     <div
-                      onClick={() => document.getElementById("fileInput").click()} // Trigger file input when clicked
-                      className="cursor-pointer w-20 h-20 rounded-full overflow-hidden"
+                      onClick={() => document.getElementById("fileInput").click()}
+                      className="cursor-pointer w-20 h-20 rounded-full overflow-hidden relative group"
                     >
                       <img
-                        src={setProfile} // Replace with the actual path to your profile image
+                        src={profileImage}
                         alt="Profile"
-                        className="w-20 h-20 rounded-full"
+                        className="w-20 h-20 rounded-full object-cover"
                       />
+                      <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span className="text-white text-sm">Change Photo</span>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Hidden File Input */}
+                            {/* Hidden File Input */}
                             <input
                             type="file"
                             id="fileInput"
@@ -250,17 +430,17 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                             />
 
                             {/* Username Section */}
-                            <div className="flex justify-center">
+                            <div className="flex justify-center mt-4">
                             <div
                               className="text-center text-base font-semibold hover:underline cursor-pointer"
                               onClick={() => setShowEditUsername(true)}
                               
                             >
-                              {user?.username || 'User'}
+                              {username}
                             </div>
                             </div>
                             <div className="flex justify-center mb-10">
-                            <div className="text-center text-sm hover:underline">
+                            <div className="text-center text-sm text-gray-500">
                               ({user?.email || 'email@example.com'})
                             </div>
                             </div>
@@ -272,11 +452,11 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                   ].map((item, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center cursor-pointer border-t border-black p-3"
+                      className="flex justify-between items-center cursor-pointer border-t border-gray-200 p-3 hover:bg-gray-50 transition-colors"
                       onClick={item.onClick}
                     >
                       <div className="text-sm">{item.label}</div>
-                      <div className="text-lg font-bold">&gt;</div>
+                      <div className="text-lg font-bold text-gray-400">&gt;</div>
                     </div>
                   ))}
                 </div>

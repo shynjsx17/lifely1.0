@@ -1,58 +1,79 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: *");
-header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Content-Type: application/json; charset=UTF-8");
 
-include_once '../config/db_connect.php';
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents("php://input"));
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../utils/Logger.php';
+
+try {
+    // Get JSON data from request body
+    $jsonData = file_get_contents('php://input');
+    Logger::info('Received delete account request', ['data' => $jsonData]);
     
-    if (!isset($data->user_id) || !isset($data->password)) {
-        echo json_encode(['status' => 'error', 'message' => 'User ID and password are required']);
-        exit;
+    $data = json_decode($jsonData, true);
+    
+    if (!isset($data['user_id']) || !isset($data['password'])) {
+        throw new Exception('User ID and password are required');
     }
 
-    $user_id = mysqli_real_escape_string($conn, $data->user_id);
-    $password = $data->password;
-    
-    // First verify the password
-    $query = "SELECT password FROM users WHERE id = '$user_id'";
-    $result = mysqli_query($conn, $query);
-    
-    if ($row = mysqli_fetch_assoc($result)) {
-        if (password_verify($password, $row['password'])) {
-            // Password is correct, proceed with deletion
-            $delete_query = "DELETE FROM users WHERE id = '$user_id'";
-            
-            if (mysqli_query($conn, $delete_query)) {
-                // Delete associated data (tasks, diary entries, etc.)
-                mysqli_query($conn, "DELETE FROM tasks WHERE user_id = '$user_id'");
-                mysqli_query($conn, "DELETE FROM diary_entries WHERE user_id = '$user_id'");
-                
-                echo json_encode([
-                    'status' => 'success',
-                    'message' => 'Account successfully deleted'
-                ]);
-            } else {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Failed to delete account'
-                ]);
-            }
-        } else {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Incorrect password'
-            ]);
-        }
-    } else {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'User not found'
-        ]);
+    $userId = $data['user_id'];
+    $password = $data['password'];
+
+    // Initialize database connection
+    $db = new Database();
+    $conn = $db->getConnection();
+
+    // First verify the user's password
+    $query = "SELECT password_hash FROM users WHERE id = ? AND is_deleted = 0";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$userId]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$user) {
+        throw new Exception('User not found');
     }
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
+
+    if (!password_verify($password, $user['password_hash'])) {
+        throw new Exception('Invalid password');
+    }
+
+    // Soft delete the user's account
+    $updateQuery = "UPDATE users SET 
+                   is_deleted = 1,
+                   deleted_at = NOW(),
+                   email = CONCAT(email, '_deleted_', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'))
+                   WHERE id = ?";
+    
+    $updateStmt = $conn->prepare($updateQuery);
+    
+    if (!$updateStmt->execute([$userId])) {
+        throw new Exception('Failed to delete account');
+    }
+
+    Logger::info('Account deleted successfully', ['user_id' => $userId]);
+
+    // Return success response
+    echo json_encode([
+        'status' => 'success',
+        'message' => 'Your account has been successfully deleted'
+    ]);
+
+} catch (Exception $e) {
+    Logger::error('Delete account error', [
+        'error' => $e->getMessage(),
+        'trace' => $e->getTraceAsString()
+    ]);
+    
+    http_response_code(500);
+    echo json_encode([
+        'status' => 'error',
+        'message' => $e->getMessage()
+    ]);
 } 
